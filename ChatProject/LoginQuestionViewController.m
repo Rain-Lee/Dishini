@@ -28,7 +28,7 @@
     // titleLbl
     UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(20, Header_Height + 125, SCREEN_WIDTH - 40, 55)];
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"你可以通过手机号+短信验证码登陆微信"];
-    [str addAttribute:NSForegroundColorAttributeName value:[UIColor greenColor] range:NSMakeRange(5, 9)];
+    [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.02 green:0.75 blue:0.00 alpha:1.00] range:NSMakeRange(5, 9)];
     titleLbl.attributedText = str;
     titleLbl.numberOfLines = 0;
     titleLbl.textAlignment = NSTextAlignmentCenter;
@@ -37,7 +37,7 @@
     
     // OkBtn
     UIButton *commentBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(titleLbl.frame) + 20, SCREEN_WIDTH - 30, 45)];
-    commentBtn.backgroundColor = [UIColor greenColor];
+    commentBtn.backgroundColor = [UIColor colorWithRed:0.02 green:0.75 blue:0.00 alpha:1.00];
     [commentBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [commentBtn setTitle:@"用短信验证码登陆" forState:UIControlStateNormal];
     [commentBtn addTarget:self action:@selector(commentEvent) forControlEvents:UIControlEventTouchUpInside];

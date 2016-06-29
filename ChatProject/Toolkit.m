@@ -31,7 +31,18 @@
     
 }
 
-
++(NSString *)phoneEdit:(NSString *)phoneNum{
+    if (phoneNum == nil || phoneNum.length == 0) {
+        return @"";
+    }
+    if (phoneNum.length < 11) {
+        return phoneNum;
+    }
+    NSMutableString *str = [NSMutableString stringWithString:phoneNum];
+    [str insertString:@"-" atIndex:3];
+    [str insertString:@"-" atIndex:8];
+    return str;
+}
 
 +(UIApplication*)showJuHua
 {

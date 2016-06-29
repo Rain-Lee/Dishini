@@ -46,8 +46,8 @@ typedef enum _VideoShowLayoutType
 //字符 define
 #define USER_ID @"id"
 #define TEAM_ID @"TeamId"
-//#define Url @"http://192.168.1.136:8033/"
-#define Url @"http://120.27.115.235/" //外网地址
+#define Url @"http://123.56.236.196:8033/WebService"
+//#define Url @"http://120.27.115.235/" //外网地址
 
 #define Web_path @"http://120.27.115.235/MessageAndImageNews.aspx?id="
 #define Kimg_path @"http://120.27.115.235/"

@@ -99,6 +99,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/zh-Hans.lproj"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/Emoji.plist"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/RCConfig.plist"
+  install_resource "SMSSDK/SMSSDKUI.bundle"
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
   install_resource "TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle"
 fi
@@ -122,6 +123,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/zh-Hans.lproj"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/Emoji.plist"
   install_resource "RongCloudIMKit/Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/RCConfig.plist"
+  install_resource "SMSSDK/SMSSDKUI.bundle"
   install_resource "SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle"
   install_resource "TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle"
 fi

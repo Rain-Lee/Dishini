@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "LoginViewController.h"
+#import <SMS_SDK/SMSSDK.h>
+#import <SMS_SDK/Extend/SMSSDK+AddressBookMethods.h>
 
 @interface AppDelegate ()
 
@@ -33,10 +35,15 @@
 }
 
 - (void)initConfiguration{
-    //融云即时通讯
+    // 融云即时通讯
     [[RCIM sharedRCIM] initWithAppKey:@"vnroth0krxvao"];
-    //设置用户信息提供者，需要提供正确的用户信息，否则SDK无法显示用户头像、用户名和本地通知
+    // 设置用户信息提供者，需要提供正确的用户信息，否则SDK无法显示用户头像、用户名和本地通知
     [RCIM sharedRCIM].userInfoDataSource = self;
+    
+    // Mob短信
+    [SMSSDK registerApp:@"145d0e804a274"
+             withSecret:@"64d4800bb58c2ccb51eed5bfa7948781"];
+    [SMSSDK enableAppContactFriends:false];
 }
 
 -(void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{

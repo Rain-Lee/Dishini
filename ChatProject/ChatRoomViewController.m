@@ -7,6 +7,7 @@
 //
 
 #import "ChatRoomViewController.h"
+#import "DetailsViewController.h"
 
 @interface ChatRoomViewController ()
 
@@ -44,6 +45,12 @@
 
 - (void)clickLeftBtnEvent{
     [self.navigationController popViewControllerAnimated:true];
+}
+
+- (void)didTapCellPortrait:(NSString *)userId{
+    NSLog(@"%@",userId);
+    DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+    [self.navigationController pushViewController:detailsVC animated:true];
 }
 
 @end

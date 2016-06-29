@@ -10,12 +10,24 @@
 #import "CustomTabBarViewController.h"
 #import "AppDelegate.h"
 #import "RegisterFirstViewController.h"
+#import "ChangePwdViewController.h"
+#import "LoginQuestionViewController.h"
 
 @interface LoginViewController ()<UITextFieldDelegate>{
     // view
     UITextField *phoneTxt;
     UITextField *passwordTxt;
     UIButton *loginBtn;
+    UIImageView *photoIv;
+    UILabel *phoneLbl;
+    UILabel *passwordLbl;
+    UIView *lineView1;
+    UIView *lineView2;
+    UIButton *loginQuestionBtn;
+    UIButton *moreBtn;
+    
+    // data
+    BOOL isExitAccount;
 }
 
 @end
@@ -24,6 +36,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isExitAccount = true;
     
     [self setBarTitle:@"登陆"];
     
@@ -37,30 +51,55 @@
 
 #pragma mark - 自定义方法
 -(void)initView{
-    if (true) { // 判断账号是否存在
+    if (photoIv != nil) {
+        [photoIv removeFromSuperview];
+    }
+    
+    if (phoneLbl != nil) {
+        [phoneLbl removeFromSuperview];
+    }
+    
+    if (phoneTxt != nil) {
+        [phoneTxt removeFromSuperview];
+    }
+    
+    if (passwordLbl != nil) {
+        [passwordLbl removeFromSuperview];
+    }
+    
+    if (passwordTxt != nil) {
+        [passwordTxt removeFromSuperview];
+    }
+    
+    if (lineView1 != nil) {
+        [lineView1 removeFromSuperview];
+    }
+    
+    if (isExitAccount) { // 判断账号是否存在
         // photoIv
-        UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 55) / 2, Header_Height + 50, 55, 55)];
+        photoIv = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 55) / 2, Header_Height + 50, 55, 55)];
         photoIv.image = [UIImage imageNamed:@"default_photo"];
         [self.view addSubview:photoIv];
-        // phoneLbl
-        UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(photoIv.frame) + 15, SCREEN_WIDTH, 21)];
-        phoneLbl.textAlignment = NSTextAlignmentCenter;
-        phoneLbl.text = @"12345678901";
-        [self.view addSubview:phoneLbl];
+        
+        // phoneTxt
+        phoneTxt = [[UITextField alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(photoIv.frame) + 15, SCREEN_WIDTH, 21)];
+        phoneTxt.text = @"12345678901";
+        phoneTxt.textAlignment = NSTextAlignmentCenter;
+        [self.view addSubview:phoneTxt];
         
         // passwordLbl
-        UILabel *passwordLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(phoneLbl.frame) + 20 + (50 - 21) / 2, 60, 21)];
+        passwordLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(phoneTxt.frame) + 20 + (50 - 21) / 2, 60, 21)];
         passwordLbl.text = @"密码";
         [self.view addSubview:passwordLbl];
         // passwordTxt
-        passwordTxt = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(passwordLbl.frame), CGRectGetMaxY(phoneLbl.frame) + 20, SCREEN_WIDTH - 30, 50)];
+        passwordTxt = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(passwordLbl.frame), CGRectGetMaxY(phoneTxt.frame) + 20, SCREEN_WIDTH - 30, 50)];
         passwordTxt.delegate = self;
         passwordTxt.placeholder = @"请填写密码";
         [passwordTxt addTarget:self action:@selector(textFieldChangeEvent:) forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:passwordTxt];
     }else{
         // phoneLbl
-        UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, Header_Height + 10 + (50 - 21) / 2, 60, 21)];
+        phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, Header_Height + 10 + (50 - 21) / 2, 60, 21)];
         phoneLbl.text = @"手机号";
         [self.view addSubview:phoneLbl];
         // phoneTxt
@@ -70,12 +109,12 @@
         [phoneTxt addTarget:self action:@selector(textFieldChangeEvent:) forControlEvents:UIControlEventEditingChanged];
         [self.view addSubview:phoneTxt];
         // lineView1
-        UIView *lineView1 = [[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(phoneTxt.frame), SCREEN_WIDTH - 15, 0.5)];
+        lineView1 = [[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(phoneTxt.frame), SCREEN_WIDTH - 15, 0.5)];
         lineView1.backgroundColor = [UIColor lightGrayColor];
         [self.view addSubview:lineView1];
         
         // passwordLbl
-        UILabel *passwordLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(lineView1.frame) + (50 - 21) / 2, 60, 21)];
+        passwordLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(lineView1.frame) + (50 - 21) / 2, 60, 21)];
         passwordLbl.text = @"密码";
         [self.view addSubview:passwordLbl];
         // passwordTxt
@@ -88,11 +127,17 @@
     }
     
     // lineView2
-    UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(passwordTxt.frame), SCREEN_WIDTH - 15, 0.5)];
+    if (lineView2 != nil) {
+        [lineView2 removeFromSuperview];
+    }
+    lineView2 = [[UIView alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(passwordTxt.frame), SCREEN_WIDTH - 15, 0.5)];
     lineView2.backgroundColor = [UIColor lightGrayColor];
     [self.view addSubview:lineView2];
     
     // loginBtn
+    if (loginBtn != nil) {
+        [loginBtn removeFromSuperview];
+    }
     loginBtn = [[UIButton alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(lineView2.frame) + 30, SCREEN_WIDTH - 30, 45)];
     [loginBtn setTitle:@"登录" forState:UIControlStateNormal];
     loginBtn.enabled = false;
@@ -103,7 +148,10 @@
     loginBtn.layer.cornerRadius = 6;
     
     // loginQuestionBtn
-    UIButton *loginQuestionBtn = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 100) / 2, CGRectGetMaxY(loginBtn.frame) + 20, 100, 21)];
+    if (loginQuestionBtn != nil) {
+        [loginQuestionBtn removeFromSuperview];
+    }
+    loginQuestionBtn = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 100) / 2, CGRectGetMaxY(loginBtn.frame) + 20, 100, 21)];
     loginQuestionBtn.titleLabel.font = [UIFont systemFontOfSize:14];
     [loginQuestionBtn setTitle:@"登录遇到问题？" forState:UIControlStateNormal];
     [loginQuestionBtn setTitleColor:[UIColor colorWithRed:0.42 green:0.47 blue:0.66 alpha:1.00] forState:UIControlStateNormal];
@@ -111,7 +159,10 @@
     [self.view addSubview:loginQuestionBtn];
     
     // moreBtn
-    UIButton *moreBtn = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 55) / 2, SCREEN_HEIGHT - 20 - 21, 55, 21)];
+    if (moreBtn != nil) {
+        [moreBtn removeFromSuperview];
+    }
+    moreBtn = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 55) / 2, SCREEN_HEIGHT - 20 - 21, 55, 21)];
     moreBtn.titleLabel.font = [UIFont systemFontOfSize:16];
     [moreBtn setTitle:@"更多" forState:UIControlStateNormal];
     [moreBtn setTitleColor:[UIColor colorWithRed:0.42 green:0.47 blue:0.66 alpha:1.00] forState:UIControlStateNormal];
@@ -120,7 +171,15 @@
 }
 
 - (void)loginEvent{
-    [self loginRongCloud];
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
+    [dataProvider login:phoneTxt.text andPassword:passwordTxt.text];
+    
+    //[self loginRongCloud];
+}
+
+-(void)loginCallBack:(id)dict{
+    NSLog(@"%@",dict);
 }
 
 - (void)loginRongCloud{
@@ -146,17 +205,22 @@
 }
 
 -(void)loginQuestionEvent{
-    
+    LoginQuestionViewController *loginQuestionVC = [[LoginQuestionViewController alloc] init];
+    [self.navigationController pushViewController:loginQuestionVC animated:true];
 }
 
 -(void)moreEvent{
-    [Toolkit actionSheetViewSecond:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle: [NSArray arrayWithObjects:@"注册", @"修改密码", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
-        if (buttonIndex == 1) { // 注册
+    [Toolkit actionSheetViewSecond:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle: [NSArray arrayWithObjects:@"切换账号",@"注册", @"修改密码", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
+        if (buttonIndex == 1) {
+            isExitAccount = false;
+            [self initView];
+        }else if (buttonIndex == 2) { // 注册
             RegisterFirstViewController *registerFirstVC = [[RegisterFirstViewController alloc] init];
             registerFirstVC.iFlagType = @"1";
             [self.navigationController pushViewController:registerFirstVC animated:true];
-        }else if (buttonIndex == 2){ // 修改密码
-            
+        }else if (buttonIndex == 3){ // 修改密码
+            ChangePwdViewController *changePwdVC = [[ChangePwdViewController alloc] init];
+            [self.navigationController pushViewController:changePwdVC animated:true];
         }
     }];
 }

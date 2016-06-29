@@ -9,6 +9,7 @@
 #import "RegisterSecondViewController.h"
 #import "ChatProject-swift.h"
 #import "RegisterThirdViewController.h"
+#import <SMS_SDK/SMSSDK.h>
 
 @interface RegisterSecondViewController ()<UITextFieldDelegate>{
     // view
@@ -65,6 +66,7 @@
     // vericationTxt
     vericationTxt = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(phoneLbl.frame), CGRectGetMaxY(lineView1.frame) + 15, SCREEN_WIDTH - CGRectGetMaxX(phoneLbl.frame), 45)];
     vericationTxt.delegate = self;
+    vericationTxt.keyboardType = UIKeyboardTypeNumberPad;
     vericationTxt.placeholder = @"请输入验证码";
     [vericationTxt addTarget:self action:@selector(vericationEvent:) forControlEvents:UIControlEventEditingChanged];
     [self.view addSubview:vericationTxt];
@@ -90,13 +92,20 @@
 }
 
 -(void)commentEvent{
-    if ([self.iFlagType isEqual:@"1"]) {
-        RegisterThirdViewController *registerThirdVC = [[RegisterThirdViewController alloc] init];
-        registerThirdVC.phone = self.phone;
-        [self.navigationController pushViewController:registerThirdVC animated:true];
-    }else{
-        // 通过短信验证码登陆
-    }
+    [SMSSDK commitVerificationCode:vericationTxt.text phoneNumber:_phone zone:@"86" result:^(NSError *error) {
+        if (!error) {
+            if ([self.iFlagType isEqual:@"1"]) {
+                RegisterThirdViewController *registerThirdVC = [[RegisterThirdViewController alloc] init];
+                registerThirdVC.phone = self.phone;
+                [self.navigationController pushViewController:registerThirdVC animated:true];
+            }else{
+                // 通过短信验证码登陆
+            }
+        }else{
+            NSLog(@"%@",error);
+            [Toolkit alertView:self andTitle:@"提示" andMsg:error.userInfo[@"commitVerificationCode"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+        }
+    }];
 }
 
 -(void)vericationEvent:(UITextField *)textField{

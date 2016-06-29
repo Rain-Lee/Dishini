@@ -21,6 +21,27 @@
  */
 - (void)setDelegateObject:(id)cbobject setBackFunctionName:(NSString *)selectorName;
 
+/**
+ * 登陆
+ * @param username 账号
+ * @param password 密码
+ */
+-(void)login:(NSString *)username andPassword:(NSString *)password;
+
+/**
+ * 注册
+ * @param phone    手机号
+ * @param password 密码
+ */
+-(void)registerUser:(NSString *)phone andPassword:(NSString *)password;
+
+/**
+ * 修改面
+ * @param phone    手机号
+ * @param oldPwd   原密码
+ * @param password 新密码
+ */
+-(void)changePwd:(NSString *)phone andOldPwd:(NSString *)oldPwd andPassword:(NSString *)password;
 
 /**
  * 获取通讯录

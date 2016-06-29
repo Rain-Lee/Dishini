@@ -12,8 +12,9 @@ target 'ChatProject' do
   # 融云聊天
   pod 'RongCloudIMKit', '2.6.2'
   
-  # 刷新
-  #pod 'MJRefresh', '3.1.6'
+  #Mob
+  pod 'MOBFoundation_IDFA', '2.0.1' #Mob产品公共库
+  pod 'SMSSDK', '2.0.4' #SMSSDK必须
   
   # 网络访问
   pod 'AFNetworking', '~>2.0'

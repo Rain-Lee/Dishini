@@ -36,6 +36,21 @@
 }
 
 -(void)clickRightButton:(UIButton *)sender{
+    if ([passwordTxt.text isEqual:@""] || [rePasswordTxt.text isEqual:@""]){
+        [Toolkit alertView:self andTitle:@"提示" andMsg:@"请完善信息" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+        return;
+    }
+    if (![passwordTxt.text isEqual:rePasswordTxt.text]) {
+        [Toolkit alertView:self andTitle:@"提示" andMsg:@"两次密码输入不一致" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+        return;
+    }
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"saveCallBack:"];
+    [dataProvider registerUser:_phone andPassword:passwordTxt.text];
+}
+
+-(void)saveCallBack:(id)dict{
+    NSLog(@"%@",dict);
     
 }
 

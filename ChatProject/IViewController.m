@@ -9,6 +9,8 @@
 #import "IViewController.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "PersonalViewController.h"
+#import "AnnouncementViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -184,12 +186,24 @@
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    if (indexPath.row == 9) {
+    if (indexPath.row == 0) {
+        PersonalViewController *personalVC = [[PersonalViewController alloc] init];
+        personalVC.hidesBottomBarWhenPushed = true;
+        [self.navigationController pushViewController:personalVC animated:true];
+    }else if (indexPath.row == 3){
+        AnnouncementViewController *announcementVC = [[AnnouncementViewController alloc] init];
+        announcementVC.hidesBottomBarWhenPushed = true;
+        [self.navigationController pushViewController:announcementVC animated:true];
+    }else if (indexPath.row == 7){
+        [Toolkit makeCall:@"15165561652"];
+    }else if (indexPath.row == 9) {
         [Toolkit actionSheetViewFirst:self andTitle:@"退出后不会删除任何历史数据，下次登录依然可以使用本账号。" andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:@"退出登录" handler:^(int buttonIndex, UIAlertAction *alertView) {
             if (buttonIndex == 1) {
                 LoginViewController *loginVC = [[LoginViewController alloc] init];
+                UINavigationController *navLoginVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+                navLoginVC.navigationBar.hidden = true;
                 AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-                appDelegate.window.rootViewController = loginVC;
+                appDelegate.window.rootViewController = navLoginVC;
             }
         }];
     }

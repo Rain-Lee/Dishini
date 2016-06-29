@@ -12,9 +12,78 @@
 #import "AFURLRequestSerialization.h"
 #import "SVProgressHUD.h"
 #import "SBXMLParser.h"
+#import "SecurityUtil.h"
 
 @implementation DataProvider
 
+// 登陆
+-(void)login:(NSString *)username andPassword:(NSString *)password{
+    
+    if (username && password) {
+        
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"username",
+                                          @"password"]
+                              andResult:@[@"Login",
+                                          username,
+                                          password
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+    
+}
+
+// 注册
+-(void)registerUser:(NSString *)phone andPassword:(NSString *)password{
+    
+    if (phone && password) {
+        
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"phone",
+                                          @"password"]
+                              andResult:@[@"Register",
+                                          phone,
+                                          password
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+// 修改密码
+-(void)changePwd:(NSString *)phone andOldPwd:(NSString *)oldPwd andPassword:(NSString *)password{
+    
+    if (phone && oldPwd && password) {
+        
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"phone",
+                                          @"oldPwd",
+                                          @"password"]
+                              andResult:@[@"ChangePassWord",
+                                          phone,
+                                          oldPwd,
+                                          password
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
 
 /**
  * 获取通讯录
@@ -30,7 +99,53 @@
     }
 }
 
+#pragma mark - 加密
+#define YZkey @"6f0a9c87-5d76-46af-87d5-2c69271b7cff"
+#define uid @"85a4d4cd-ec0f-4b2e-8514-4c5ffc0257c0"
+-(NSString *)setParam:(NSArray *)params andResult:(NSArray *)results
+{
+    
+    NSString *json = @"";
+    
+    @try {
+        if (params && results && params.count == results.count) {
+            json = ZY_NSStringFromFormat(@"\"%@\":\"%@\"",params[0],results[0]);
+            for (int i = 1; i < params.count ; i++) {
+                if (((NSString *)params[i]).length >=5 && [[params[i] substringToIndex:5] isEqualToString:@"list_"]/*json字符串 不加“”*/ ) {
+                    json = ZY_NSStringFromFormat(@"%@,\"%@\":%@",json,params[i],results[i]);
+                }
+                else
+                {
+                    json = ZY_NSStringFromFormat(@"%@,\"%@\":\"%@\"",json,params[i],results[i]);
+                    
+                }
+            }
+            //添加key
+            json = ZY_NSStringFromFormat(@"\"key\":\"%@\",\"uid\":\"%@\",%@",YZkey,uid,json);
+            //添加｛｝
+            json = ZY_NSStringFromFormat(@"{%@}",json);
+            DLog(@"%@",json);
+            return [self encryptionStr:json];
+        }
+        
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+    }
+    
+    return json;
+}
 
+-(NSString *)encryptionStr:(NSString *)str
+{
+    NSString *securityStr;
+    securityStr = [SecurityUtil encryptAESData:[NSString stringWithFormat:@"%lu&%@",(unsigned long)str.length,str]];
+    return securityStr;
+    
+}
 
 #pragma mark 赋值回调
 - (void)setDelegateObject:(id)cbobject setBackFunctionName:(NSString *)selectorName

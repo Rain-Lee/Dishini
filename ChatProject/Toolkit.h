@@ -14,6 +14,7 @@
 
 @interface Toolkit : NSObject
 
++(NSString *)phoneEdit:(NSString *)phoneNum;
 
 + (BOOL)isEnglishSysLanguage;
 + (BOOL)isSystemIOS7;

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		04E0829C27397B46294C19AF /* libPods-ChatProjectTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 37D70757A2EB0DA820B782D9 /* libPods-ChatProjectTests.a */; };
 		755B5DD4C180A625BA19F22D /* libPods-ChatProjectUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6860AEF67FA15E46DC6F32A5 /* libPods-ChatProjectUITests.a */; };
+		B71F9D031D220FEB00994D6E /* DataSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D021D220FEA00994D6E /* DataSettingViewController.m */; };
+		B71F9D061D221D3900994D6E /* RemarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D051D221D3900994D6E /* RemarksViewController.m */; };
 		B74496551D1BBD290012C9AA /* RegisterFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */; };
 		B77C5D261D1D2D9D00246820 /* RegisterThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */; };
 		B77C5D291D1D349400246820 /* LoginQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77C5D281D1D349400246820 /* LoginQuestionViewController.m */; };
@@ -83,6 +85,14 @@
 		B7D4273D1D1A36C20089A263 /* ChineseString.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D4273A1D1A36C20089A263 /* ChineseString.m */; };
 		B7D427411D1A3C240089A263 /* UserMomentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D427401D1A3C240089A263 /* UserMomentsViewController.m */; };
 		B7D427461D1A918B0089A263 /* NewFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7D427451D1A918B0089A263 /* NewFriendsViewController.m */; };
+		B7DBCD211D20C26300BF3489 /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD1B1D20C26300BF3489 /* GTMBase64.m */; };
+		B7DBCD221D20C26300BF3489 /* NSData+AES.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD1E1D20C26300BF3489 /* NSData+AES.m */; };
+		B7DBCD231D20C26300BF3489 /* SecurityUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD201D20C26300BF3489 /* SecurityUtil.m */; };
+		B7DBCD261D20C61300BF3489 /* PersonalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD251D20C61300BF3489 /* PersonalViewController.m */; };
+		B7DBCD291D20FD5C00BF3489 /* AnnouncementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD281D20FD5C00BF3489 /* AnnouncementViewController.m */; };
+		B7DBCD2C1D21023400BF3489 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD2B1D21023400BF3489 /* AboutUsViewController.m */; };
+		B7DBCD2F1D210A8300BF3489 /* ChangePwdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD2E1D210A8300BF3489 /* ChangePwdViewController.m */; };
+		B7DBCD321D2117CD00BF3489 /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7DBCD311D2117CD00BF3489 /* DetailsViewController.m */; };
 		EF332C4106864A86D902A3AD /* libPods-ChatProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4467018C1407F23893E9EFB8 /* libPods-ChatProject.a */; };
 /* End PBXBuildFile section */
 
@@ -110,6 +120,10 @@
 		6860AEF67FA15E46DC6F32A5 /* libPods-ChatProjectUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatProjectUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E0BAD65CC2BE699BBA2B96D /* Pods-ChatProjectTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatProjectTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatProjectTests/Pods-ChatProjectTests.debug.xcconfig"; sourceTree = "<group>"; };
 		AC6DBC4A54BC55D6DDF156EE /* Pods-ChatProjectUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatProjectUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatProjectUITests/Pods-ChatProjectUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B71F9D011D220FEA00994D6E /* DataSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSettingViewController.h; sourceTree = "<group>"; };
+		B71F9D021D220FEA00994D6E /* DataSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSettingViewController.m; sourceTree = "<group>"; };
+		B71F9D041D221D3800994D6E /* RemarksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemarksViewController.h; sourceTree = "<group>"; };
+		B71F9D051D221D3900994D6E /* RemarksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemarksViewController.m; sourceTree = "<group>"; };
 		B74496531D1BBD290012C9AA /* RegisterFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterFirstViewController.h; sourceTree = "<group>"; };
 		B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterFirstViewController.m; sourceTree = "<group>"; };
 		B77C5D231D1D24D600246820 /* ChatProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ChatProject-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -244,6 +258,23 @@
 		B7D427401D1A3C240089A263 /* UserMomentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserMomentsViewController.m; sourceTree = "<group>"; };
 		B7D427441D1A918B0089A263 /* NewFriendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NewFriendsViewController.h; sourceTree = "<group>"; };
 		B7D427451D1A918B0089A263 /* NewFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NewFriendsViewController.m; sourceTree = "<group>"; };
+		B7DBCD1A1D20C26300BF3489 /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		B7DBCD1B1D20C26300BF3489 /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		B7DBCD1C1D20C26300BF3489 /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		B7DBCD1D1D20C26300BF3489 /* NSData+AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+AES.h"; sourceTree = "<group>"; };
+		B7DBCD1E1D20C26300BF3489 /* NSData+AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+AES.m"; sourceTree = "<group>"; };
+		B7DBCD1F1D20C26300BF3489 /* SecurityUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecurityUtil.h; sourceTree = "<group>"; };
+		B7DBCD201D20C26300BF3489 /* SecurityUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecurityUtil.m; sourceTree = "<group>"; };
+		B7DBCD241D20C61300BF3489 /* PersonalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalViewController.h; sourceTree = "<group>"; };
+		B7DBCD251D20C61300BF3489 /* PersonalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalViewController.m; sourceTree = "<group>"; };
+		B7DBCD271D20FD5C00BF3489 /* AnnouncementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementViewController.h; sourceTree = "<group>"; };
+		B7DBCD281D20FD5C00BF3489 /* AnnouncementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnouncementViewController.m; sourceTree = "<group>"; };
+		B7DBCD2A1D21023400BF3489 /* AboutUsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutUsViewController.h; sourceTree = "<group>"; };
+		B7DBCD2B1D21023400BF3489 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
+		B7DBCD2D1D210A8300BF3489 /* ChangePwdViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePwdViewController.h; sourceTree = "<group>"; };
+		B7DBCD2E1D210A8300BF3489 /* ChangePwdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePwdViewController.m; sourceTree = "<group>"; };
+		B7DBCD301D2117CD00BF3489 /* DetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		B7DBCD311D2117CD00BF3489 /* DetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		C0B9326BA6963970671BB038 /* Pods-ChatProject.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatProject.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatProject/Pods-ChatProject.release.xcconfig"; sourceTree = "<group>"; };
 		C5748EB2587DAB17D03FB12E /* Pods-ChatProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatProjectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatProjectUITests/Pods-ChatProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		DF6DC56389E535F4524F6F46 /* Pods-ChatProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatProject/Pods-ChatProject.debug.xcconfig"; sourceTree = "<group>"; };
@@ -410,6 +441,8 @@
 				B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */,
 				B77C5D271D1D349400246820 /* LoginQuestionViewController.h */,
 				B77C5D281D1D349400246820 /* LoginQuestionViewController.m */,
+				B7DBCD2D1D210A8300BF3489 /* ChangePwdViewController.h */,
+				B7DBCD2E1D210A8300BF3489 /* ChangePwdViewController.m */,
 			);
 			name = LoginPage;
 			sourceTree = "<group>";
@@ -454,6 +487,18 @@
 			children = (
 				B7A03CCB1D18E16500A48C39 /* IViewController.h */,
 				B7A03CCC1D18E16500A48C39 /* IViewController.m */,
+				B7DBCD241D20C61300BF3489 /* PersonalViewController.h */,
+				B7DBCD251D20C61300BF3489 /* PersonalViewController.m */,
+				B7DBCD271D20FD5C00BF3489 /* AnnouncementViewController.h */,
+				B7DBCD281D20FD5C00BF3489 /* AnnouncementViewController.m */,
+				B7DBCD2A1D21023400BF3489 /* AboutUsViewController.h */,
+				B7DBCD2B1D21023400BF3489 /* AboutUsViewController.m */,
+				B7DBCD301D2117CD00BF3489 /* DetailsViewController.h */,
+				B7DBCD311D2117CD00BF3489 /* DetailsViewController.m */,
+				B71F9D011D220FEA00994D6E /* DataSettingViewController.h */,
+				B71F9D021D220FEA00994D6E /* DataSettingViewController.m */,
+				B71F9D041D221D3800994D6E /* RemarksViewController.h */,
+				B71F9D051D221D3900994D6E /* RemarksViewController.m */,
 			);
 			name = IPage;
 			sourceTree = "<group>";
@@ -488,6 +533,7 @@
 		B7C4219F1D1D218100A43E8F /* OC */ = {
 			isa = PBXGroup;
 			children = (
+				B7DBCD181D20C26300BF3489 /* Security */,
 				B7D427381D1A36C20089A263 /* ChineseSorting */,
 				B7D426B71D1A29EE0089A263 /* DFTimelineView */,
 				B7D426B01D1A1F9C0089A263 /* xml */,
@@ -736,6 +782,28 @@
 				B7D427451D1A918B0089A263 /* NewFriendsViewController.m */,
 			);
 			name = AddFriend;
+			sourceTree = "<group>";
+		};
+		B7DBCD181D20C26300BF3489 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				B7DBCD191D20C26300BF3489 /* GTMBase64 */,
+				B7DBCD1D1D20C26300BF3489 /* NSData+AES.h */,
+				B7DBCD1E1D20C26300BF3489 /* NSData+AES.m */,
+				B7DBCD1F1D20C26300BF3489 /* SecurityUtil.h */,
+				B7DBCD201D20C26300BF3489 /* SecurityUtil.m */,
+			);
+			path = Security;
+			sourceTree = "<group>";
+		};
+		B7DBCD191D20C26300BF3489 /* GTMBase64 */ = {
+			isa = PBXGroup;
+			children = (
+				B7DBCD1A1D20C26300BF3489 /* GTMBase64.h */,
+				B7DBCD1B1D20C26300BF3489 /* GTMBase64.m */,
+				B7DBCD1C1D20C26300BF3489 /* GTMDefines.h */,
+			);
+			path = GTMBase64;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1022,6 +1090,7 @@
 				B7A03CCA1D18E15B00A48C39 /* MomentsViewController.m in Sources */,
 				B7D427361D1A29EE0089A263 /* DFLikeCommentView.m in Sources */,
 				B7D426AF1D1A1CE30089A263 /* DataProvider.m in Sources */,
+				B71F9D031D220FEB00994D6E /* DataSettingViewController.m in Sources */,
 				B7D427461D1A918B0089A263 /* NewFriendsViewController.m in Sources */,
 				B7A03CC71D18E14C00A48C39 /* ContactsViewController.m in Sources */,
 				B77C5D261D1D2D9D00246820 /* RegisterThirdViewController.m in Sources */,
@@ -1036,11 +1105,15 @@
 				B7D4272D1D1A29EE0089A263 /* DFUserLineCellManager.m in Sources */,
 				B7D4272B1D1A29EE0089A263 /* DFBaseUserLineCell.m in Sources */,
 				B7A03CD81D18E87A00A48C39 /* LoginViewController.m in Sources */,
+				B7DBCD231D20C26300BF3489 /* SecurityUtil.m in Sources */,
 				B7D427121D1A29EE0089A263 /* DFBaseLineItem.m in Sources */,
 				B7D426B51D1A1F9C0089A263 /* SBXMLParser.m in Sources */,
 				B7A03D6D1D19464400A48C39 /* ContactsTableViewCell.m in Sources */,
 				B7A03CDB1D191B6400A48C39 /* CustomTabBarViewController.m in Sources */,
+				B7DBCD211D20C26300BF3489 /* GTMBase64.m in Sources */,
 				B7A03C731D18DBA300A48C39 /* ViewController.m in Sources */,
+				B71F9D061D221D3900994D6E /* RemarksViewController.m in Sources */,
+				B7DBCD2C1D21023400BF3489 /* AboutUsViewController.m in Sources */,
 				B7D427281D1A29EE0089A263 /* DFUserTimeLineViewController.m in Sources */,
 				B7A03CE11D1928B200A48C39 /* ChatRoomViewController.m in Sources */,
 				B7D427371D1A29EE0089A263 /* MLClickColorLinkLabel.m in Sources */,
@@ -1056,16 +1129,21 @@
 				B7D4273D1D1A36C20089A263 /* ChineseString.m in Sources */,
 				B7D427331D1A29EE0089A263 /* DFTextImageLineCell.m in Sources */,
 				B7D427171D1A29EE0089A263 /* DFFaceManager.m in Sources */,
+				B7DBCD291D20FD5C00BF3489 /* AnnouncementViewController.m in Sources */,
 				B7A03C701D18DBA300A48C39 /* AppDelegate.m in Sources */,
 				B7A03CD51D18E66C00A48C39 /* Toolkit.m in Sources */,
+				B7DBCD261D20C61300BF3489 /* PersonalViewController.m in Sources */,
+				B7DBCD2F1D210A8300BF3489 /* ChangePwdViewController.m in Sources */,
 				B7D427321D1A29EE0089A263 /* DFLineCellManager.m in Sources */,
 				B7B234871D1D0F2800A102D9 /* RegisterSecondViewController.m in Sources */,
 				B7D427341D1A29EE0089A263 /* DFVideoLineCell.m in Sources */,
 				B7D4272A1D1A29EE0089A263 /* DFTextImageUserLineItem.m in Sources */,
 				B7C4219D1D1D214F00A43E8F /* Timer.swift in Sources */,
 				B7A03C6D1D18DBA300A48C39 /* main.m in Sources */,
+				B7DBCD221D20C26300BF3489 /* NSData+AES.m in Sources */,
 				B7D427101D1A29EE0089A263 /* DFImagesSendViewController.m in Sources */,
 				B77C5D291D1D349400246820 /* LoginQuestionViewController.m in Sources */,
+				B7DBCD321D2117CD00BF3489 /* DetailsViewController.m in Sources */,
 				B7D427351D1A29EE0089A263 /* DFLikeCommentToolbar.m in Sources */,
 				B7A03CCD1D18E16500A48C39 /* IViewController.m in Sources */,
 			);

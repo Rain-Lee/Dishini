@@ -8,6 +8,7 @@
 
 #import "RegisterFirstViewController.h"
 #import "RegisterSecondViewController.h"
+#import <SMS_SDK/SMSSDK.h>
 
 @interface RegisterFirstViewController ()<UITextFieldDelegate>{
     // view
@@ -42,6 +43,7 @@
     [self.view addSubview:titleLbl];
     // phoneTxt
     phoneTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(titleLbl.frame) + 20, SCREEN_WIDTH - 30, 45)];
+    phoneTxt.keyboardType = UIKeyboardTypeNumberPad;
     phoneTxt.delegate = self;
     phoneTxt.placeholder = @"请填写手机号码";
     phoneTxt.borderStyle = UITextBorderStyleNone;
@@ -65,10 +67,19 @@
 }
 
 -(void)nextEvent{
-    RegisterSecondViewController *registerSecondVC = [[RegisterSecondViewController alloc] init];
-    registerSecondVC.phone = phoneTxt.text;
-    registerSecondVC.iFlagType = self.iFlagType;
-    [self.navigationController pushViewController:registerSecondVC animated:true];
+    [SVProgressHUD showWithStatus:@"加载中..."];
+    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:phoneTxt.text zone:@"86" customIdentifier:nil result:^(NSError *error) {
+        [SVProgressHUD dismiss];
+        if (!error) {
+            RegisterSecondViewController *registerSecondVC = [[RegisterSecondViewController alloc] init];
+            registerSecondVC.phone = phoneTxt.text;
+            registerSecondVC.iFlagType = self.iFlagType;
+            [self.navigationController pushViewController:registerSecondVC animated:true];
+        }else{
+            phoneTxt.text = @"";
+            [Toolkit alertView:self andTitle:@"提示" andMsg:error.userInfo[@"getVerificationCode"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+        }
+    }];
 }
 
 -(void)textFieldChangeEvent:(UITextField *)textField{

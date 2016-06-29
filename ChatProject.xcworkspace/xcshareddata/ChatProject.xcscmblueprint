@@ -1,0 +1,32 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "DF4B43A979B707EA2B043ADDC063564BE243E269",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : {
+
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "DF4B43A979B707EA2B043ADDC063564BE243E269" : 0,
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "57B5000A-A8F2-415E-AFC9-81B2FE031B66",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "DF4B43A979B707EA2B043ADDC063564BE243E269" : "ChatProject\/",
+    "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134" : "ChatProject\/ChatProject\/CustomViewController\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "ChatProject",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "ChatProject.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Rain-Li\/ChatProject.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "DF4B43A979B707EA2B043ADDC063564BE243E269"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/42.121.145.175\/svn\/aiwoba_ios",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Subversion",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "d1172e3f-1812-6f49-83ca-d74b34ffb609++9134"
+    }
+  ]
+}

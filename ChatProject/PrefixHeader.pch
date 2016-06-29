@@ -16,5 +16,6 @@
 #import "Toolkit.h"
 #import "BaseNavigationController.h"
 #import "DataProvider.h"
+#import "SVProgressHUD.h"
 
 #endif /* PrefixHeader_pch */

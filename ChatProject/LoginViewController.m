@@ -175,7 +175,7 @@
     [dataProvider setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
     [dataProvider login:phoneTxt.text andPassword:passwordTxt.text];
     
-    //[self loginRongCloud];
+    [self loginRongCloud];
 }
 
 -(void)loginCallBack:(id)dict{

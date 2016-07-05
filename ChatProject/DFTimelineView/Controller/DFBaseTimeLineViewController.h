@@ -8,9 +8,7 @@
 
 #import "UIImageView+WebCache.h"
 #import "MLLabel+Size.h"
-
 #import "DFBaseViewController.h"
-
 
 @interface DFBaseTimeLineViewController : DFBaseViewController<UITableViewDataSource, UITableViewDelegate>
 
@@ -32,6 +30,9 @@
 //设置封面
 -(void) setCover:(NSString *) url;
 
+//设置封面 UIImage
+-(void)setCoverImg:(UIImage *)img;
+
 //设置封面上的用户头像
 -(void) setUserAvatar:(NSString *) url;
 
@@ -44,8 +45,9 @@
 /**
  * 设置topView
  * @param iFlag 1:朋友圈  2:用户个人动态
+ * @param iFlag 标题
  */
-- (void)setTopView:(int)iFlag;
+- (void)setTopView:(int)iFlag andTitle:(NSString *)title;
 
 
 @end

@@ -11,4 +11,6 @@
 
 @interface UserMomentsViewController : DFUserTimeLineViewController
 
+@property(nonatomic, strong) NSString *nickName;
+
 @end

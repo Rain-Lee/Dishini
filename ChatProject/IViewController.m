@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "PersonalViewController.h"
 #import "AnnouncementViewController.h"
+#import "FeedbackViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -33,7 +35,7 @@
 #pragma mark - 自定义方法
 -(void)initView{
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height - TabBar_HEIGHT)];
-    mTableView.backgroundColor = [UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1.0];
+    mTableView.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     mTableView.dataSource = self;
     mTableView.delegate = self;
     mTableView.tableFooterView = [[UIView alloc] init];
@@ -69,21 +71,21 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         // photoIv
         UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 60, 60)];
-        photoIv.image = [UIImage imageNamed:@"default_photo"];
+        [photoIv sd_setImageWithURL:[NSURL URLWithString:[Toolkit getStringValueByKey:@"PhotoPath"]] placeholderImage:[UIImage imageNamed:@"default_photo"]];
         [cell.contentView addSubview:photoIv];
         photoIv.layer.masksToBounds = true;
         photoIv.layer.cornerRadius = 6;
         // nameLbl
         UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 10, CGRectGetMinY(photoIv.frame) + 5, 200, 21)];
-        nameLbl.text = @"用户昵称";
+        nameLbl.text = [Toolkit getStringValueByKey:@"NickName"];
         [cell.contentView addSubview:nameLbl];
         // detailLbl
         UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nameLbl.frame), CGRectGetMaxY(nameLbl.frame) + 8, 200, 21)];
-        detailLbl.text = @"微号:123456789";
+        detailLbl.text = @"IPIC:123456789";
         detailLbl.font = [UIFont systemFontOfSize:15];
         [cell.contentView addSubview:detailLbl];
     }else if (indexPath.row == 1){
-        cell.backgroundColor = [UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }else if (indexPath.row == 2){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         // titleIv
@@ -105,7 +107,7 @@
         titleLbl.text = @"公告";
         [cell.contentView addSubview:titleLbl];
     }else if (indexPath.row == 4){
-        cell.backgroundColor = [UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }else if (indexPath.row == 5){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         // titleIv
@@ -137,8 +139,9 @@
         titleLbl.text = @"客服";
         [cell.contentView addSubview:titleLbl];
     }else if (indexPath.row == 8){
-        cell.backgroundColor = [UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }else if (indexPath.row == 9){
+        cell.backgroundColor = [UIColor whiteColor];
         // logOutBtn
         UIButton *logOutBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, (CGRectGetHeight(cell.frame) - 21) / 2, SCREEN_WIDTH, 21)];
         [logOutBtn setTitle:@"退出登录" forState:UIControlStateNormal];
@@ -146,7 +149,7 @@
         logOutBtn.userInteractionEnabled = false;
         [cell.contentView addSubview:logOutBtn];
     }else if (indexPath.row == 10){
-        cell.backgroundColor = [UIColor colorWithRed:0.92 green:0.92 blue:0.92 alpha:1.0];
+        cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }
     return cell;
 }
@@ -194,8 +197,12 @@
         AnnouncementViewController *announcementVC = [[AnnouncementViewController alloc] init];
         announcementVC.hidesBottomBarWhenPushed = true;
         [self.navigationController pushViewController:announcementVC animated:true];
+    }else if (indexPath.row == 6){
+        FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
+        feedbackVC.hidesBottomBarWhenPushed = true;
+        [self.navigationController pushViewController:feedbackVC animated:true];
     }else if (indexPath.row == 7){
-        [Toolkit makeCall:@"15165561652"];
+        [Toolkit makeCall:@"12345678910"];
     }else if (indexPath.row == 9) {
         [Toolkit actionSheetViewFirst:self andTitle:@"退出后不会删除任何历史数据，下次登录依然可以使用本账号。" andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:@"退出登录" handler:^(int buttonIndex, UIAlertAction *alertView) {
             if (buttonIndex == 1) {

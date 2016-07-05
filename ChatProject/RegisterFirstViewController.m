@@ -67,7 +67,7 @@
 }
 
 -(void)nextEvent{
-    [SVProgressHUD showWithStatus:@"加载中..."];
+    [Toolkit showWithStatus:@"加载中..."];
     [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:phoneTxt.text zone:@"86" customIdentifier:nil result:^(NSError *error) {
         [SVProgressHUD dismiss];
         if (!error) {

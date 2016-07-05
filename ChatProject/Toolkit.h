@@ -14,6 +14,30 @@
 
 @interface Toolkit : NSObject
 
++(NSDate*)getDateFromString:(NSString*)dateString;
+
++(NSTimeInterval)getTimeIntervalFromString:(NSString *)dateString;
+
++(BOOL)isExitAccount;
+
++(void)showWithStatus:(NSString *)msg;
+
++(void)showInfoWithStatus:(NSString *)msg;
+
++(void)showSuccessWithStatus:(NSString *)msg;
+
++(void)showErrorWithStatus:(NSString *)msg;
+
++(void)setUserDefaultValue:(id)value andKey:(NSString *)key;
+
++(id)getUserDefaultValue:(NSString *)key;
+
++(NSString *)getStringValueByKey:(NSString *)key;
+
++(BOOL)getBoolValueByKey:(NSString *)key;
+
++(void)clearUserDefaultCache; // 清空NSUserDefault
+
 +(NSString *)phoneEdit:(NSString *)phoneNum;
 
 + (BOOL)isEnglishSysLanguage;
@@ -52,11 +76,16 @@
 //检测当前是否登陆
 +(BOOL)islogin;
 
+//手机号隐藏中间四位
++(NSString *)phoneEncryption:(NSString *)phoneNum;
+
 // 弹框
 +(void)alertView:(id)target andTitle:(NSString *)title andMsg:(NSString *)msg andCancelButtonTitle:(NSString *)cancelButtonTitle andOtherButtonTitle:(NSString *)otherButtonTitle handler:(void (^)(int buttonIndex, UIAlertAction *alertView))handler;
 
+/// 只有两个，otherButtonTitle样式是UIAlertActionStyleDestructive
 +(void)actionSheetViewFirst:(id)target andTitle:(NSString *)title andMsg:(NSString *)msg andCancelButtonTitle:(NSString *)cancelButtonTitle andOtherButtonTitle:(NSString *)otherButtonTitle handler:(void (^)(int buttonIndex, UIAlertAction *alertView))handler;
 
+/// 有多个，otherButtonTitle样式是UIAlertActionStyleDefault
 +(void)actionSheetViewSecond:(id)target andTitle:(NSString *)title andMsg:(NSString *)msg andCancelButtonTitle:(NSString *)cancelButtonTitle andOtherButtonTitle:(NSArray *)otherButtonTitle handler:(void (^)(int buttonIndex, UIAlertAction *alertView))handler;
 
 #pragma mark Plist

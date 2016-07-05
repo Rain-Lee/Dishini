@@ -15,6 +15,81 @@
 #pragma mark - add by wangjc
 
 
++(NSDate*)getDateFromString:(NSString*)dateString{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    return [dateFormatter dateFromString:dateString];
+}
+
++(NSTimeInterval)getTimeIntervalFromString:(NSString *)dateString{
+    NSDate *timeDate = [Toolkit getDateFromString:dateString];
+    NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[timeDate timeIntervalSince1970]];
+    return timeSp.longLongValue * 1000;
+}
+
++(BOOL)isExitAccount{
+    return [[Toolkit getStringValueByKey:@"Id"] isEqual:@""] ? false : true;
+}
+
++(void)showWithStatus:(NSString *)msg{
+    [SVProgressHUD showWithStatus:msg];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+}
+
++(void)showInfoWithStatus:(NSString *)msg{
+    [SVProgressHUD showInfoWithStatus:msg];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+}
+
++(void)showSuccessWithStatus:(NSString *)msg{
+    [SVProgressHUD showSuccessWithStatus:msg];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+}
+
++(void)showErrorWithStatus:(NSString *)msg{
+    [SVProgressHUD showErrorWithStatus:msg];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+}
+
++(void)setUserDefaultValue:(id)value andKey:(NSString *)key{
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault setValue:value forKey:key];
+}
+
++(id)getUserDefaultValue:(NSString *)key{
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    return [NSString stringWithFormat:@"%@",[userDefault valueForKey:key]];
+}
+
++(NSString *)getStringValueByKey:(NSString *)key{
+    id value = [Toolkit getUserDefaultValue:key];
+    if ([[Toolkit judgeIsNull:value] isEqual:@""]){
+        return @"";
+    }else{
+        return [NSString stringWithFormat:@"%@",value];
+    }
+}
+
++(BOOL)getBoolValueByKey:(NSString *)key{
+    id value = [Toolkit getUserDefaultValue:key];
+    if ([[Toolkit judgeIsNull:value] isEqual:@""]){
+        return false;
+    }else{
+        return [NSString stringWithFormat:@"%@",value].boolValue;
+    }
+}
+
++(void)clearUserDefaultCache{
+    //清空 NSUserDefaults
+    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    
+    
+    // 引导图  true 不显示引导图
+    [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"firstStart"];
+}
+
 +(void)makeCall:(NSString *)phoneNum
 {
     if(phoneNum ==nil||phoneNum.length==0)
@@ -42,6 +117,17 @@
     [str insertString:@"-" atIndex:3];
     [str insertString:@"-" atIndex:8];
     return str;
+}
+
++(NSString *)phoneEncryption:(NSString *)phoneNum{
+    if (phoneNum == nil || phoneNum.length == 0) {
+        return @"";
+    }
+    if (phoneNum.length < 11) {
+        return phoneNum;
+    }
+    phoneNum = [phoneNum stringByReplacingCharactersInRange:NSMakeRange(3, 4) withString:@"****"];
+    return phoneNum;
 }
 
 +(UIApplication*)showJuHua

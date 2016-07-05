@@ -21,6 +21,9 @@ target 'ChatProject' do
   
   # 朋友圈
   pod 'DFCommon', '1.3.9'
+  
+  # 地图
+  pod 'AMap2DMap', '4.0.0'
 
   target 'ChatProjectTests' do
     inherit! :search_paths

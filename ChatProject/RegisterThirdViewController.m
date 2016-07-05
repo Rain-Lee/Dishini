@@ -7,6 +7,9 @@
 //
 
 #import "RegisterThirdViewController.h"
+#import <RongIMKit/RongIMKit.h>
+#import "AppDelegate.h"
+#import "CustomTabBarViewController.h"
 
 @interface RegisterThirdViewController ()<UITextFieldDelegate>{
     UITextField *passwordTxt;
@@ -49,9 +52,32 @@
     [dataProvider registerUser:_phone andPassword:passwordTxt.text];
 }
 
--(void)saveCallBack:(id)dict{
-    NSLog(@"%@",dict);
-    
+-(void)saveCallBack:(id)dict{// 18810375184
+    dispatch_async(dispatch_get_main_queue(), ^{
+        DataProvider *dataProvider2 = [[DataProvider alloc] init];
+        [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
+        [dataProvider2 editUserInfo:@"2013" andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"0"];
+    });
+//    if ([dict[@"code"] intValue] == 200) {
+//        
+//    }else{
+//        [SVProgressHUD showInfoWithStatus:dict[@"data"]];
+//    }
+}
+
+-(void)editUserInfoCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        NSLog(@"%@",dict);
+        dispatch_async(dispatch_get_main_queue(), ^{
+            DataProvider *dataProvider3 = [[DataProvider alloc] init];
+            [dataProvider3 setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
+            [dataProvider3 login:_phone andPassword:passwordTxt.text];
+        });
+    }
+}
+
+-(void)loginCallBack:(id)dict{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"loginCallBackSetting" object:nil userInfo:dict];
 }
 
 -(void)initView{

@@ -100,12 +100,18 @@
                 [self.navigationController pushViewController:registerThirdVC animated:true];
             }else{
                 // 通过短信验证码登陆
+                DataProvider *dataProvider = [[DataProvider alloc] init];
+                [dataProvider setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
+                [dataProvider loginWithoutPassword:[Toolkit getStringValueByKey:@"Id"]];
             }
         }else{
-            NSLog(@"%@",error);
             [Toolkit alertView:self andTitle:@"提示" andMsg:error.userInfo[@"commitVerificationCode"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         }
     }];
+}
+
+-(void)loginCallBack:(id)dict{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"loginCallBackSetting" object:nil userInfo:dict];
 }
 
 -(void)vericationEvent:(UITextField *)textField{

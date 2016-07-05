@@ -7,6 +7,10 @@
 //
 
 #import "DFBaseTimeLineViewController.h"
+#import "SendNewsViewController.h"
+#import <CoreMotion/CoreMotion.h>
+#import <ALBBQuPaiPlugin/ALBBQuPaiPlugin.h>
+#import "SendVideoViewController.h"
 
 #define TableHeaderHeight 290*([UIScreen mainScreen].bounds.size.width / 375.0)
 #define CoverHeight 240*([UIScreen mainScreen].bounds.size.width / 375.0)
@@ -22,9 +26,14 @@
 #define SignFont [UIFont systemFontOfSize:11]
 
 
+#define sendNews  (2015+1)
+#define smallVideo  (2015+2)
 
-
-@interface DFBaseTimeLineViewController()
+@interface DFBaseTimeLineViewController(){
+    UIView *moreSettingBackView;
+    SendNewsViewController *sendNewsVC;
+    UIViewController *recordController;
+}
 
 @property (nonatomic, strong) UIImageView *coverView;
 
@@ -71,7 +80,7 @@
     
 }
 
-- (void)setTopView:(int)iFlag{
+- (void)setTopView:(int)iFlag andTitle:(NSString *)title{
     // topView
     UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, Header_Height)];
     topView.backgroundColor = navi_bar_bg_color;
@@ -80,7 +89,7 @@
     UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, StatusBar_HEIGHT, SCREEN_WIDTH, NavigationBar_HEIGHT)];
     titleLbl.textAlignment = NSTextAlignmentCenter;
     titleLbl.textColor = [UIColor whiteColor];
-    titleLbl.text = @"朋友圈";
+    titleLbl.text = title;
     [topView addSubview:titleLbl];
     if (iFlag == 1) {
         // 修改_tableView frame
@@ -90,7 +99,7 @@
         rightBtn.titleLabel.textColor = [UIColor whiteColor];
         rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-        [rightBtn setTitle:@"" forState:UIControlStateNormal];
+        [rightBtn setImage:[UIImage imageNamed:@"moreNoword"] forState:UIControlStateNormal];
         [rightBtn addTarget:self action:@selector(clickRightBtnEvent) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:rightBtn];
     }else{
@@ -117,6 +126,31 @@
         _tableView.layoutMargins = UIEdgeInsetsZero;
     }
     [self.view addSubview:_tableView];
+    
+    moreSettingBackView = [[UIView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 100 -10), Header_Height, 100, 88)];
+    moreSettingBackView.backgroundColor = navi_bar_bg_color;
+    UIButton *newBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, moreSettingBackView.frame.size.width,  moreSettingBackView.frame.size.height/2)];
+    [newBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [newBtn setTitle:@"发动态" forState:UIControlStateNormal];
+    newBtn.tag = sendNews;
+    [newBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIView *lineView2 =[[UIView alloc] initWithFrame:CGRectMake(0, moreSettingBackView.frame.size.height/2, moreSettingBackView.frame.size.width - 2, 1)];
+    lineView2.backgroundColor = Separator_Color;
+    UIButton *delBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, moreSettingBackView.frame.size.height/2, moreSettingBackView.frame.size.width,  moreSettingBackView.frame.size.height/2)];
+    [delBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [delBtn setTitle:@"小视频" forState:UIControlStateNormal];
+    [delBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    delBtn.tag = smallVideo;
+    
+    
+    
+    [moreSettingBackView addSubview:newBtn];
+    [moreSettingBackView addSubview:delBtn];
+    [moreSettingBackView addSubview:lineView2];
+    
+    [self.view addSubview:moreSettingBackView];
+    moreSettingBackView.hidden = YES;
 }
 
 -(void) initHeader
@@ -135,6 +169,9 @@
     height = CoverHeight;
     _coverView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, width, height)];
     _coverView.backgroundColor = [UIColor darkGrayColor];
+    UITapGestureRecognizer *tapCoverView = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCoverViewEvent)];
+    _coverView.userInteractionEnabled = true;
+    [_coverView addGestureRecognizer:tapCoverView];
     
     self.coverWidth  = width*2;
     self.coverHeight = height*2;
@@ -331,6 +368,7 @@
 
 -(void) refresh
 {
+
 }
 
 -(void) loadMore
@@ -358,9 +396,13 @@
     [_coverView sd_setImageWithURL:[NSURL URLWithString:url]];
 }
 
+-(void)setCoverImg:(UIImage *)img{
+    _coverView.image = img;
+}
+
 -(void)setUserAvatar:(NSString *)url
 {
-    [_userAvatarView sd_setImageWithURL:[NSURL URLWithString:url]];
+    [_userAvatarView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"default_photo"]];
 }
 
 -(void)setUserNick:(NSString *)nick
@@ -409,7 +451,132 @@
 }
 
 -(void)clickRightBtnEvent{
+    if(moreSettingBackView.hidden == YES)
+    {
+        moreSettingBackView.hidden = NO;
+        [self positionShowView:moreSettingBackView];
+    }
+    else
+    {
+        
+        [self positionDismissView:moreSettingBackView];
+    }
+}
+
+-(void)btnClick:(UIButton *)sender
+{
+    [self positionDismissView:moreSettingBackView];
+    if(sender.tag == sendNews)
+    {
+        sendNewsVC = [[SendNewsViewController alloc] init];
+        sendNewsVC.hidesBottomBarWhenPushed = true;
+        [self.navigationController pushViewController:sendNewsVC animated:YES];
+    }
+    else  if(sender.tag == smallVideo)
+    {
+        QupaiSDK *sdkqupai = [QupaiSDK shared];
+        [sdkqupai setDelegte:(id<QupaiSDKDelegate>)self];
+        
+        /*可选设置*/
+        sdkqupai.thumbnailCompressionQuality =0.3;
+        sdkqupai.combine = YES;
+        sdkqupai.progressIndicatorEnabled = YES;
+        sdkqupai.beautySwitchEnabled = NO;
+        sdkqupai.flashSwitchEnabled = NO;
+        sdkqupai.tintColor = [UIColor orangeColor];
+        sdkqupai.localizableFileUrl = [[NSBundle mainBundle] URLForResource:@"QPLocalizable_en" withExtension:@"plist"];
+        sdkqupai.bottomPanelHeight = 120;
+        sdkqupai.recordGuideEnabled = YES;
+        
+        /*基本设置*/
+        CGSize videoSize = CGSizeMake(320, 240);
+        recordController = [sdkqupai createRecordViewControllerWithMinDuration:2
+                                                                   maxDuration:8
+                                                                       bitRate:500000
+                                                                     videoSize:videoSize];
+        [self presentViewController:recordController animated:YES completion:nil];
+    }
+}
+
+//趣拍取消
+-(void)qupaiSDKCancel:(QupaiSDK *)sdk
+{
+    [recordController dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)qupaiSDK:(QupaiSDK *)sdk compeleteVideoPath:(NSString *)videoPath thumbnailPath:(NSString *)thumbnailPath
+{
+    NSLog(@"%@",videoPath);
     
+    [recordController dismissViewControllerAnimated:YES completion:nil];
+    
+    SendVideoViewController *sendVideoVC = [[SendVideoViewController alloc] init];
+    sendVideoVC.hidesBottomBarWhenPushed = true;
+    sendVideoVC.VideoFilePath=[NSURL fileURLWithPath:videoPath];
+    [self.navigationController pushViewController:sendVideoVC animated:YES];
+}
+
+#define SHOW_ANIM_KEY   @"showSettingView"
+#define DISMISS_ANIM_KEY   @"dismissSettingView"
+-(void)positionShowView:(UIView *)tempView
+{
+    CABasicAnimation *scale=[CABasicAnimation animationWithKeyPath:@"transform"];
+    [scale setFromValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 0, 1.0)]];
+    [scale setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)]];
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    
+    animation.fromValue = [NSValue valueWithCGPoint:CGPointMake((moreSettingBackView.frame.origin.x+moreSettingBackView.frame.size.width/2), Header_Height)];
+    animation.toValue = [NSValue valueWithCGPoint:CGPointMake((moreSettingBackView.frame.origin.x+moreSettingBackView.frame.size.width/2),
+                                                              (moreSettingBackView.frame.size.height/2 + moreSettingBackView.frame.origin.y))];
+    //动画执行后保持显示状态 但是属性值不会改变 只会保持显示状态
+    animation.fillMode = kCAFillModeForwards;
+    animation.removedOnCompletion = NO;
+    
+    //    animation.autoreverses = YES;//动画返回
+    
+    CAAnimationGroup *group=[CAAnimationGroup animation];
+    [group setAnimations:[NSArray arrayWithObjects:scale,animation, nil]];
+    [group setDuration:0.5];
+    //    animation.repeatCount = MAXFLOAT;//重复
+    //tempView.layer.delegate = self;
+    group.delegate= self;
+    [moreSettingBackView.layer addAnimation:group forKey:SHOW_ANIM_KEY];
+}
+
+-(void)positionDismissView:(UIView *)tempView
+{
+    
+    
+    CABasicAnimation *scale=[CABasicAnimation animationWithKeyPath:@"transform"];
+    [scale setFromValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1, 1.0)]];
+    [scale setToValue:[NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 0.0, 1.0)]];
+    
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position"];
+    
+    animation.fromValue = [NSValue valueWithCGPoint:CGPointMake((moreSettingBackView.frame.origin.x+moreSettingBackView.frame.size.width/2),
+                                                                (moreSettingBackView.frame.size.height/2 + moreSettingBackView.frame.origin.y))];
+    animation.toValue = [NSValue valueWithCGPoint:CGPointMake((moreSettingBackView.frame.origin.x+moreSettingBackView.frame.size.width/2),
+                                                              Header_Height)];
+    //动画执行后保持显示状态 但是属性值不会改变 只会保持显示状态
+    animation.fillMode = kCAFillModeForwards;
+    animation.removedOnCompletion = NO;
+    
+    //    animation.autoreverses = YES;//动画返回
+    
+    CAAnimationGroup *group=[CAAnimationGroup animation];
+    [group setAnimations:[NSArray arrayWithObjects:scale,animation, nil]];
+    [group setDuration:0.5];
+    //    animation.repeatCount = MAXFLOAT;//重复
+    group.delegate= self;
+    [tempView.layer addAnimation:group forKey:DISMISS_ANIM_KEY];
+    
+    [self performSelector:@selector(viewSetHidden:) withObject:[NSNumber numberWithBool:YES] afterDelay:0.5 - 0.1];
+}
+
+-(void)viewSetHidden:(id)info
+{
+    moreSettingBackView.hidden = YES;
 }
 
 @end

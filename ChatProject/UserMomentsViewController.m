@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setTopView:2];
+    [self setTopView:2 andTitle:_nickName];
     
     [self initData];
     

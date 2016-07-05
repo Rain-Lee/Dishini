@@ -11,6 +11,9 @@
 #import "MJRefresh.h"
 #import "ChineseString.h"
 #import "NewFriendsViewController.h"
+#import "LaunchGroupChatViewController.h"
+#import "GroupChatViewController.h"
+#import "DetailsViewController.h"
 
 #define ContactsCell @"ContactsTableViewCell"
 
@@ -53,7 +56,7 @@
 - (void)refreshData{
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendsCallBack:"];
-    [dataProvider getFriendForKeyValue:@"2"];
+    [dataProvider getFriends:@"2"];
 }
 
 - (void)getFriendsCallBack:(id)dict{
@@ -71,6 +74,8 @@
         firstLetterArray = [ChineseString mIndexArray:[itemmutablearray valueForKey:@"RemarkName"]];
         letterResultArray = [ChineseString mLetterSortArray:itemmutablearray];
         [mTableView reloadData];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
     [mTableView.header endRefreshing];
 }
@@ -136,7 +141,19 @@
         if (indexPath.row == 0) {
             NewFriendsViewController *newFriendVC = [[NewFriendsViewController alloc] init];
             [self.navigationController pushViewController:newFriendVC animated:true];
+        }else if (indexPath.row == 1){
+            LaunchGroupChatViewController *launchGroupChatVC = [[LaunchGroupChatViewController alloc] init];
+            launchGroupChatVC.hidesBottomBarWhenPushed = true;
+            [self.navigationController pushViewController:launchGroupChatVC animated:true];
+        }else if (indexPath.row == 2){
+            GroupChatViewController *groupChatVC = [[GroupChatViewController alloc] init];
+            groupChatVC.hidesBottomBarWhenPushed = true;
+            [self.navigationController pushViewController:groupChatVC animated:true];
         }
+    }else{
+        DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+        detailsVC.hidesBottomBarWhenPushed = true;
+        [self.navigationController pushViewController:detailsVC animated:true];
     }
 }
 

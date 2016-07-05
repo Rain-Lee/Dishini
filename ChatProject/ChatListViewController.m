@@ -28,7 +28,7 @@
     self.emptyConversationView = [[UIView alloc] init];
     
     // 设置显示的会话类型
-    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE)]];
+    [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE), @(ConversationType_GROUP)]];
 }
 
 - (void)initView{
@@ -55,8 +55,9 @@
 - (void)clickRightBtnEvent{
     ChatRoomViewController *chatRoomVC = [[ChatRoomViewController alloc] init];
     chatRoomVC.conversationType = ConversationType_PRIVATE;
-    chatRoomVC.targetId = @"1";
-    chatRoomVC.title = @"name1";
+    NSLog(@"%@--%@",[Toolkit getUserDefaultValue:@"Id"], [Toolkit getUserDefaultValue:@"NicName"]);
+    chatRoomVC.targetId = [Toolkit getUserDefaultValue:@"Id"];
+    chatRoomVC.title = [Toolkit getUserDefaultValue:@"NicName"];
     chatRoomVC.hidesBottomBarWhenPushed = true;
     [self.navigationController pushViewController:chatRoomVC animated:true];
 }
@@ -65,7 +66,7 @@
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath{
     ChatRoomViewController *chatRoomVC = [[ChatRoomViewController alloc] init];
     chatRoomVC.conversationType = ConversationType_PRIVATE;
-    chatRoomVC.targetId = @"1";
+    chatRoomVC.targetId = model.targetId;
     chatRoomVC.title = model.conversationTitle;
     chatRoomVC.hidesBottomBarWhenPushed = true;
     [self.navigationController pushViewController:chatRoomVC animated:true];

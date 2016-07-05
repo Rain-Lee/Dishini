@@ -50,7 +50,7 @@ typedef enum _VideoShowLayoutType
 //#define Url @"http://120.27.115.235/" //外网地址
 
 #define Web_path @"http://120.27.115.235/MessageAndImageNews.aspx?id="
-#define Kimg_path @"http://120.27.115.235/"
+#define Kimg_path @"http://123.56.236.196:8033/"
 
 #pragma mark - 缓存plist
 #define NewsCaChePlist  @"NewsCache.plist"

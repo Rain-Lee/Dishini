@@ -7,11 +7,33 @@
 //
 
 #import "PersonalViewController.h"
+#import "SignViewController.h"
+#import "NameViewController.h"
+#import "MyErweimaViewController.h"
+#import "MyAddressViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
-@interface PersonalViewController (){
+@interface PersonalViewController ()<UIPickerViewDataSource, UIPickerViewDelegate, SignDelegate, NameDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
+    // view
     UITableView *mTableView;
+    UIView *BackView;
+    UIPickerView *addressPickView;
+    UIImage *headImage;
+    
+    // data
+    NSString *nameValue;
+    NSString *sexValue;
+    NSString *addressValue;
+    NSString *signValue;
+    NSMutableArray *provinceArray;
+    NSMutableArray *cityArray;
+    NSString *provinceCode;
+    NSString *cityCode;
+    NSString *provinceId;
+    NSString *cityId;
+    NSString *provinceTxt;
+    NSString *cityTxt;
 }
 
 @end
@@ -24,6 +46,8 @@
     [self setNavtitle:@"个人信息"];
     [self addLeftButton:@"left"];
     
+    [self initAddressData];
+    
     [self initView];
 }
 
@@ -35,6 +59,84 @@
     mTableView.tableFooterView = [[UIView alloc] init];
     [mTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.view addSubview:mTableView];
+    
+    BackView=[[UIView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT-250, SCREEN_WIDTH, 50)];
+    [BackView setBackgroundColor:[UIColor whiteColor]];
+    UIButton * btn_cancel=[[UIButton alloc] initWithFrame:CGRectMake(10, 0, 60, 50)];
+    [btn_cancel setTitle:@"取消" forState:UIControlStateNormal];
+    [btn_cancel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn_cancel addTarget:self action:@selector(cancelSelect:) forControlEvents:UIControlEventTouchUpInside];
+    UIButton * btn_sure=[[UIButton alloc] initWithFrame:CGRectMake(BackView.frame.size.width-70, 0, 60, 50)];
+    [btn_sure setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn_sure setTitle:@"确定" forState:UIControlStateNormal];
+    [btn_sure addTarget:self action:@selector(sureForSelect:) forControlEvents:UIControlEventTouchUpInside];
+    UIView * fenge=[[UIView alloc] initWithFrame:CGRectMake(0, BackView.frame.size.height-1, BackView.frame.size.width, 1)];
+    fenge.backgroundColor=[UIColor grayColor];
+    [BackView addSubview:btn_sure];
+    [BackView addSubview:btn_cancel];
+    [BackView addSubview:fenge];
+    
+    addressPickView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, SCREEN_HEIGHT - 200, SCREEN_WIDTH, 200)];
+    addressPickView.delegate = self;
+    addressPickView.dataSource = self;
+    addressPickView.backgroundColor = [UIColor grayColor];
+}
+
+-(void)cancelSelect:(UIButton * )sender
+{
+    [BackView removeFromSuperview];
+    [addressPickView removeFromSuperview];
+}
+
+-(void)sureForSelect:(UIButton *)sender
+{
+    addressValue = [NSString stringWithFormat:@"%@ %@",provinceTxt, cityTxt];
+    [BackView removeFromSuperview];
+    [addressPickView removeFromSuperview];
+    [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:7 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)initAddressData{
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getInitProvinceCallBack:"];
+    [dataProvider getProvince];
+}
+
+-(void)getInitProvinceCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        provinceArray = [[NSMutableArray alloc] init];
+        
+        NSArray *itemArray = dict[@"data"];
+        for (int i = 0; i < itemArray.count; i++) {
+            [provinceArray addObject:itemArray[i]];
+        }
+        if (provinceArray.count > 0) {
+            provinceCode = provinceArray[0][@"Code"];
+            provinceId = provinceArray[0][@"Id"];
+            provinceTxt = provinceArray[0][@"Name"];
+            DataProvider *dataProvider = [[DataProvider alloc] init];
+            [dataProvider setDelegateObject:self setBackFunctionName:@"getInitCityCallBack:"];
+            [dataProvider getCityByProvince:provinceCode];
+        }
+    }
+}
+
+-(void)getInitCityCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        cityArray = [[NSMutableArray alloc] init];
+        NSArray *itemArray = dict[@"data"];
+        for (int i = 0; i < itemArray.count; i++) {
+            [cityArray addObject:itemArray[i]];
+        }
+        if (cityArray.count > 0) {
+            cityCode = cityArray[0][@"Code"];
+            cityId = cityArray[0][@"Id"];
+            cityTxt = cityArray[0][@"Name"];
+        }
+        [addressPickView selectRow:0 inComponent:1 animated:true];
+        [addressPickView reloadComponent:1];
+    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -68,7 +170,11 @@
         [cell.contentView addSubview:photoLbl];
         // photoIv
         UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 50, 10, 50, 50)];
-        photoIv.image = [UIImage imageNamed:@"default_photo"];
+        if (headImage == nil) {
+            photoIv.image = [UIImage imageNamed:@"default_photo"];
+        }else{
+            photoIv.image = headImage;
+        }
         [cell.contentView addSubview:photoIv];
     }else if (indexPath.row == 1){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -80,7 +186,7 @@
         // nameShowLbl
         UILabel *nameShowLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 200, 0, 200, 50)];
         nameShowLbl.font = [UIFont systemFontOfSize:16];
-        nameShowLbl.text = @"Hello world";
+        nameShowLbl.text = nameValue == nil || [nameValue isEqual:@""] ? @"未填写" : nameValue;
         nameShowLbl.textAlignment = NSTextAlignmentRight;
         nameShowLbl.textColor = [UIColor grayColor];
         [cell.contentView addSubview:nameShowLbl];
@@ -124,7 +230,7 @@
         // sexShowLbl
         UILabel *sexShowLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 200, 0, 200, 50)];
         sexShowLbl.font = [UIFont systemFontOfSize:16];
-        sexShowLbl.text = @"男";
+        sexShowLbl.text = sexValue == nil || [sexValue isEqual:@""] ? @"未填写" : sexValue;
         sexShowLbl.textAlignment = NSTextAlignmentRight;
         sexShowLbl.textColor = [UIColor grayColor];
         [cell.contentView addSubview:sexShowLbl];
@@ -138,7 +244,7 @@
         // cityShowLbl
         UILabel *cityShowLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 200, 0, 200, 50)];
         cityShowLbl.font = [UIFont systemFontOfSize:16];
-        cityShowLbl.text = @"山东 临沂";
+        cityShowLbl.text = addressValue == nil || [addressValue isEqual:@""] ? @"未填写" : addressValue;
         cityShowLbl.textAlignment = NSTextAlignmentRight;
         cityShowLbl.textColor = [UIColor grayColor];
         [cell.contentView addSubview:cityShowLbl];
@@ -151,15 +257,12 @@
         [cell.contentView addSubview:signLbl];
         // signShowLbl
         UILabel *signShowLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 200, 0, 200, 50)];
-        signShowLbl.text = @"12333ee";
+        signShowLbl.text = signValue == nil || [signValue isEqual:@""] ? @"未填写" : signValue;
         signShowLbl.numberOfLines = 0;
         signShowLbl.font = [UIFont systemFontOfSize:16];
         signShowLbl.textAlignment = NSTextAlignmentRight;
         signShowLbl.textColor = [UIColor grayColor];
         [cell.contentView addSubview:signShowLbl];
-    }
-    else{
-        cell.textLabel.text = @"test";
     }
     return cell;
 }
@@ -184,6 +287,139 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
+    if (indexPath.row == 0) {
+        [Toolkit actionSheetViewSecond:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:[NSArray arrayWithObjects:@"拍照", @"从手机相册选择", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
+            if (buttonIndex == 1) {
+                // 拍照
+                UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+                mImagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+                mImagePick.delegate = self;
+                mImagePick.allowsEditing = YES;
+                [self presentViewController:mImagePick animated:YES completion:nil];
+            }else if (buttonIndex == 2){
+                // 从相册中选取
+                UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+                mImagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                mImagePick.delegate = self;
+                mImagePick.allowsEditing = YES;
+                [self presentViewController:mImagePick animated:YES completion:nil];
+            }
+        }];
+    }else if (indexPath.row == 1) {
+        NameViewController *nameVC = [[NameViewController alloc] init];
+        nameVC.delegate = self;
+        nameVC.nameStr = nameValue;
+        [self.navigationController pushViewController:nameVC animated:true];
+    }else if (indexPath.row == 3){
+        MyErweimaViewController *myErweimaVC = [[MyErweimaViewController alloc] init];
+        [self.navigationController pushViewController:myErweimaVC animated:true];
+    }else if (indexPath.row == 4){
+        MyAddressViewController *myAddressVC = [[MyAddressViewController alloc] init];
+        [self.navigationController pushViewController:myAddressVC animated:true];
+    }else if (indexPath.row == 6) {
+        [Toolkit actionSheetViewSecond:self andTitle:@"选择性别" andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:[NSArray arrayWithObjects:@"男", @"女", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
+            NSLog(@"%d",buttonIndex);
+            if (buttonIndex == 1) {
+                sexValue = @"男";
+                [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:6 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }else if (buttonIndex == 2){
+                sexValue = @"女";
+                [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:6 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+            }
+        }];
+    }else if (indexPath.row == 7){
+        [self.view addSubview:BackView];
+        [self.view addSubview:addressPickView];
+    }else if (indexPath.row == 8){
+        SignViewController *signVC = [[SignViewController alloc] init];
+        signVC.delegate = self;
+        signVC.signStr = signValue;
+        [self.navigationController pushViewController:signVC animated:true];
+    }
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(800, 800)];
+    NSData *imageData = UIImagePNGRepresentation(smallImage);
+    headImage = smallImage;
+    [self changeHeadImage:imageData];
+    [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(UIImage *)scaleFromImage:(UIImage *)image andSize:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(void)changeHeadImage:(NSData *) data{
+    [Toolkit showWithStatus:@"请稍等..."];
+    NSString *imagebase64= [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"uploadPhotoCallBack:"];
+    [dataprovider upLoadPhoto:[Toolkit getStringValueByKey:@"Id"] andImgData:imagebase64 andImgName:@"PhotoName.png"];
+}
+
+-(void)uploadPhotoCallBack:(id)dict{
+    [SVProgressHUD dismiss];
+    NSLog(@"%@",dict);
+    if ([dict[@"code"] intValue] == 200) {
+        [Toolkit setUserDefaultValue:[NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"date"][@"ImageName"]] andKey:@"PhotoPath"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"setHeader" object:nil];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"date"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
+}
+
+#pragma mark - pickerView delegate
+-(NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 2;
+}
+
+-(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (component == 0) {
+        return provinceArray.count;
+    }else{
+        return cityArray.count;
+    }
+}
+
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (component == 0) {
+        return provinceArray[row][@"Name"];
+    }else{
+        return cityArray[row][@"Name"];
+    }
+}
+
+-(void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
+    NSLog(@"%ld---%ld",(long)component,(long)row);
+    if (component == 0) {
+        provinceTxt = provinceArray[row][@"Name"];
+        provinceCode = provinceArray[row][@"Code"];
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"getInitCityCallBack:"];
+        [dataProvider getCityByProvince:provinceCode];
+    }else{
+        cityId = cityArray[row][@"Id"];
+        cityCode = cityArray[row][@"Code"];
+        cityTxt = cityArray[row][@"Name"];
+    }
+}
+
+-(void)getSign:(NSString *)signStr{
+    signValue = signStr;
+    [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:8 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)getName:(NSString *)nameStr{
+    nameValue = nameStr;
+    [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

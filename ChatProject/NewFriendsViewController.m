@@ -7,14 +7,15 @@
 //
 
 #import "NewFriendsViewController.h"
+#import "AddressLocalViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
-@interface NewFriendsViewController ()<UISearchResultsUpdating,UISearchControllerDelegate>{
+@interface NewFriendsViewController ()<UITextFieldDelegate>{
     
     // view
     UITableView *mTableView;
-    UISearchController *resultSearchController;
+    UITextField *searchTxt;
 }
 
 @end
@@ -30,6 +31,10 @@
     [self initView];
 }
 
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [searchTxt resignFirstResponder];
+}
+
 -(void)initView{
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height)];
     mTableView.dataSource = self;
@@ -37,35 +42,6 @@
     mTableView.tableFooterView = [[UIView alloc] init];
     [mTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.view addSubview:mTableView];
-    
-    [self getSearchController];
-}
-
--(void)getSearchController{
-    // 实例化UISearchController，并且设置搜索控制器为本身TableView
-    //resultSearchController = UISearchController(searchResultsController: nil)
-    resultSearchController = [[UISearchController alloc] initWithSearchResultsController:nil];
-    
-    //设置UISearchControllerDelegate delegate
-    resultSearchController.delegate = self;
-    
-    // 设置更新搜索结果的对象为self
-    resultSearchController.searchResultsUpdater = self;
-    
-    // 设置UISearchController是否在编辑的时候隐藏NavigationBar，默认为true
-    resultSearchController.hidesNavigationBarDuringPresentation = false;
-    
-    // 设置UISearchController是否在编辑的时候隐藏背景色，默认为true
-    resultSearchController.dimsBackgroundDuringPresentation = false;
-    
-    // 设置UISearchController搜索栏的UISearchBarStyle为Prominent
-    resultSearchController.searchBar.searchBarStyle = UISearchBarStyleProminent;
-    resultSearchController.searchBar.placeholder = @"微信号/手机号";
-    
-    // 设置UISearchController搜索栏的Size是自适应
-    [resultSearchController.searchBar sizeToFit];
-    
-    mTableView.tableHeaderView = resultSearchController.searchBar;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -74,7 +50,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     if (section == 0) {
-        return 2;
+        return 4;
     }else{
         return 3;
     }
@@ -82,10 +58,14 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
-        if (indexPath.row == 0) {
+        if (indexPath.row == 0){
+            return 50;
+        }else if (indexPath.row == 1){
+            return 20;
+        }else if (indexPath.row == 2) {
             return 105;
         }else{
-            return 25;
+            return 20;
         }
     }else{
         return 70;
@@ -94,8 +74,23 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
+            // searchTxt
+            searchTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
+            searchTxt.delegate = self;
+            searchTxt.placeholder = @"请输入名称";
+            [cell.contentView addSubview:searchTxt];
+            // searchIv
+            UIImageView *searchIv = [[UIImageView alloc] initWithFrame:CGRectMake(0, (CGRectGetHeight(searchTxt.frame) - 22) / 2, 35, 22)];
+            searchIv.contentMode = UIViewContentModeScaleAspectFit;
+            searchIv.image = [UIImage imageNamed:@"search"];
+            searchTxt.leftView = searchIv;
+            searchTxt.leftViewMode = UITextFieldViewModeAlways;
+        }else if(indexPath.row == 1){
+            cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue: 0.96 alpha:1.0];
+        }else if (indexPath.row == 2) {
             // phoneIv
             UIImageView *phoneIv = [[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 40) / 2, 20, 40, 35)];
             phoneIv.contentMode = UIViewContentModeScaleAspectFit;
@@ -108,7 +103,7 @@
             detailLbl.text = @"添加手机联系人";
             [cell.contentView addSubview:detailLbl];
         }else{
-            cell.backgroundColor = [UIColor colorWithRed:0.93 green:0.93 blue: 0.93 alpha:1.0];
+            cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue: 0.96 alpha:1.0];
         }
     }else{
         // photoIv
@@ -165,8 +160,30 @@
     }
 }
 
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (section == 0) {
+        return 20;
+    }else{
+        return 0;
+    }
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
+    if (indexPath.section == 0) {
+        if (indexPath.row == 0) {
+            
+        }else if (indexPath.row == 2){
+            AddressLocalViewController *addressLocalVC = [[AddressLocalViewController alloc] init];
+            addressLocalVC.hidesBottomBarWhenPushed = true;
+            [self.navigationController pushViewController:addressLocalVC animated:true];
+        }
+    }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+    return true;
 }
 
 @end

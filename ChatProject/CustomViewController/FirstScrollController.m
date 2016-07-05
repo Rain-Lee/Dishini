@@ -7,7 +7,7 @@
 //
 
 #import "FirstScrollController.h"
-#import "CustomTabBarViewController.h"
+#import "LoginViewController.h"
 #import "AppDelegate.h"
 
 @interface FirstScrollController ()
@@ -33,11 +33,9 @@
     
     pageCol=[[UIPageControl alloc]initWithFrame:CGRectMake(0, SCREEN_HEIGHT-30, 320, 20)];
     pageCol.numberOfPages=3;
-    //pageCol.center=CGPointMake(SCREEN_WIDTH/2, SCREEN_HEIGHT-30);
     [self.view addSubview:pageCol];
     
     pageCol.hidden=YES;
-    // Do any additional setup after loading the view from its nib.
 }
 - (void)scrollViewDidScroll:(UIScrollView *)sender
 {
@@ -47,14 +45,12 @@
     
     if (sender.contentOffset.x>(SCREEN_WIDTH*2+60)) {
         
-
-//        set_sp(@"1", @"FIRST_ENTER");
-        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"firstStart"];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"setTagandAliasUpdate" object:nil];
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"changeRootView1" object:nil ];
-        CustomTabBarViewController *_tabBarViewCol = [[CustomTabBarViewController alloc] init];
+        [[NSUserDefaults standardUserDefaults] setBool:true forKey:@"firstStart"];
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        UINavigationController *navLoginVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        navLoginVC.navigationBar.hidden = true;
         AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        app.window.rootViewController =_tabBarViewCol;
+        app.window.rootViewController =navLoginVC;
     }
     
     

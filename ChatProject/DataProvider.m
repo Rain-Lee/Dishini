@@ -39,6 +39,24 @@
     
 }
 
+-(void)loginWithoutPassword:(NSString *)phone{
+    if (phone) {
+        
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"phone"]
+                              andResult:@[@"LoginWithoutPassword",
+                                          phone
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
 // 注册
 -(void)registerUser:(NSString *)phone andPassword:(NSString *)password{
     
@@ -70,9 +88,9 @@
         
         NSString *json = [self setParam:@[@"function",
                                           @"phone",
-                                          @"oldPwd",
+                                          @"oldpwd",
                                           @"password"]
-                              andResult:@[@"ChangePassWord",
+                              andResult:@[@"ChangePassWordByPhone",
                                           phone,
                                           oldPwd,
                                           password
@@ -85,13 +103,251 @@
     }
 }
 
+// 编辑用户信息
+-(void)editUserInfo:(NSString *)userId andNickName:(NSString *)nickName andSex:(NSString *)sex andHomeAreaId:(NSString *)homeAreaId{
+    NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+    
+    NSString *json = [self setParam:@[@"function",
+                                      @"userid",
+                                      @"nicname",
+                                      @"sexuality",
+                                      @"height",
+                                      @"weight",
+                                      @"homeAreaId",
+                                      @"experience",
+                                      @"description",
+                                      @"birthday"
+                                      ]
+                          andResult:@[@"ChangeInfor",
+                                      userId,
+                                      nickName,
+                                      sex,
+                                      @"0",
+                                      @"0",
+                                      homeAreaId,
+                                      @"0",
+                                      @"",
+                                      @"1900/01/01"
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
+
+-(void)getProvince{
+    NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+    
+    NSString *json = [self setParam:@[@"function"
+                                      ]
+                          andResult:@[@"GetProvince"
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
+
+-(void)getCityByProvince:(NSString *)provinceCode{
+    
+    if (provinceCode) {
+        
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"provinceCode"]
+                              andResult:@[@"GetCityByProvince",
+                                          provinceCode
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)getCountyByCity:(NSString *)cityCode{
+    if (cityCode) {
+        
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"cityCode"]
+                              andResult:@[@"GetCountyByCity",
+                                          cityCode
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)upLoadPhoto:(NSString *)userId andImgData:(NSString *)filestream  andImgName:(NSString *)fileName{
+    if (userId && filestream && fileName) {
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"fileName",
+                                          @"filestream",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"UpLoadPhoto",
+                                          fileName,
+                                          filestream,
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)UploadImgWithImgdata:(NSString *)imageData
+{
+    if (imageData) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"fileName",
+                                          @"filestream"
+                                          ]
+                              andResult:@[@"UpLoadImage",
+                                          @"PhotoName.png",
+                                          imageData
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)getFriends:(NSString *)userId{
+    if (userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"GetFriendForKeyValue",
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)getDongtaiPageByFriends:(NSString *)userId andStartRowIndex:(NSString *)startRowIndex andMaximumRows:(NSString *)maximumRows{
+    if (userId && startRowIndex && maximumRows) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"startRowIndex",
+                                          @"maximumRows"
+                                          ]
+                              andResult:@[@"GetDongtaiPageByFriends",
+                                          userId,
+                                          startRowIndex,
+                                          maximumRows
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)SaveDongtai:(NSString *)userId andContent:(NSString *)content andPathlist:(NSString *)pathlist andVideoImage:(NSString *)videoImage andVideopath:(NSString *)videopath andVideoDuration:(NSString *)videoDuration andSmallImage:(NSString *)smallImage{
+    if (userId && content && pathlist && videoImage && videopath && videoDuration && smallImage) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"content",
+                                          @"pathlist",
+                                          @"videoImage",
+                                          @"videopath",
+                                          @"videoDuration",
+                                          @"smallImage"
+                                          ]
+                              andResult:@[@"SaveDongtai",
+                                          userId,
+                                          content,
+                                          pathlist,
+                                          videoImage,
+                                          videopath,
+                                          videoDuration,
+                                          smallImage
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)saveSpaceImage:(NSString *)userId andImagePath:(NSString *)imagePath{
+    if (userId && imagePath) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"imagepath"
+                                          ]
+                              andResult:@[@"SaveSpaceImage",
+                                          userId,
+                                          imagePath
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)upLoadVideo:(NSURL *)videoPath{
+    if (videoPath) {
+        NSData* imageData = [[NSData alloc] initWithContentsOfURL:videoPath];
+        NSString *imagebase64= [imageData base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+        
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"fileName",
+                                          @"filestream"
+                                          ]
+                              andResult:@[@"UpLoadVideo",
+                                          @"video.mov",
+                                          imagebase64
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+
+
 /**
  * 获取通讯录
  * @param uid 用户Id
  */
 -(void)getFriendForKeyValue:(NSString *)uid{
     if (uid) {
-        NSString * url=[NSString stringWithFormat:@"%@Helianmeng.asmx/GetFriendForKeyValue",Url];
+        NSString * url=[NSString stringWithFormat:@"%@Helianmeng.asmx/GetFriendForKeyValue",@"http://120.27.115.235/"];
         NSDictionary * prm=@{@"userid":uid};
         [self PostRequest:url andpram:prm];
     }else{
@@ -100,8 +356,8 @@
 }
 
 #pragma mark - 加密
-#define YZkey @"6f0a9c87-5d76-46af-87d5-2c69271b7cff"
-#define uid @"85a4d4cd-ec0f-4b2e-8514-4c5ffc0257c0"
+#define YZkey @"fd15f548-7559-4d40-80a1-f00ca9bfcc02"
+#define uid @"48a5f357-484f-4847-97b7-a44a2e73e8d5"
 -(NSString *)setParam:(NSArray *)params andResult:(NSArray *)results
 {
     
@@ -155,23 +411,6 @@
     callBackFunctionName = selectorName;
 }
 
--(void)getProvince{
-    NSString *url = [NSString stringWithFormat:@"%@LoginAndRegister.asmx/GetProvince",Url];
-    [self PostRequest:url andpram:nil];
-}
-
--(void)getCityByProvinceCode:(NSString *)provinceCode{
-    NSString *url = [NSString stringWithFormat:@"%@LoginAndRegister.asmx/GetCityByProvince",Url];
-    NSDictionary *prm = @{@"provinceCode":provinceCode};
-    [self PostRequest:url andpram:prm];
-}
-
--(void)getCountryByCityCode:(NSString *)cityCode{
-    NSString *url = [NSString stringWithFormat:@"%@LoginAndRegister.asmx/GetCountyByCity",Url];
-    NSDictionary *prm = @{@"cityCode":cityCode};
-    [self PostRequest:url andpram:prm];
-}
-
 -(void)PostRequest:(NSString *)url andpram:(NSDictionary *)pram
 {
     NSLog(@"----------------------------------------%f",[NSDate timeIntervalSinceReferenceDate]);
@@ -208,7 +447,7 @@
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
-        [SVProgressHUD showErrorWithStatus:@"请检查网络" maskType:SVProgressHUDMaskTypeBlack];
+        [Toolkit showErrorWithStatus:@"请检查网络"];
 //        [SVProgressHUD dismiss];
     }];
 }
@@ -251,7 +490,7 @@
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"error:%@",error);
-        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
+        [Toolkit showErrorWithStatus:@"请检查网络或防火墙"];
     }];
 }
 
@@ -307,7 +546,7 @@
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"上传失败->%@", error);
-        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
+        [Toolkit showErrorWithStatus:@"请检查网络或防火墙"];
     }];
     
     //执行
@@ -345,7 +584,7 @@
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"上传失败->%@", error);
-        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
+        [Toolkit showErrorWithStatus:@"请检查网络或防火墙"];
     }];
     
     //执行
@@ -396,7 +635,7 @@
         NSLog(@"上传完成");
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"上传失败->%@", error);
-        [SVProgressHUD showErrorWithStatus:@"请检查网络或防火墙" maskType:SVProgressHUDMaskTypeBlack];
+        [Toolkit showErrorWithStatus:@"请检查网络或防火墙"];
     }];
     
     //执行

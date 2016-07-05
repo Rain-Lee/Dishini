@@ -80,6 +80,7 @@ EOM
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "AMap2DMap/MAMapKit.framework/AMap.bundle"
   install_resource "DFCommon/DFCommon/DFCommon/Resource/back-arrow@2x.png"
   install_resource "DFCommon/DFCommon/DFCommon/Resource/back-arrow@3x.png"
   install_resource "DFCommon/DFCommon/DFCommon/Resource/Expression.plist"
@@ -104,6 +105,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "TZImagePickerController/TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "AMap2DMap/MAMapKit.framework/AMap.bundle"
   install_resource "DFCommon/DFCommon/DFCommon/Resource/back-arrow@2x.png"
   install_resource "DFCommon/DFCommon/DFCommon/Resource/back-arrow@3x.png"
   install_resource "DFCommon/DFCommon/DFCommon/Resource/Expression.plist"

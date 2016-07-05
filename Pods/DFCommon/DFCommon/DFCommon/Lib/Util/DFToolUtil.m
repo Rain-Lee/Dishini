@@ -33,6 +33,10 @@
 
 +(NSString *)preettyTime:(long long)ts
 {
+    NSDate *confromTimesp = [NSDate dateWithTimeIntervalSince1970:ts];
+    
+    NSLog(@"--------= %@",confromTimesp);
+    
     //原有时间
     NSString *firstDateStr=[DFToolUtil FormatTime:@"yyyy-MM-dd" timeInterval:ts];
     NSArray *firstDateStrArr=[firstDateStr componentsSeparatedByString:@"-"];

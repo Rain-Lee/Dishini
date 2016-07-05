@@ -8,6 +8,10 @@
 
 #import "DetailsViewController.h"
 #import "DataSettingViewController.h"
+#import "UserMomentsViewController.h"
+#import "ChatRoomViewController.h"
+#import "RemarksViewController.h"
+#import "DataSettingViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -24,8 +28,14 @@
     
     [self setNavtitle:@"详细资料"];
     [self addLeftButton:@"left"];
+    [self addRightButton:@"moreNoword"];
     
     [self initView];
+}
+
+-(void)clickRightButton:(UIButton *)sender{
+    DataSettingViewController *dataSettingVC = [[DataSettingViewController alloc] init];
+    [self.navigationController pushViewController:dataSettingVC animated:true];
 }
 
 #pragma mark - 自定义方法
@@ -51,7 +61,11 @@
 }
 
 -(void)sendMsgEvent{
-    
+    ChatRoomViewController *chatRoomVC = [[ChatRoomViewController alloc] init];
+    chatRoomVC.conversationType = ConversationType_PRIVATE;
+    chatRoomVC.targetId = @"1";
+    chatRoomVC.title = @"name1";
+    [self.navigationController pushViewController:chatRoomVC animated:true];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -91,7 +105,7 @@
         // wechatNoLbl
         UILabel *wechatNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nickNameLbl.frame), CGRectGetMaxY(nickNameLbl.frame) + 5, 200, 21)];
         wechatNoLbl.font = [UIFont systemFontOfSize:16];
-        wechatNoLbl.text = @"微信号：abc123";
+        wechatNoLbl.text = @"IPIC：abc123";
         [cell.contentView addSubview:wechatNoLbl];
     }else if (indexPath.row == 1){
         cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
@@ -167,8 +181,12 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
     if (indexPath.row == 2) {
-        DataSettingViewController *dataSettingVC = [[DataSettingViewController alloc] init];
-        [self.navigationController pushViewController:dataSettingVC animated:true];
+        RemarksViewController *remarksVC = [[RemarksViewController alloc] init];
+        [self.navigationController pushViewController:remarksVC animated:TRUE];
+    }else if (indexPath.row == 5){
+        UserMomentsViewController *userMomentsVC = [[UserMomentsViewController alloc] init];
+        userMomentsVC.nickName = @"nickName";
+        [self.navigationController pushViewController:userMomentsVC animated:YES];
     }
 }
 

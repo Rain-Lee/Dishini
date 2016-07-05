@@ -274,7 +274,7 @@
     
     //时间
     y = CGRectGetMaxY(_bodyView.frame) + sumHeight + Padding;
-    width = 100;
+    width = 150;
     height = TimeLabelHeight;
     _timeLabel.hidden = NO;
     _timeLabel.frame = CGRectMake(x, y, width, height);

@@ -67,7 +67,6 @@
 
 +(NSMutableArray*)mIndexArray:(NSArray*)stringArr
 {
-    NSLog(@"%@",stringArr);
     NSMutableArray *tempArray = [self ReturnSortChineseArrar:stringArr];
     NSMutableArray *A_Result=[NSMutableArray array];
     NSString *tempString ;
@@ -165,7 +164,6 @@
         NSString *initialStr = [chineseString.string length]?[chineseString.string substringToIndex:1]:@"";
         if ([predicate evaluateWithObject:initialStr])
         {
-            NSLog(@"chineseString.string== %@",chineseString.string);
             //首字母大写
             chineseString.pinYin = [chineseString.string capitalizedString] ;
         }else{
@@ -193,7 +191,6 @@
     for(int i=0;i<[chineseStringsArray count];i++){
         //        NSLog(@"chineseStringsArray====%@",((ChineseString*)[chineseStringsArray objectAtIndex:i]).pinYin);
     }
-    NSLog(@"-----------------------------");
     
     
     return chineseStringsArray;
@@ -212,7 +209,6 @@
     for(int i=0;i<[stringArr count];i++)
     {
         ChineseString *chineseString=[[ChineseString alloc]init];
-        NSLog(@"%@",stringArr[i]);
         chineseString.string=[stringArr[i] valueForKey:@"RemarkName"];
         chineseString.friendID = [stringArr[i] valueForKey:@"Key"];
         chineseString.photoImg = [stringArr[i] valueForKey:@"PhotoPath"];
@@ -240,7 +236,6 @@
         NSString *initialStr = [chineseString.string length]?[chineseString.string substringToIndex:1]:@"";
         if ([predicate evaluateWithObject:initialStr])
         {
-            NSLog(@"chineseString.string== %@",chineseString.string);
             //首字母大写
             chineseString.pinYin = [chineseString.string capitalizedString] ;
         }else{
@@ -268,8 +263,6 @@
     for(int i=0;i<[chineseStringsArray count];i++){
         //        NSLog(@"chineseStringsArray====%@",((ChineseString*)[chineseStringsArray objectAtIndex:i]).pinYin);
     }
-    NSLog(@"-----------------------------");
-    
     
     return chineseStringsArray;
     
@@ -284,7 +277,6 @@
     NSMutableArray *result=[NSMutableArray array];
     for(int i=0;i<[stringArr count];i++){
         [result addObject:((ChineseString*)[tempArray objectAtIndex:i]).string];
-        NSLog(@"SortArray----->%@",((ChineseString*)[tempArray objectAtIndex:i]).string);
     }
     return result;
 }

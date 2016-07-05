@@ -7,6 +7,8 @@
 //
 
 #import "ChangePwdViewController.h"
+#import "LoginViewController.h"
+#import "AppDelegate.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -35,6 +37,7 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [phoneTxt resignFirstResponder];
     [oldPwdTxt resignFirstResponder];
     [newPwdTxt resignFirstResponder];
     [reNewPwdTxt resignFirstResponder];
@@ -45,7 +48,7 @@
         [Toolkit alertView:self andTitle:@"提示" andMsg:@"请完善信息" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         return;
     }
-    if (![oldPwdTxt.text isEqual:newPwdTxt.text]) {
+    if (![newPwdTxt.text isEqual:reNewPwdTxt.text]) {
         [Toolkit alertView:self andTitle:@"提示" andMsg:@"两次新密码输入不一致" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         return;
     }
@@ -56,6 +59,15 @@
 
 -(void)saveCallBack:(id)dict{
     NSLog(@"%@",dict);
+    if ([dict[@"code"] intValue] == 200) {
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        UINavigationController *navLoginVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        navLoginVC.navigationBar.hidden = true;
+        AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+        appDelegate.window.rootViewController = navLoginVC;
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"data"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
 }
 
 #pragma mark - 自定义方法
@@ -82,6 +94,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     for (UIView *itemView in cell.contentView.subviews) {
         [itemView removeFromSuperview];
     }
@@ -93,9 +106,15 @@
         [cell.contentView addSubview:phoneLbl];
         // phoneTxt
         phoneTxt = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(phoneLbl.frame), 0, 200, CGRectGetHeight(cell.frame))];
-        phoneTxt.keyboardType = UIKeyboardTypeNumberPad;
+        phoneTxt.keyboardType = UIKeyboardTypePhonePad;
         phoneTxt.placeholder = @"请输入手机号";
         [cell.contentView addSubview:phoneTxt];
+        if ([Toolkit isExitAccount]) {
+            phoneTxt.text = [Toolkit getStringValueByKey:@"Phone"];
+            phoneTxt.enabled = false;
+            phoneTxt.textColor = [UIColor grayColor];
+            phoneLbl.textColor = [UIColor grayColor];
+        }
     }else if (indexPath.row == 1) {
         // oldPwdLbl
         UILabel *oldPwdLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 100, CGRectGetHeight(cell.frame))];

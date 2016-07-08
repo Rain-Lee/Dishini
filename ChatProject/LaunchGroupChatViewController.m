@@ -42,6 +42,20 @@
     [searchTxt resignFirstResponder];
 }
 
+-(void)clickRightButton:(UIButton *)sender{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"createGroupCallBack:"];
+    [dataProvider createGroup:[Toolkit getStringValueByKey:@"Id"] andIdList:@"2013A1014"];
+}
+
+-(void)createGroupCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        [Toolkit showSuccessWithStatus:@"创建群组成功"];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
+}
+
 -(void)initView{
     mTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height)];
     mTableView.dataSource = self;

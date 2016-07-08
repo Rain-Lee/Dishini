@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -24,9 +24,9 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headImg.png" translatesAutoresizingMaskIntoConstraints="NO" id="yEZ-N2-WgN">
-                        <rect key="frame" x="8" y="5" width="70" height="70"/>
+                        <rect key="frame" x="8" y="14" width="50" height="50"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="70" id="0Uf-d8-eAS"/>
+                            <constraint firstAttribute="width" constant="50" id="Edo-v0-mSg"/>
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6N-le-uVh">
@@ -42,16 +42,16 @@
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="GoR-1W-QPk" firstAttribute="leading" secondItem="yEZ-N2-WgN" secondAttribute="trailing" constant="8" symbolic="YES" id="Gxd-Mh-B90"/>
+                    <constraint firstItem="GoR-1W-QPk" firstAttribute="leading" secondItem="yEZ-N2-WgN" secondAttribute="trailing" constant="28" id="0xU-Vy-H0j"/>
+                    <constraint firstItem="yEZ-N2-WgN" firstAttribute="centerY" secondItem="GoR-1W-QPk" secondAttribute="centerY" id="ArH-aQ-SAn"/>
                     <constraint firstItem="GoR-1W-QPk" firstAttribute="baseline" secondItem="a6N-le-uVh" secondAttribute="firstBaseline" id="LnI-Ek-nBu"/>
                     <constraint firstItem="a6N-le-uVh" firstAttribute="leading" secondItem="GoR-1W-QPk" secondAttribute="trailing" constant="51" id="MOB-rr-nxJ"/>
+                    <constraint firstItem="yEZ-N2-WgN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="6" id="QIg-30-1TW"/>
                     <constraint firstItem="a6N-le-uVh" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="QJ4-f4-wZs"/>
                     <constraint firstItem="a6N-le-uVh" firstAttribute="baseline" secondItem="GoR-1W-QPk" secondAttribute="baseline" id="UOG-0f-eiS"/>
                     <constraint firstItem="a6N-le-uVh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="16" id="ZTC-TE-3PU"/>
-                    <constraint firstItem="GoR-1W-QPk" firstAttribute="centerY" secondItem="yEZ-N2-WgN" secondAttribute="centerY" id="bYd-iQ-OyI"/>
-                    <constraint firstItem="yEZ-N2-WgN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="f9m-g0-Cm3"/>
-                    <constraint firstItem="yEZ-N2-WgN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="riK-rs-1cr"/>
-                    <constraint firstItem="yEZ-N2-WgN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-3" id="vpG-H6-9zv"/>
+                    <constraint firstItem="yEZ-N2-WgN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="hO4-Wa-qpC"/>
+                    <constraint firstItem="yEZ-N2-WgN" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="nf7-kd-oib"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">

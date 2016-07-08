@@ -48,7 +48,9 @@
     width = self.frame.size.width/2;
     height = self.frame.size.height;
     
-    _likeButton = [self getButton:CGRectMake(x, y, width, height) title:@"赞" image:@"AlbumLike"];
+    NSString *isLike = [Toolkit getStringValueByKey:@"isLike"];
+    NSLog(@"isLike ------------- %@",isLike);
+    _likeButton = [self getButton:CGRectMake(x, y, width, height) title:[isLike isEqual:@"1"] ? @"取消赞" : @"赞" image:@"AlbumLike"];
     [_likeButton addTarget:self action:@selector(onLike:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_likeButton];
     
@@ -83,8 +85,11 @@
 
 -(void) onLike:(id) sender
 {
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike)]) {
-        [_delegate onLike];
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike:)]) {
+        UIButton *btn = (UIButton *)sender;
+        NSString *titleString = btn.titleLabel.text;
+        NSLog(@"%@",titleString);
+        [_delegate onLike:[titleString isEqual:@"赞"] ? false : true];
     }
     
 }
@@ -96,4 +101,11 @@
         [_delegate onComment];
     }
 }
+
+-(void)updateClickZan{
+    NSString *isLike = [Toolkit getStringValueByKey:@"isLike"];
+    NSLog(@"isLike ------------- %@",isLike);
+    [_likeButton setTitle:[isLike isEqual:@"1"] ? @"取消赞" : @"赞" forState:UIControlStateNormal];
+}
+
 @end

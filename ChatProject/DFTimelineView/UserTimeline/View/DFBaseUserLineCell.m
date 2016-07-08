@@ -95,7 +95,7 @@
     _timeDayLabel.hidden = !item.bShowTime;
     
     
-    x = CGRectGetMinX(_timeDayLabel.frame)+35;
+    x = CGRectGetMinX(_timeDayLabel.frame)+40;
     y = CGRectGetMinY(_timeDayLabel.frame)+10;
     width = 30;
     height = 15;

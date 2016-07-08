@@ -178,7 +178,7 @@
 }
 
 - (void)loginEvent{
-    [Toolkit showWithStatus:@"加载中..."];
+    [Toolkit showWithStatus:@"登陆中..."];
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
     [dataProvider login:phoneTxt.text andPassword:passwordTxt.text];
@@ -218,7 +218,17 @@
     [Toolkit setUserDefaultValue:dataParam[@"Id"] andKey:@"Id"];
     [Toolkit setUserDefaultValue:dataParam[@"NicName"] andKey:@"NickName"];
     [Toolkit setUserDefaultValue:dataParam[@"Phone"] andKey:@"Phone"];
+    NSString *sexId = dataParam[@"Sexuality"];
+    [Toolkit setUserDefaultValue:sexId andKey:@"SexId"];
+    if ([sexId isEqual:@"0"]) {
+        [Toolkit setUserDefaultValue:@"未填写" andKey:@"Sex"];
+    }else if ([sexId isEqual:@"1"]){
+        [Toolkit setUserDefaultValue:@"男" andKey:@"Sex"];
+    }else{
+        [Toolkit setUserDefaultValue:@"女" andKey:@"Sex"];
+    }
     [Toolkit setUserDefaultValue:[NSString stringWithFormat:@"%@%@",Kimg_path,dataParam[@"PhotoPath"]] andKey:@"PhotoPath"];
+    [Toolkit setUserDefaultValue:dataParam[@"Description"] andKey:@"Sign"];
 }
 
 - (void)loginRongCloud:(NSString *)token{
@@ -228,7 +238,7 @@
     //连接融云服务器
     [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
         [SVProgressHUD dismiss];
-        [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[Toolkit getUserDefaultValue:@"NicName"] portrait:@"http://pic.to8to.com/attch/day_160218/20160218_d968438a2434b62ba59dH7q5KEzTS6OH.png"];
+        [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[Toolkit getUserDefaultValue:@"NickName"] portrait:@"http://pic.to8to.com/attch/day_160218/20160218_d968438a2434b62ba59dH7q5KEzTS6OH.png"];
         dispatch_async(dispatch_get_main_queue(), ^{
             CustomTabBarViewController *customTabBarVC = [[CustomTabBarViewController alloc] init];
             AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;

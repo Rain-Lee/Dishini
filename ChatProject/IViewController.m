@@ -30,6 +30,8 @@
     [self setNavtitle:@"我的"];
     
     [self initView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:@"updateData" object:nil];
 }
 
 #pragma mark - 自定义方法
@@ -41,6 +43,10 @@
     mTableView.tableFooterView = [[UIView alloc] init];
     [mTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.view addSubview:mTableView];
+}
+
+-(void)updateData{
+    [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - UITableViewDataSource
@@ -81,7 +87,7 @@
         [cell.contentView addSubview:nameLbl];
         // detailLbl
         UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nameLbl.frame), CGRectGetMaxY(nameLbl.frame) + 8, 200, 21)];
-        detailLbl.text = @"IPIC:123456789";
+        detailLbl.text = [NSString stringWithFormat:@"IPIC:%@",[Toolkit getStringValueByKey:@"Phone"]];
         detailLbl.font = [UIFont systemFontOfSize:15];
         [cell.contentView addSubview:detailLbl];
     }else if (indexPath.row == 1){

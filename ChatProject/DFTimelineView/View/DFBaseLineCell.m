@@ -232,6 +232,8 @@
     _titleLabel.frame = CGRectMake(x, y, width, height);
     _titleLabel.text = item.title;
     _titleLabel.hidden = item.title == nil || [item.title isEqualToString:@""];
+    
+    [_likeCommentToolbar updateClickZan];
 }
 
 
@@ -394,13 +396,13 @@
 
 #pragma mark - DFLikeCommentToolbarDelegate
 
--(void)onLike
+-(void)onLike:(BOOL)isLike
 {
    
     [self hideLikeCommentToolbar];
     
-    if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike:)]) {
-        [_delegate onLike:self.item.itemId];
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(onLike:andIsLike:)]) {
+        [_delegate onLike:self.item.itemId andIsLike:isLike];
     }
 }
 

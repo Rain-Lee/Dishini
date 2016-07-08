@@ -25,6 +25,8 @@
 
 @property (nonatomic, assign) long long ts;
 
+@property (nonatomic, assign) BOOL isLike;
+
 
 @property (nonatomic, strong) NSMutableArray *likes;
 @property (nonatomic, strong) NSMutableArray *comments;

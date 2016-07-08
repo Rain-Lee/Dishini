@@ -22,6 +22,7 @@
 		B70AE03E1D23CC9700DB3C8C /* GroupChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AE03D1D23CC9700DB3C8C /* GroupChatViewController.m */; };
 		B71F9D031D220FEB00994D6E /* DataSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D021D220FEA00994D6E /* DataSettingViewController.m */; };
 		B71F9D061D221D3900994D6E /* RemarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D051D221D3900994D6E /* RemarksViewController.m */; };
+		B7272C091D2C9DCD00149919 /* MomentsItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7272C081D2C9DCD00149919 /* MomentsItemViewController.m */; };
 		B74496551D1BBD290012C9AA /* RegisterFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */; };
 		B748AEFF1D274D1B002DC0F7 /* SendNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B748AEFE1D274D1B002DC0F7 /* SendNewsViewController.m */; };
 		B748AF231D274DB1002DC0F7 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = B748AF021D274DB1002DC0F7 /* JKImagePickerController.strings */; };
@@ -240,6 +241,8 @@
 		B71F9D021D220FEA00994D6E /* DataSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSettingViewController.m; sourceTree = "<group>"; };
 		B71F9D041D221D3800994D6E /* RemarksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemarksViewController.h; sourceTree = "<group>"; };
 		B71F9D051D221D3900994D6E /* RemarksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemarksViewController.m; sourceTree = "<group>"; };
+		B7272C071D2C9DCD00149919 /* MomentsItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentsItemViewController.h; sourceTree = "<group>"; };
+		B7272C081D2C9DCD00149919 /* MomentsItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentsItemViewController.m; sourceTree = "<group>"; };
 		B74496531D1BBD290012C9AA /* RegisterFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterFirstViewController.h; sourceTree = "<group>"; };
 		B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterFirstViewController.m; sourceTree = "<group>"; };
 		B748AEFD1D274D1B002DC0F7 /* SendNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendNewsViewController.h; sourceTree = "<group>"; };
@@ -1007,6 +1010,8 @@
 				B7A03CC91D18E15B00A48C39 /* MomentsViewController.m */,
 				B7D4273F1D1A3C240089A263 /* UserMomentsViewController.h */,
 				B7D427401D1A3C240089A263 /* UserMomentsViewController.m */,
+				B7272C071D2C9DCD00149919 /* MomentsItemViewController.h */,
+				B7272C081D2C9DCD00149919 /* MomentsItemViewController.m */,
 				B748AEFD1D274D1B002DC0F7 /* SendNewsViewController.h */,
 				B748AEFE1D274D1B002DC0F7 /* SendNewsViewController.m */,
 				B748AF471D275E9F002DC0F7 /* PlayVideoViewController.h */,
@@ -1705,6 +1710,7 @@
 				B748AFCA1D275FC7002DC0F7 /* CALayer+AddUIColor.m in Sources */,
 				B7D427141D1A29EE0089A263 /* DFVideoLineItem.m in Sources */,
 				B7D427131D1A29EE0089A263 /* DFTextImageLineItem.m in Sources */,
+				B7272C091D2C9DCD00149919 /* MomentsItemViewController.m in Sources */,
 				B7A03CCA1D18E15B00A48C39 /* MomentsViewController.m in Sources */,
 				B7D427361D1A29EE0089A263 /* DFLikeCommentView.m in Sources */,
 				B748AF411D274E5B002DC0F7 /* UploadDataToServer.m in Sources */,
@@ -1998,6 +2004,7 @@
 				);
 				GCC_PREFIX_HEADER = ChatProject/PrefixHeader.pch;
 				INFOPLIST_FILE = ChatProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.ChatProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2019,6 +2026,7 @@
 				);
 				GCC_PREFIX_HEADER = ChatProject/PrefixHeader.pch;
 				INFOPLIST_FILE = ChatProject/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.ChatProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";

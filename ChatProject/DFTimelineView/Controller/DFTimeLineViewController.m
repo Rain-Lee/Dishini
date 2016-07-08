@@ -79,6 +79,7 @@
     
     [self initCommentInputView];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(clickZanEvent:) name:@"clickZanEvent" object:nil];
 }
 
 
@@ -230,6 +231,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DFBaseLineItem *item = [_items objectAtIndex:indexPath.row];
     DFBaseLineCell *typeCell = [self getCell:[item class]];
+    NSLog(@"isLike ------------- %d",item.isLike);
+    [Toolkit setUserDefaultValue:item.isLike ? @"1" : @"0" andKey:@"isLike"];
     
     NSString *reuseIdentifier = NSStringFromClass([typeCell class]);
     DFBaseLineCell *cell = [tableView dequeueReusableCellWithIdentifier: reuseIdentifier];
@@ -369,9 +372,7 @@
     [_commentInputView show];
 }
 
-
--(void)onLike:(long long)itemId
-{
+-(void)onLike:(long long)itemId andIsLike:(BOOL)isLike{
     
 }
 
@@ -380,6 +381,17 @@
     
 }
 
+-(void)clickZanEvent:(id)dict{
+    NSDictionary *userInfo = [dict userInfo];
+    DFBaseLineItem *item = [self getItem:[userInfo[@"itemId"] intValue]];
+    
+    item.isLike = [userInfo[@"isLike"] intValue] == 1 ? true : false;
+    
+    
+    [self genLikeAttrString:item];
+    
+    [self.tableView reloadData];
+}
 
 -(void)onClickComment:(long long)commentId itemId:(long long)itemId
 {

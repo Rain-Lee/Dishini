@@ -13,5 +13,6 @@
 
 
 -(void)addItem:(DFBaseUserLineItem *)item;
+-(void)deleteAllItem;
 
 @end

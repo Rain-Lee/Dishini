@@ -104,7 +104,7 @@
 }
 
 // 编辑用户信息
--(void)editUserInfo:(NSString *)userId andNickName:(NSString *)nickName andSex:(NSString *)sex andHomeAreaId:(NSString *)homeAreaId{
+-(void)editUserInfo:(NSString *)userId andNickName:(NSString *)nickName andSex:(NSString *)sex andHomeAreaId:(NSString *)homeAreaId andDescription:(NSString *)description{
     NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
     
     NSString *json = [self setParam:@[@"function",
@@ -126,7 +126,7 @@
                                       @"0",
                                       homeAreaId,
                                       @"0",
-                                      @"",
+                                      description,
                                       @"1900/01/01"
                                       ]];
     
@@ -228,7 +228,7 @@
 
 -(void)getFriends:(NSString *)userId{
     if (userId) {
-        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
         
         NSString *json = [self setParam:@[@"function",
                                           @"userid"
@@ -339,21 +339,329 @@
     }
 }
 
-
-
-/**
- * 获取通讯录
- * @param uid 用户Id
- */
--(void)getFriendForKeyValue:(NSString *)uid{
-    if (uid) {
-        NSString * url=[NSString stringWithFormat:@"%@Helianmeng.asmx/GetFriendForKeyValue",@"http://120.27.115.235/"];
-        NSDictionary * prm=@{@"userid":uid};
+-(void)getDongtaiByUserId:(NSString *)userId andStartRowFriends:(NSString *)startRowFriends andMaximumRows:(NSString *)maximumRows{
+    if (userId && startRowFriends && maximumRows) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"friendid",
+                                          @"startRowIndex",
+                                          @"maximumRows"
+                                          ]
+                              andResult:@[@"SelectDongtaiByFriendId",
+                                          userId,
+                                          startRowFriends,
+                                          maximumRows
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
         [self PostRequest:url andpram:prm];
     }else{
         [SVProgressHUD dismiss];
     }
 }
+
+-(void)getDongtaiByNewsId:(NSString *)userId andNewsId:(NSString *)newsId{
+    if (userId && newsId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"messid"
+                                          ]
+                              andResult:@[@"GetDongtaiById",
+                                          userId,
+                                          newsId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)newsZan:(NSString *)newsId andUserId:(NSString *)userId andIFlag:(NSString *)iFlag{
+    if (newsId && userId && iFlag) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"id",
+                                          @"userid",
+                                          @"flg"
+                                          ]
+                              andResult:@[@"MessageRepeatAndFavorite",
+                                          newsId,
+                                          userId,
+                                          iFlag
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)newsZanCancel:(NSString *)newsId andUserId:(NSString *)userId andIFlag:(NSString *)iFlag{
+    if (newsId && userId && iFlag) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"id",
+                                          @"userid",
+                                          @"flg"
+                                          ]
+                              andResult:@[@"MessageRepeatAndFavoriteCancel",
+                                          newsId,
+                                          userId,
+                                          iFlag
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)messageComment:(NSString *)newsId andUserId:(NSString *)userId andComment:(NSString *)comment{
+    if (newsId && userId && comment) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"id",
+                                          @"userid",
+                                          @"comment"
+                                          ]
+                              andResult:@[@"MessageComment",
+                                          newsId,
+                                          userId,
+                                          comment
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)commentComment:(NSString *)newsId andUserId:(NSString *)userId andComment:(NSString *)comment{
+    if (newsId && userId && comment) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"id",
+                                          @"userid",
+                                          @"comment"
+                                          ]
+                              andResult:@[@"CommentComment",
+                                          newsId,
+                                          userId,
+                                          comment
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)selectFriended:(NSString *)userId{
+    if (userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"SelectFriended",
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)selectApplyList:(NSString *)startRowIndex andMaximumRows:(NSString *)maximumRows andUserId:(NSString *)userId{
+    if (startRowIndex && maximumRows && userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"startRowIndex",
+                                          @"maximumRows",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"SelectApplyList",
+                                          startRowIndex,
+                                          maximumRows,
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)getFriendByAreaCodeAndSearch:(NSString *)startRowFriends andMaximumRows:(NSString *)maximumRows andNicName:(NSString *)nicName andAreaCode:(NSString *)areaCode andAge:(NSString *)age andSexuality:(NSString *)sexuality andUserId:(NSString *)userId{
+    if (startRowFriends && maximumRows && nicName && areaCode && age && sexuality && userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"startRowFriends",
+                                          @"maximumRows",
+                                          @"nicName",
+                                          @"areaCode",
+                                          @"age",
+                                          @"sexuality",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"GetFriendByAreaCodeAndSearch",
+                                          startRowFriends,
+                                          maximumRows,
+                                          nicName,
+                                          areaCode,
+                                          age,
+                                          sexuality,
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)contactsMatch:(NSString *)userId andContacts:(NSString *)contacts{
+    if (userId && contacts) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"contacts"
+                                          ]
+                              andResult:@[@"ContactsMatch",
+                                          userId,
+                                          contacts
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)createGroup:(NSString *)userId andIdList:(NSString *)idList{
+    if (userId && idList) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"idlist"
+                                          ]
+                              andResult:@[@"BuildTeam",
+                                          userId,
+                                          idList
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)getUserInfoByUserId:(NSString *)userId andFriendId:(NSString *)friendId{
+    if (userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"friendid"
+                                          ]
+                              andResult:@[@"GetUserInfor",
+                                          userId,
+                                          friendId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)searchFriendByPhone:(NSString *)userId andPhone:(NSString *)phone{
+    if (userId && phone) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"phone"
+                                          ]
+                              andResult:@[@"SearchFriendByPhone",
+                                          userId,
+                                          phone
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)addFriend:(NSString *)userId andFriendId:(NSString *)friendId{
+    if (userId && friendId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"friendid"
+                                          ]
+                              andResult:@[@"SaveFriend",
+                                          userId,
+                                          friendId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)agreeFriendAndSaveFriend:(NSString *)applyId{
+    if (applyId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"applyId"
+                                          ]
+                              andResult:@[@"AgreeFriendAndSaveFriend",
+                                          applyId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+
+
+
+
+
 
 #pragma mark - 加密
 #define YZkey @"fd15f548-7559-4d40-80a1-f00ca9bfcc02"

@@ -102,9 +102,19 @@
         [rightBtn setImage:[UIImage imageNamed:@"moreNoword"] forState:UIControlStateNormal];
         [rightBtn addTarget:self action:@selector(clickRightBtnEvent) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:rightBtn];
-    }else{
+    }else if (iFlag == 2){
         // 修改_tableView frame 因为向下偏移
         _tableView.frame = CGRectMake(0, Header_Height - 20, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height + 20);
+        // leftBtn
+        UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(14, StatusBar_HEIGHT, 75, NavigationBar_HEIGHT)];
+        leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        leftBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [leftBtn setImage:[UIImage imageNamed:@"left"] forState:UIControlStateNormal];
+        [leftBtn addTarget:self action:@selector(clickLeftBtnEvent) forControlEvents:UIControlEventTouchUpInside];
+        [topView addSubview:leftBtn];
+    }else{
+        // 去掉 tableHeaderView
+        _tableView.tableHeaderView = [[UIView alloc] init];
         // leftBtn
         UIButton *leftBtn = [[UIButton alloc] initWithFrame:CGRectMake(14, StatusBar_HEIGHT, 75, NavigationBar_HEIGHT)];
         leftBtn.titleLabel.font = [UIFont systemFontOfSize:14];
@@ -351,7 +361,7 @@
         x = frame.origin.x;
         y = frame.origin.y;
         _footer.frame = CGRectMake(x, y, width, height);
-        _tableView.tableFooterView = _footer;
+        _tableView.tableFooterView = [[UIView alloc] init];
         
         _isLoadingMore = NO;
         

@@ -55,9 +55,8 @@
 - (void)clickRightBtnEvent{
     ChatRoomViewController *chatRoomVC = [[ChatRoomViewController alloc] init];
     chatRoomVC.conversationType = ConversationType_PRIVATE;
-    NSLog(@"%@--%@",[Toolkit getUserDefaultValue:@"Id"], [Toolkit getUserDefaultValue:@"NicName"]);
     chatRoomVC.targetId = [Toolkit getUserDefaultValue:@"Id"];
-    chatRoomVC.title = [Toolkit getUserDefaultValue:@"NicName"];
+    chatRoomVC.title = [Toolkit getUserDefaultValue:@"NickName"];
     chatRoomVC.hidesBottomBarWhenPushed = true;
     [self.navigationController pushViewController:chatRoomVC animated:true];
 }

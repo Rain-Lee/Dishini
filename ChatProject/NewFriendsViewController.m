@@ -8,6 +8,9 @@
 
 #import "NewFriendsViewController.h"
 #import "AddressLocalViewController.h"
+#import "MJRefresh.h"
+#import "UIImageView+WebCache.h"
+#import "DetailsViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -16,6 +19,10 @@
     // view
     UITableView *mTableView;
     UITextField *searchTxt;
+    
+    // data
+    NSMutableArray *userDataArray;
+    int index;
 }
 
 @end
@@ -42,6 +49,80 @@
     mTableView.tableFooterView = [[UIView alloc] init];
     [mTableView registerClass:[UITableViewCell class] forCellReuseIdentifier:CellIdentifier];
     [self.view addSubview:mTableView];
+    
+    mTableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
+    [mTableView.header beginRefreshing];
+    
+    mTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+}
+
+-(void)refreshData{
+    index = 0;
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendsCallBack:"];
+    [dataProvider selectApplyList:@"0" andMaximumRows:@"20" andUserId:[Toolkit getStringValueByKey:@"Id"]];
+}
+
+-(void)getFriendsCallBack:(id)dict{
+    NSLog(@"%@",dict);
+    [mTableView.header endRefreshing];
+    if ([dict[@"code"] intValue] == 200) {
+        userDataArray = [[NSMutableArray alloc] init];
+        userDataArray = dict[@"data"];
+        
+        if (userDataArray.count == [dict[@"recordcount"] intValue]){
+            // 所有数据加载完毕，没有更多的数据了
+            mTableView.footer.state = MJRefreshStateNoMoreData;
+        }else{
+            // mj_footer设置为:普通闲置状态(Idle)
+            mTableView.footer.state = MJRefreshStateIdle;
+        }
+    }
+    [mTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)loadMore{
+    index++;
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"loadMoreCallBack:"];
+    [dataProvider selectApplyList:[NSString stringWithFormat:@"%d",index * 20] andMaximumRows:@"20" andUserId:[Toolkit getStringValueByKey:@"Id"]];
+}
+
+-(void)loadMoreCallBack:(id)dict{
+    // 结束刷新
+    [mTableView.footer endRefreshing];
+    if ([dict[@"code"] intValue] == 200) {
+        NSArray * arrayitem=[[NSArray alloc] init];
+        arrayitem=dict[@"data"];
+        for (id item in arrayitem) {
+            [userDataArray addObject:item];
+        }
+        if (userDataArray.count == [dict[@"recordcount"] intValue]){
+            // 所有数据加载完毕，没有更多的数据了
+            mTableView.footer.state = MJRefreshStateNoMoreData;
+        }else{
+            // mj_footer设置为:普通闲置状态(Idle)
+            mTableView.footer.state = MJRefreshStateIdle;
+        }
+        [mTableView reloadSections:[NSIndexSet indexSetWithIndex:1] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
+}
+
+-(void)stateBtnEvent:(UIButton *)sender{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"stateBtnCallBack:"];
+    [dataProvider agreeFriendAndSaveFriend:[NSString stringWithFormat:@"%ld",(long)sender.tag]];
+}
+
+-(void)stateBtnCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        [self.navigationController popToRootViewControllerAnimated:true];
+        [Toolkit showInfoWithStatus:@"操作成功"];
+    }else{
+        [Toolkit showInfoWithStatus:dict[@"error"]];
+    }
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -52,7 +133,7 @@
     if (section == 0) {
         return 4;
     }else{
-        return 3;
+        return userDataArray.count;
     }
 }
 
@@ -75,12 +156,18 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    for (UIView *itemView in cell.contentView.subviews) {
+        [itemView removeFromSuperview];
+    }
+    cell.backgroundColor = [UIColor whiteColor];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             // searchTxt
             searchTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
             searchTxt.delegate = self;
-            searchTxt.placeholder = @"请输入名称";
+            searchTxt.keyboardType = UIKeyboardTypeNumberPad;
+            searchTxt.returnKeyType = UIReturnKeySearch;
+            searchTxt.placeholder = @"请输入手机号";
             [cell.contentView addSubview:searchTxt];
             // searchIv
             UIImageView *searchIv = [[UIImageView alloc] initWithFrame:CGRectMake(0, (CGRectGetHeight(searchTxt.frame) - 22) / 2, 35, 22)];
@@ -106,21 +193,24 @@
             cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue: 0.96 alpha:1.0];
         }
     }else{
+        NSDictionary *valueDict = userDataArray[indexPath.row][@"Value"];
         // photoIv
         UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake(15, 10, 50, 50)];
-        photoIv.image = [UIImage imageNamed:@"default_photo"];
+        NSString *photoPath = [NSString stringWithFormat:@"%@%@",Kimg_path,[valueDict valueForKey:@"PhotoPath"]];
+        [photoIv sd_setImageWithURL:[NSURL URLWithString:photoPath] placeholderImage:[UIImage imageNamed:@"default_photo"]];
         [cell.contentView addSubview:photoIv];
         // nameLbl
-        UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 10, CGRectGetMinY(photoIv.frame) + 4, 200, 21)];
-        nameLbl.text = @"用户昵称";
+        UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 10, 0, 200, CGRectGetHeight(cell.frame))];
+        nameLbl.textAlignment = NSTextAlignmentLeft;
+        nameLbl.text = valueDict[@"NicName"];
         [cell.contentView addSubview:nameLbl];
-        // detailLbl
-        UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nameLbl.frame), CGRectGetMaxY(nameLbl.frame) + 4, 200, 21)];
-        detailLbl.text = @"备注信息";
-        detailLbl.font = [UIFont systemFontOfSize:16];
-        detailLbl.textColor = [UIColor grayColor];
-        [cell.contentView addSubview:detailLbl];
-        if (indexPath.row == 0) {
+//        // detailLbl
+//        UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nameLbl.frame), CGRectGetMaxY(nameLbl.frame) + 4, 200, 21)];
+//        detailLbl.text = @"备注信息";
+//        detailLbl.font = [UIFont systemFontOfSize:16];
+//        detailLbl.textColor = [UIColor grayColor];
+//        [cell.contentView addSubview:detailLbl];
+        if (false) {
             // 已接受
             UIButton *stateBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 15 - 55, (CGRectGetHeight(cell.frame) - 30) / 2, 55, 30)];
             [stateBtn setTitle:@"已添加" forState:UIControlStateNormal];
@@ -138,6 +228,8 @@
             stateBtn.titleLabel.font = [UIFont systemFontOfSize:15];
             stateBtn.layer.masksToBounds = true;
             stateBtn.layer.cornerRadius = 6;
+            stateBtn.tag = [valueDict[@"Id"] intValue];
+            [stateBtn addTarget:self action:@selector(stateBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:stateBtn];
         }
     }
@@ -184,6 +276,18 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return true;
+}
+
+-(void)textFieldDidEndEditing:(UITextField *)textField{
+    if ([textField.text isEqual:@""]) {
+        return;
+    }
+    
+    DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+    detailsVC.iFlag = @"2";
+    detailsVC.userId = [Toolkit getStringValueByKey:@"Id"];
+    detailsVC.phone = searchTxt.text;
+    [self.navigationController pushViewController:detailsVC animated:true];
 }
 
 @end

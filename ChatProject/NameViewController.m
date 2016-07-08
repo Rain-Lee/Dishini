@@ -33,10 +33,24 @@
 }
 
 -(void)clickRightButton:(UIButton *)sender{
-    if ([self.delegate respondsToSelector:@selector(getName:)]) {
-        [self.delegate getName:nameTxt.text];
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
+    [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:nameTxt.text andSex:[Toolkit getStringValueByKey:@"SexId"] andHomeAreaId:@"0" andDescription:[Toolkit getStringValueByKey:@"Sign"]];
+}
+
+-(void)editUserInfoCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        
+        [Toolkit setUserDefaultValue:nameTxt.text andKey:@"NickName"];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateData" object:nil];
+        
+        if ([self.delegate respondsToSelector:@selector(getName:)]) {
+            [self.delegate getName:nameTxt.text];
+        }
+        [self.navigationController popViewControllerAnimated:true];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
-    [self.navigationController popViewControllerAnimated:true];
 }
 
 -(void)initView{

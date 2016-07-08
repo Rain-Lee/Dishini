@@ -105,17 +105,10 @@
     [SVProgressHUD dismiss];
     [Toolkit showWithStatus:@"正在保存视频信息..."];
     
-    //    code = 200;
-    //    date =     {
-    //        ImageName = "UpLoad\\Image\\83e46012-91f3-4a31-a27b-fdb658601adf.JPG";
-    //        VideoDuration = "00:00:08";
-    //        VideoName = "UpLoad\\Video\\279b6db9-455e-4feb-9e03-1e5fa15a9879.mov";
-    //    };
-    
     if ([dict[@"code"] intValue]==200) {
         DataProvider * dataprovider=[[DataProvider alloc] init];
         [dataprovider setDelegateObject:self setBackFunctionName:@"sendVideoInfoCallBack:"];
-        [dataprovider SaveDongtai:[Toolkit getStringValueByKey:@"Id"] andContent:txt_Content.text andPathlist:@"" andVideoImage:dict[@"data"][@"ImageName"] andVideopath:dict[@"data"][@"VideoName"] andVideoDuration:dict[@"data"][@"VideoDuration"] andSmallImage:@""];
+        [dataprovider SaveDongtai:[Toolkit getStringValueByKey:@"Id"] andContent:txt_Content.text andPathlist:@"" andVideoImage:dict[@"data"][@"ImagePath"] andVideopath:dict[@"data"][@"VideoPath"] andVideoDuration:dict[@"data"][@"VideoDuration"] andSmallImage:@""];
         
         //[dataprovider SaveDongtai:[userDefault valueForKey:@"id"] andcontent:txt_Content.text andpathlist:dict[@"data"][@"ImageName"] andvideopath:dict[@"data"][@"VideoName"] andvideoDuration:dict[@"data"][@"VideoDuration"]];
         //[dataprovider SaveDongtai:[userDefault valueForKey:@"id"] andcontent:txt_Content.text andpathlist:@"" andvideoImage:dict[@"data"][@"ImageName"] andvideopath:dict[@"data"][@"VideoName"] andvideoDuration:dict[@"data"][@"VideoDuration"]];
@@ -160,7 +153,7 @@
         }
         
         [SVProgressHUD showSuccessWithStatus:@"发布成功"];
-        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"initData" object:nil];
         [self.navigationController popViewControllerAnimated:YES];
     }
 }

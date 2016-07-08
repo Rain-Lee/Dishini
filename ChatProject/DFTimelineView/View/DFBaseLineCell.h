@@ -26,7 +26,7 @@
 @protocol DFLineCellDelegate <NSObject>
 
 @optional
--(void) onLike:(long long) itemId;
+-(void) onLike:(long long) itemId andIsLike:(BOOL)isLike;
 
 -(void) onComment:(long long) itemId;
 

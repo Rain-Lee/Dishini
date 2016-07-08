@@ -16,6 +16,10 @@
     
     int index;
     UIImage *headImage;
+    long long currentNewsId;
+    long long currentCommentId;
+    NSString *currentCommentContent;
+    BOOL currentIsLike;
 }
 
 @end
@@ -81,35 +85,92 @@
     @try {
         if ([dict[@"code"] intValue] == 200) {
             NSString *coverUrl = [NSString stringWithFormat:@"%@%@",Kimg_path, dict[@"data"][0][@"SpaceImagePath"]];
+            [Toolkit setUserDefaultValue:coverUrl andKey:@"SpaceImagePath"];
             [self setCover:coverUrl];
             
             for (NSDictionary *item in dict[@"data"]) {
-                DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc] init];
-                //textImageItem.itemId = 1;
-                textImageItem.userId = [item[@"UserId"] intValue];
-                textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"PhotoPath"]];
-                textImageItem.userNick = item[@"NicName"];
-                textImageItem.title = @"";
-                textImageItem.text = item[@"Content"];
-                textImageItem.ts = [Toolkit getTimeIntervalFromString:item[@"PublishTime"]];
                 
-                // 图片
-                NSMutableArray *thumbImages = [NSMutableArray array];
-                for (NSDictionary *picItem in item[@"PicList"]) {
-                    [thumbImages addObject:[NSString stringWithFormat:@"%@%@",Kimg_path, picItem[@"ImagePath"]]];
+                if ([item[@"VideoPath"] isEqual:@""]) {
+                    DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc] init];
+                    textImageItem.itemId = [item[@"Id"] intValue];
+                    textImageItem.userId = [item[@"UserId"] intValue];
+                    textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"PhotoPath"]];
+                    textImageItem.userNick = item[@"NicName"];
+                    textImageItem.title = @"";
+                    textImageItem.text = item[@"Content"];
+                    textImageItem.ts = [Toolkit getTimeIntervalFromString:item[@"PublishTime"]];
+                    
+                    BOOL isLike = [[Toolkit judgeIsNull:item[@"IsLike"]] isEqual:@"1"] ? true : false;
+                    textImageItem.isLike = isLike;
+                    
+                    
+                    // 图片
+                    NSMutableArray *thumbImages = [NSMutableArray array];
+                    for (NSDictionary *picItem in item[@"PicList"]) {
+                        [thumbImages addObject:[NSString stringWithFormat:@"%@%@",Kimg_path, picItem[@"ImagePath"]]];
+                    }
+                    textImageItem.thumbImages = thumbImages;
+                    NSMutableArray *srcImages = [NSMutableArray array];
+                    for (NSDictionary *picItem in item[@"PicList"]) {
+                        [srcImages addObject:[NSString stringWithFormat:@"%@%@",Kimg_path, picItem[@"ImagePath"]]];
+                    }
+                    textImageItem.srcImages = srcImages;
+                    
+                    // 评论
+                    for (NSDictionary *commentItem in item[@"ComList"]){
+                        DFLineCommentItem *lineItem = [[DFLineCommentItem alloc] init];
+                        lineItem.commentId = [commentItem[@"Id"] intValue];
+                        lineItem.userId = [commentItem[@"CommenterId"] intValue];
+                        lineItem.userNick = commentItem[@"NicName"];
+                        lineItem.text = commentItem[@"Content"];
+                        NSString *parentId = [commentItem[@"ParentId"] stringValue];
+                        if (![parentId isEqual:@"0"]) {
+                            lineItem.replyUserId = [commentItem[@"CommentedId"] intValue];
+                            lineItem.replyUserNick = commentItem[@"CommentedNicName"];
+                        }
+                        [textImageItem.comments addObject:lineItem];
+                    }
+                    
+                    textImageItem.width = 640;
+                    textImageItem.height = 360;
+                    
+                    [self addItem:textImageItem];
+                }else{
+                    DFVideoLineItem *videoItem = [[DFVideoLineItem alloc] init];
+                    videoItem.itemId = [item[@"Id"] intValue]; //随便设置一个 待服务器生成
+                    videoItem.userId = [item[@"UserId"] intValue];
+                    videoItem.userAvatar = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"PhotoPath"]];
+                    videoItem.userNick = item[@"NicName"];
+                    videoItem.title = @"";
+                    videoItem.text = item[@"Content"];
+                    videoItem.location = @"";
+                    videoItem.ts = [Toolkit getTimeIntervalFromString:item[@"PublishTime"]];
+                    
+                    BOOL isLike = [[Toolkit judgeIsNull:item[@"IsLike"]] isEqual:@"1"] ? true : false;
+                    videoItem.isLike = isLike;
+                    
+                    videoItem.localVideoPath = currentVideoPath;
+                    videoItem.videoUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"VideoPath"]]; //网络路径
+                    videoItem.thumbUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"ImagePath"]];
+                    //videoItem.thumbImage = [UIImage imageNamed:@"index_1"]; //如果thumbImage存在 优先使用thumbImage
+                    
+                    // 评论
+                    for (NSDictionary *commentItem in item[@"ComList"]){
+                        DFLineCommentItem *lineItem = [[DFLineCommentItem alloc] init];
+                        lineItem.commentId = [commentItem[@"Id"] intValue];
+                        lineItem.userId = [commentItem[@"CommenterId"] intValue];
+                        lineItem.userNick = commentItem[@"NicName"];
+                        lineItem.text = commentItem[@"Content"];
+                        NSString *parentId = [commentItem[@"ParentId"] stringValue];
+                        if (![parentId isEqual:@"0"]) {
+                            lineItem.replyUserId = [commentItem[@"CommentedId"] intValue];
+                            lineItem.replyUserNick = commentItem[@"CommentedNicName"];
+                        }
+                        [videoItem.comments addObject:lineItem];
+                    }
+                    
+                    [self addItem:videoItem];
                 }
-                textImageItem.thumbImages = thumbImages;
-                NSMutableArray *srcImages = [NSMutableArray array];
-                for (NSDictionary *picItem in item[@"PicList"]) {
-                    [srcImages addObject:[NSString stringWithFormat:@"%@%@",Kimg_path, picItem[@"ImagePath"]]];
-                }
-                textImageItem.srcImages = srcImages;
-                
-                textImageItem.width = 640;
-                textImageItem.height = 360;
-                
-                [self addItem:textImageItem];
-                
             }
         }else{
             [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
@@ -123,26 +184,60 @@
 
 -(void)onCommentCreate:(long long)commentId text:(NSString *)text itemId:(long long) itemId
 {
-    DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
-    commentItem.commentId = [[NSDate date] timeIntervalSince1970];
-    commentItem.userId = 10098;
-    commentItem.userNick = @"金三胖";
-    commentItem.text = text;
-    [self addCommentItem:commentItem itemId:itemId replyCommentId:commentId];
+    currentCommentContent = text;
+    currentNewsId = itemId;
+    currentCommentId = commentId;
     
+    
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"messageCommentCallBack:"];
+    if (commentId == 0) {
+        [dataProvider messageComment:[NSString stringWithFormat:@"%lld",itemId] andUserId:[Toolkit getStringValueByKey:@"Id"] andComment:text];
+    }else{
+        [dataProvider commentComment:[NSString stringWithFormat:@"%lld",commentId] andUserId:[Toolkit getStringValueByKey:@"Id"] andComment:text];
+    }
 }
 
+-(void)messageCommentCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        DFLineCommentItem *commentItem = [[DFLineCommentItem alloc] init];
+        commentItem.commentId = [dict[@"insertid"] intValue];
+        commentItem.userId = [[Toolkit getStringValueByKey:@"Id"] intValue];
+        commentItem.userNick = [Toolkit getStringValueByKey:@"NickName"];
+        commentItem.text = currentCommentContent;
+        [self addCommentItem:commentItem itemId:currentNewsId replyCommentId:currentCommentId];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"data"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
+}
 
--(void)onLike:(long long)itemId
+-(void)onLike:(long long)itemId andIsLike:(BOOL)isLike
 {
-    //点赞
-    NSLog(@"onLike: %lld", itemId);
+    NSLog(@"---------------%d",isLike);
     
-    DFLineLikeItem *likeItem = [[DFLineLikeItem alloc] init];
-    likeItem.userId = 10092;
-    likeItem.userNick = @"琅琊榜";
-    [self addLikeItem:likeItem itemId:itemId];
+    currentIsLike = isLike;
+    currentNewsId = itemId;
     
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"newsZanCallBack:"];
+    
+    if (currentIsLike) { // 取消赞
+        [dataProvider newsZanCancel:[NSString stringWithFormat:@"%lld",itemId] andUserId:[Toolkit getStringValueByKey:@"Id"] andIFlag:@"2"];
+    }else{ // 点赞
+        [dataProvider newsZan:[NSString stringWithFormat:@"%lld",itemId] andUserId:[Toolkit getStringValueByKey:@"Id"] andIFlag:@"2"];
+    }
+}
+
+-(void)newsZanCallBack:(id)dict{
+    NSLog(@"%@",dict);
+    if ([dict[@"code"] intValue] == 200) {
+        if (currentIsLike) { // 取消赞
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"clickZanEvent" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%lld",currentNewsId],@"itemId",@"0",@"isLike", nil]];
+        }else{ // 点赞
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"clickZanEvent" object:nil userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%lld",currentNewsId],@"itemId",@"1",@"isLike", nil]];
+        }
+        [Toolkit showSuccessWithStatus:@"操作成功~"];
+    }
 }
 
 
@@ -154,12 +249,17 @@
     UserMomentsViewController *userMomentsVC = [[UserMomentsViewController alloc] init];
     userMomentsVC.hidesBottomBarWhenPushed = true;
     userMomentsVC.nickName = @"个人动态";
+    userMomentsVC.userId = [NSString stringWithFormat:@"%lu",(unsigned long)userId];
     [self.navigationController pushViewController:userMomentsVC animated:YES];
 }
 
 -(void)onClickHeaderUserAvatar
 {
-    [self onClickUser:1111];
+    UserMomentsViewController *userMomentsVC = [[UserMomentsViewController alloc] init];
+    userMomentsVC.hidesBottomBarWhenPushed = true;
+    userMomentsVC.nickName = @"个人动态";
+    userMomentsVC.userId = [Toolkit getStringValueByKey:@"Id"];
+    [self.navigationController pushViewController:userMomentsVC animated:YES];
 }
 
 -(void) refresh

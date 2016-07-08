@@ -56,7 +56,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         DataProvider *dataProvider2 = [[DataProvider alloc] init];
         [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
-        [dataProvider2 editUserInfo:@"2013" andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"0"];
+        [dataProvider2 editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"0" andDescription:@""];
     });
 //    if ([dict[@"code"] intValue] == 200) {
 //        

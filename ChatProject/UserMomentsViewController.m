@@ -7,8 +7,11 @@
 //
 
 #import "UserMomentsViewController.h"
+#import "MomentsItemViewController.h"
 
-@interface UserMomentsViewController ()
+@interface UserMomentsViewController (){
+    int index;
+}
 
 @end
 
@@ -26,64 +29,72 @@
 
 -(void) setHeader
 {
-    NSString *coverUrl = [NSString stringWithFormat:@"http://file-cdn.datafans.net/temp/12.jpg_%dx%d.jpeg", (int)self.coverWidth, (int)self.coverHeight];
+    NSString *coverUrl = [Toolkit getUserDefaultValue:@"SpaceImagePath"];
     [self setCover:coverUrl];
     
-    NSString *avatarUrl = [NSString stringWithFormat:@"http://file-cdn.datafans.net/avatar/1.jpeg_%dx%d.jpeg", (int)self.userAvatarSize, (int)self.userAvatarSize];
+    NSString *avatarUrl = [Toolkit getStringValueByKey:@"PhotoPath"];
     [self setUserAvatar:avatarUrl];
     
-    [self setUserNick:@"Allen"];
+    [self setUserNick:[Toolkit getStringValueByKey:@"NickName"]];
     
-    [self setUserSign:@"梦想还是要有的 万一实现了呢"];
+    //[self setUserSign:@"梦想还是要有的 万一实现了呢"];
     
 }
 
 -(void) initData
 {
-    DFTextImageUserLineItem *item = [[DFTextImageUserLineItem alloc] init];
-    item.itemId = 1111;
-    item.ts = 1444902955586;
-    item.cover = @"http://file-cdn.datafans.net/temp/11.jpg_200x200.jpeg";
-    item.photoCount = 5;
-    item.text = @"我说你二你就二";
-    [self addItem:item];
-    
-    
-    DFTextImageUserLineItem *item2 = [[DFTextImageUserLineItem alloc] init];
-    item2.itemId = 11222;
-    item2.ts = 1444902951586;
-    item2.text = @"阿里巴巴（1688.com）是全球企业间电子商务的著名品牌，为数千万网商提供海量商机信息和便捷安全的在线交易市场，也是商人们以商会友、真实互动的社区平台 ...";
-    
-    [self addItem:item2];
-    
-    
-    DFTextImageUserLineItem *item3 = [[DFTextImageUserLineItem alloc] init];
-    item3.itemId = 22221111;
-    item3.ts = 1444102855586;
-    item3.cover = @"http://file-cdn.datafans.net/temp/15.jpg_200x200.jpeg";
-    item3.photoCount = 8;
-    [self addItem:item3];
-    
-    
-    DFTextImageUserLineItem *item4 = [[DFTextImageUserLineItem alloc] init];
-    item4.itemId = 7771111;
-    item4.ts = 1442912955586;
-    item4.cover = @"http://file-cdn.datafans.net/temp/19.jpg_200x200.jpeg";
-    item4.photoCount = 6;
-    [self addItem:item4];
-    
-    
-    
-    DFTextImageUserLineItem *item5 = [[DFTextImageUserLineItem alloc] init];
-    item5.itemId = 9991111;
-    item5.ts = 1442912945586;
-    item5.cover = @"http://file-cdn.datafans.net/temp/14.jpg_200x200.jpeg";
-    item5.photoCount = 2;
-    item5.text = @"京东JD.COM-专业的综合网上购物商城，销售超数万品牌、4020万种商品，http://jd.com 囊括家电、手机、电脑、服装、图书、母婴、个护、食品、旅游等13大品类。秉承客户为先的理念，京东所售商品为正品行货、全国联保、机打发票。@刘强东";
-    [self addItem:item5];
+    index = 0;
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getDongtaiByUserIdCallBack:"];
+    [dataProvider getDongtaiByUserId:_userId andStartRowFriends:@"0" andMaximumRows:@"10"];
 }
 
+-(void)getDongtaiByUserIdCallBack:(id)dict{
+    [self deleteAllItem];
+    [self addItemFunc:dict];
+    [self endRefresh];
+}
 
+-(void)loadMoreFunc{
+    index++;
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"loadMoreFuncCallBack:"];
+    [dataProvider getDongtaiByUserId:_userId andStartRowFriends:[NSString stringWithFormat:@"%d",index * 10] andMaximumRows:@"10"];
+}
+
+-(void)loadMoreFuncCallBack:(id)dict{
+    [self addItemFunc:dict];
+    [self endLoadMore];
+}
+
+-(void)addItemFunc:(id)dict{
+    @try {
+        if ([dict[@"code"] intValue] == 200) {
+            for (NSDictionary *item in dict[@"data"]) {
+                DFTextImageUserLineItem *textImageItem = [[DFTextImageUserLineItem alloc] init];
+                textImageItem.itemId = [item[@"Id"] intValue];
+                textImageItem.ts = [Toolkit getTimeIntervalFromString:item[@"PublishTime"]];
+                textImageItem.text = item[@"Content"];
+                // 图片
+                if ([item[@"PicList"] count] > 0) {
+                    textImageItem.cover = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"PicList"][0][@"ImagePath"]];
+                    textImageItem.photoCount = [item[@"PicList"] count];
+                }
+                // 视频
+                if (![item[@"ImagePath"] isEqual:@""]) {
+                    textImageItem.cover = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"ImagePath"]];
+                }
+                [self addItem:textImageItem];
+            }
+        }else{
+            [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+        }
+    } @catch (NSException *exception) {
+        
+    } @finally {
+        
+    }
+}
 
 -(void) refresh
 {
@@ -97,10 +108,7 @@
 
 -(void) loadMore
 {
-    dispatch_time_t time=dispatch_time(DISPATCH_TIME_NOW, 1*NSEC_PER_SEC);
-    dispatch_after(time, dispatch_get_main_queue(), ^{
-        [self endLoadMore];
-    });
+    [self loadMoreFunc];
 }
 
 
@@ -108,6 +116,14 @@
 -(void)onClickItem:(DFBaseUserLineItem *)item
 {
     NSLog(@"click item: %lld", item.itemId);
+    
+    MomentsItemViewController *momentsItemVC = [[MomentsItemViewController alloc] init];
+    momentsItemVC.newsId = [NSString stringWithFormat:@"%lld",item.itemId];
+    [self.navigationController pushViewController:momentsItemVC animated:true];
+}
+
+-(void)tapCoverViewEvent{
+    
 }
 
 @end

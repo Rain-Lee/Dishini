@@ -58,14 +58,14 @@
     }];
     
     // 马上进入刷新状态
-    //[_tableView.header beginRefreshing];
+    [_tableView.header beginRefreshing];
 }
 
 -(void)initData{
     [Toolkit showWithStatus:@"加载中..."];
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"matchAddressBackCall:"];
-    //[dataProvider ContactsMatch:get_sp(@"id") andcontacts:phoneStr];
+    [dataProvider contactsMatch:[Toolkit getStringValueByKey:@"Id"] andContacts:phoneStr];
 }
 
 -(void)matchAddressBackCall:(id)dict{
@@ -104,7 +104,7 @@
         }
         [self setUserSource];
     }else{
-
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
 }
 
@@ -177,7 +177,7 @@
             UIImage *image = [UIImage imageWithData:imageData];
             addressBook.photo = image;
         }else{
-            addressBook.photo = [UIImage imageNamed:@"me"];
+            addressBook.photo = [UIImage imageNamed:@"default_photo"];
         }
         
         ABPropertyID multiProperties[] = {
@@ -211,7 +211,7 @@
                         }
                         
                         if (phoneStr) {
-                            phoneStr = [NSString stringWithFormat:@"%@&'%@'",phoneStr,temtPhone];
+                            phoneStr = [NSString stringWithFormat:@"%@A'%@'",phoneStr,temtPhone];
                         }else{
                             phoneStr = [NSString stringWithFormat:@"'%@'",temtPhone];
                         }
@@ -645,7 +645,7 @@
         MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
         
         controller.recipients = [NSArray arrayWithObject:phoneTxt];
-        controller.body = @"http://www.pgyer.com/ybow";
+        //controller.body = @"http://www.pgyer.com/ybow";
         controller.messageComposeDelegate = self;
         
         [self presentViewController:controller animated:YES completion:nil];

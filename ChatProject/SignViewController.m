@@ -30,10 +30,23 @@
 }
 
 -(void)clickRightButton:(UIButton *)sender{
-    if ([self.delegate respondsToSelector:@selector(getSign:)]) {
-        [self.delegate getSign:contentTv.text];
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"signCallBack:"];
+    [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:[Toolkit getStringValueByKey:@"NickName"] andSex:[Toolkit getStringValueByKey:@"SexId"] andHomeAreaId:@"0" andDescription:contentTv.text];
+}
+
+-(void)signCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        
+        [Toolkit setUserDefaultValue:contentTv.text andKey:@"Sign"];
+        
+        if ([self.delegate respondsToSelector:@selector(getSign:)]) {
+            [self.delegate getSign:contentTv.text];
+        }
+        [self.navigationController popViewControllerAnimated:true];
+    }else{
+        [SVProgressHUD dismiss];
     }
-    [self.navigationController popViewControllerAnimated:true];
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{

@@ -10,4 +10,13 @@
 
 @interface DetailsViewController : BaseNavigationController<UITableViewDelegate, UITableViewDataSource>
 
+@property(nonatomic,strong) NSString *userId;
+
+@property(nonatomic,strong) NSString *phone;
+
+/**
+ * 1、根据用户Id获取用户信息  2、根据手机号获取用户信息
+ */
+@property(nonatomic,strong) NSString *iFlag;
+
 @end

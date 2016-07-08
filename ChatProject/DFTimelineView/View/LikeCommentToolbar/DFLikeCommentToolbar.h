@@ -10,7 +10,7 @@
 
 @required
 
--(void) onLike;
+-(void) onLike:(BOOL)isLike;
 -(void) onComment;
 
 @end
@@ -19,6 +19,8 @@
 
 
 @property (nonatomic, weak) id<DFLikeCommentToolbarDelegate> delegate;
+
+-(void)updateClickZan;
 
 
 @end

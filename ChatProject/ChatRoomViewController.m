@@ -69,6 +69,8 @@
 - (void)didTapCellPortrait:(NSString *)userId{
     NSLog(@"%@",userId);
     DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+    detailsVC.userId = userId;
+    detailsVC.iFlag = @"1";
     [self.navigationController pushViewController:detailsVC animated:true];
 }
 

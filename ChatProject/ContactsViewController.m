@@ -56,7 +56,7 @@
 - (void)refreshData{
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendsCallBack:"];
-    [dataProvider getFriends:@"2"];
+    [dataProvider getFriends:[Toolkit getStringValueByKey:@"Id"]];
 }
 
 - (void)getFriendsCallBack:(id)dict{
@@ -140,6 +140,7 @@
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             NewFriendsViewController *newFriendVC = [[NewFriendsViewController alloc] init];
+            newFriendVC.hidesBottomBarWhenPushed = true;
             [self.navigationController pushViewController:newFriendVC animated:true];
         }else if (indexPath.row == 1){
             LaunchGroupChatViewController *launchGroupChatVC = [[LaunchGroupChatViewController alloc] init];
@@ -153,6 +154,7 @@
     }else{
         DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
         detailsVC.hidesBottomBarWhenPushed = true;
+        detailsVC.iFlag = @"1";
         [self.navigationController pushViewController:detailsVC animated:true];
     }
 }

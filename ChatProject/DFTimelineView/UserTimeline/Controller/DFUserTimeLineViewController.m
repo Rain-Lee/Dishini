@@ -132,7 +132,9 @@
     [self.tableView reloadData];
 }
 
-
+-(void)deleteAllItem{
+    [_items removeAllObjects];
+}
 
 -(void)onClickItem:(DFBaseUserLineItem *)item
 {

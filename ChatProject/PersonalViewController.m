@@ -11,6 +11,7 @@
 #import "NameViewController.h"
 #import "MyErweimaViewController.h"
 #import "MyAddressViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -24,6 +25,7 @@
     // data
     NSString *nameValue;
     NSString *sexValue;
+    NSString *sexId;
     NSString *addressValue;
     NSString *signValue;
     NSMutableArray *provinceArray;
@@ -45,6 +47,10 @@
     
     [self setNavtitle:@"个人信息"];
     [self addLeftButton:@"left"];
+    
+    nameValue = [Toolkit getStringValueByKey:@"NickName"];
+    sexValue = [Toolkit getStringValueByKey:@"Sex"];
+    signValue = [Toolkit getStringValueByKey:@"Sign"];
     
     [self initAddressData];
     
@@ -152,6 +158,8 @@
         return 70;
     }else if (indexPath.row == 5){
         return 20;
+    }else if (indexPath.row == 4){
+        return 0;
     }else{
         return 50;
     }
@@ -169,9 +177,11 @@
         photoLbl.text = @"头像";
         [cell.contentView addSubview:photoLbl];
         // photoIv
-        UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 50, 10, 50, 50)];
+        UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 30 - 55, 7.5, 55, 55)];
+        photoIv.layer.masksToBounds = true;
+        photoIv.layer.cornerRadius = 6;
         if (headImage == nil) {
-            photoIv.image = [UIImage imageNamed:@"default_photo"];
+            [photoIv sd_setImageWithURL:[NSURL URLWithString:[Toolkit getStringValueByKey:@"PhotoPath"]] placeholderImage:[UIImage imageNamed:@"default_photo"]];
         }else{
             photoIv.image = headImage;
         }
@@ -210,15 +220,17 @@
         qrCodeLbl.textAlignment = NSTextAlignmentLeft;
         qrCodeLbl.text = @"我的二维码";
         [cell.contentView addSubview:qrCodeLbl];
-    }else if (indexPath.row == 4){
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-        // addressLbl
-        UILabel *addressLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 100, 50)];
-        addressLbl.textAlignment = NSTextAlignmentLeft;
-        addressLbl.font = [UIFont systemFontOfSize:16];
-        addressLbl.text = @"我的地址";
-        [cell.contentView addSubview:addressLbl];
-    }else if(indexPath.row == 5){
+    }
+//    else if (indexPath.row == 4){
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        // addressLbl
+//        UILabel *addressLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 100, 50)];
+//        addressLbl.textAlignment = NSTextAlignmentLeft;
+//        addressLbl.font = [UIFont systemFontOfSize:16];
+//        addressLbl.text = @"我的地址";
+//        [cell.contentView addSubview:addressLbl];
+//    }
+    else if(indexPath.row == 5){
         cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
     }else if (indexPath.row == 6){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -319,13 +331,15 @@
     }else if (indexPath.row == 6) {
         [Toolkit actionSheetViewSecond:self andTitle:@"选择性别" andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:[NSArray arrayWithObjects:@"男", @"女", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
             NSLog(@"%d",buttonIndex);
+            sexId = [NSString stringWithFormat:@"%d",buttonIndex];
             if (buttonIndex == 1) {
                 sexValue = @"男";
-                [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:6 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             }else if (buttonIndex == 2){
                 sexValue = @"女";
-                [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:6 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
             }
+            DataProvider *dataProvider = [[DataProvider alloc] init];
+            [dataProvider setDelegateObject:self setBackFunctionName:@"UpdateSexCallBack:"];
+            [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:[Toolkit getStringValueByKey:@"NickName"] andSex:[NSString stringWithFormat:@"%d",buttonIndex] andHomeAreaId:@"0" andDescription:[Toolkit getStringValueByKey:@"Sign"]];
         }];
     }else if (indexPath.row == 7){
         [self.view addSubview:BackView];
@@ -335,6 +349,16 @@
         signVC.delegate = self;
         signVC.signStr = signValue;
         [self.navigationController pushViewController:signVC animated:true];
+    }
+}
+
+-(void)UpdateSexCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        [Toolkit setUserDefaultValue:sexId andKey:@"SexId"];
+        [Toolkit setUserDefaultValue:sexValue andKey:@"Sex"];
+        [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:6 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
 }
 
@@ -370,6 +394,7 @@
     if ([dict[@"code"] intValue] == 200) {
         [Toolkit setUserDefaultValue:[NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"date"][@"ImageName"]] andKey:@"PhotoPath"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setHeader" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"updateData" object:nil];
     }else{
         [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"date"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }

@@ -339,7 +339,7 @@
     
     [tempArr addObjectsFromArray:allImgsPicked[PICPICKER_IMGS_KEY]];
     [tempArr addObjectsFromArray:allImgsPicked[PHOTO_IMGS_KEY]];
-    [SVProgressHUD dismiss];
+    //[SVProgressHUD dismiss];
     [Toolkit showWithStatus:[NSString stringWithFormat:@"正在保存图片(%ld/%ld)",(long)ImgIndex,(unsigned long)tempArr.count]];
 }
 
@@ -353,14 +353,14 @@
         allThumbPath = thumbPath[0];
         for(int i = 1;i< imgPath.count ;i++)
         {
-            allImgPath = [NSString stringWithFormat:@"%@&%@",allImgPath,imgPath[i]];
-            allThumbPath = [NSString stringWithFormat:@"%@&%@",allImgPath,thumbPath[i]];
+            allImgPath = [NSString stringWithFormat:@"%@*%@",allImgPath,imgPath[i]];
+            allThumbPath = [NSString stringWithFormat:@"%@*%@",allThumbPath,thumbPath[i]];
         }
     }
     [Toolkit showWithStatus:@"正在保存数据"];
     DataProvider * dataprovider=[[DataProvider alloc] init];
     [dataprovider setDelegateObject:self setBackFunctionName:@"uploadPlansCallBack:"];
-    [dataprovider SaveDongtai:[Toolkit getStringValueByKey:@"Id"] andContent:_textView.text andPathlist:allImgPath andVideoImage:@"" andVideopath:@"" andVideoDuration:@"" andSmallImage:allThumbPath];
+    [dataprovider SaveDongtai:[Toolkit getStringValueByKey:@"Id"] andContent:_textView.text andPathlist:allImgPath andVideoImage:@"" andVideopath:@"" andVideoDuration:@"" andSmallImage:allImgPath];
     
 }
 
@@ -383,7 +383,7 @@
     }
     else
     {
-        [Toolkit alertView:self andTitle:@"提示" andMsg:[dict[@"data"] substringToIndex:4] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         
     }
     

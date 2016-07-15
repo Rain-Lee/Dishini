@@ -851,7 +851,25 @@ static const char encodingTable[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopq
  }
 
 
-
++ (BOOL)isNumText:(NSString *)str{
+    
+    NSString * regex        = @"(/^[0-9]*$/)";
+    
+    NSPredicate * pred      = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
+    
+    BOOL isMatch            = [pred evaluateWithObject:str];
+    
+    if (isMatch) {
+        
+        return YES;
+        
+    }else{
+        
+        return NO;
+        
+    }
+    
+}
 
 
 @end

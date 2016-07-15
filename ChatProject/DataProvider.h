@@ -241,4 +241,79 @@
  */
 -(void)agreeFriendAndSaveFriend:(NSString *)applyId;
 
+/**
+ * 聊天--获取武友信息
+ * @param userId 用户Id
+ */
+-(void)getFriendForKeyValue:(NSString *)userId;
+
+/**
+ * 根据Id获取用户信息 -- 聊天
+ * @param userId 用户Id
+ */
+-(NSDictionary *)getUserInfoByUserIDChat:(NSString *)userId;
+
+/**
+ * 根据用户ID查询所有参与的群组
+ * @param userId 用户Id
+ */
+-(void)selectAllTeamByUserId:(NSString *)userId;
+
+/**
+ * 删除好友
+ * @param userId   用户Id
+ * @param friendId 好友Id
+ */
+-(void)deleteFriend:(NSString *)userId andFriendId:(NSString *)friendId;
+
+/**
+ * 编辑群组
+ * @param groupId 群组Id
+ * @param name    名称
+ * @param userId  用户Id
+ */
+-(void)editGroup:(NSString *)groupId andName:(NSString *)name andUserId:(NSString *)userId;
+
+/**
+ * 获取群成员
+ * @param groupId 群Id
+ * @param userid  用户Id
+ */
+-(void)getGroupMember:(NSString *)groupId andUserId:(NSString *)userid;
+
+/**
+ * 修改好友备注名称
+ * @param userId   用户Id
+ * @param friendId 好友Id
+ * @param rname    备注名称
+ */
+-(void)changeFriendRName:(NSString *)userId andFriendId:(NSString *)friendId andRname:(NSString *)rname;
+
+/**
+ * 邀请群成员
+ * @param idList 好友ID集合，多个ID中间用“A”分割
+ * @param teamid 群组ID
+ */
+-(void)yaoQing:(NSString *)idList andTeamId:(NSString *)teamid;
+
+/**
+ * 提出成员
+ * @param idList 群成员ID集合（不是会员ID），多个ID中间用“A”分割
+ * @param teamid 群组ID
+ */
+-(void)tiChu:(NSString *)idList andTeamId:(NSString *)teamid;
+
+/**
+ * 解散群组
+ * @param userId  用户Id
+ * @param groupId 群组Id
+ */
+-(void)dismissTeam:(NSString *)userId andGroupId:(NSString *)groupId;
+
+/**
+ * 删除动态
+ * @param newsId 动态Id
+ */
+-(void)delDongtai:(NSString *)newsId;
+
 @end

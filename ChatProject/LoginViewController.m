@@ -197,14 +197,16 @@
         if (connectStatus == ConnectionStatus_Connected) {
             [SVProgressHUD dismiss];
             // 连接成功
+            [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:[Toolkit getUserDefaultValue:@"Id"] name:[Toolkit getUserDefaultValue:@"NickName"] portrait:[Toolkit getUserDefaultValue:@"PhotoPath"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendFunc" object:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
+            [[RCIM sharedRCIM] refreshUserInfoCache:[RCIM sharedRCIM].currentUserInfo withUserId:[Toolkit getUserDefaultValue:@"Id"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewData" object:nil];
             dispatch_async(dispatch_get_main_queue(), ^{
                 CustomTabBarViewController *customTabBarVC = [[CustomTabBarViewController alloc] init];
                 AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
                 appDelegate.window.rootViewController = customTabBarVC;
             });
-        }else if (connectStatus == ConnectionStatus_KICKED_OFFLINE_BY_OTHER_CLIENT){
-            // 当前用户在其他设备上登陆，此设备被踢下线
-            [SVProgressHUD dismiss];
         }else{
             [self loginRongCloud:userInfo[@"data"][@"Token"]];
         }
@@ -218,6 +220,7 @@
     [Toolkit setUserDefaultValue:dataParam[@"Id"] andKey:@"Id"];
     [Toolkit setUserDefaultValue:dataParam[@"NicName"] andKey:@"NickName"];
     [Toolkit setUserDefaultValue:dataParam[@"Phone"] andKey:@"Phone"];
+    [Toolkit setUserDefaultValue:[dataParam[@"HomeAddress"] isEqual:@"0"] ? @"" : dataParam[@"HomeAddress"] andKey:@"Address"];
     NSString *sexId = dataParam[@"Sexuality"];
     [Toolkit setUserDefaultValue:sexId andKey:@"SexId"];
     if ([sexId isEqual:@"0"]) {
@@ -238,7 +241,7 @@
     //连接融云服务器
     [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
         [SVProgressHUD dismiss];
-        [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[Toolkit getUserDefaultValue:@"NickName"] portrait:@"http://pic.to8to.com/attch/day_160218/20160218_d968438a2434b62ba59dH7q5KEzTS6OH.png"];
+        [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[Toolkit getUserDefaultValue:@"NickName"] portrait:[Toolkit getUserDefaultValue:@"PhotoPath"]];
         dispatch_async(dispatch_get_main_queue(), ^{
             CustomTabBarViewController *customTabBarVC = [[CustomTabBarViewController alloc] init];
             AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;

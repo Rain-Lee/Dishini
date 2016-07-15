@@ -490,6 +490,9 @@
     }
 }
 
+-(void)onClickDelNews:(NSString *)newsId{
+    
+}
 
 #pragma mark - TZImagePickerControllerDelegate
 

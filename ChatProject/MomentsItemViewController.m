@@ -8,6 +8,8 @@
 
 #import "MomentsItemViewController.h"
 #import "UserMomentsViewController.h"
+#import "PersonalViewController.h"
+#import "DetailsViewController.h"
 
 @interface MomentsItemViewController (){
     long long currentNewsId;
@@ -47,16 +49,13 @@
 -(void)addItemFunc:(id)dict{
     @try {
         if ([dict[@"code"] intValue] == 200) {
-            NSString *coverUrl = [NSString stringWithFormat:@"%@%@",Kimg_path, dict[@"data"][@"SpaceImagePath"]];
-            [self setCover:coverUrl];
-            
             NSDictionary *item = dict[@"data"];
             if ([item[@"VideoPath"] isEqual:@""]) {
                 DFTextImageLineItem *textImageItem = [[DFTextImageLineItem alloc] init];
                 textImageItem.itemId = [item[@"Id"] intValue];
                 textImageItem.userId = [item[@"UserId"] intValue];
                 textImageItem.userAvatar = [NSString stringWithFormat:@"%@%@",Kimg_path,item[@"PhotoPath"]];
-                textImageItem.userNick = item[@"NicName"];
+                textImageItem.userNick = item[@"RemarkName"];
                 textImageItem.title = @"";
                 textImageItem.text = item[@"Content"];
                 textImageItem.ts = [Toolkit getTimeIntervalFromString:item[@"PublishTime"]];
@@ -208,16 +207,21 @@
     //点击左边头像 或者 点击评论和赞的用户昵称
     NSLog(@"onClickUser: %ld", userId);
     
-    UserMomentsViewController *userMomentsVC = [[UserMomentsViewController alloc] init];
-    userMomentsVC.hidesBottomBarWhenPushed = true;
-    userMomentsVC.nickName = @"个人动态";
-    userMomentsVC.userId = [NSString stringWithFormat:@"%lu",(unsigned long)userId];
-    [self.navigationController pushViewController:userMomentsVC animated:YES];
+    if ([[Toolkit getStringValueByKey:@"Id"] isEqual:[NSString stringWithFormat:@"%lu",(unsigned long)userId]]) {
+        PersonalViewController *personalVC = [[PersonalViewController alloc] init];
+        [self.navigationController pushViewController:personalVC animated:true];
+    }else{
+        DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+        detailsVC.hidesBottomBarWhenPushed = true;
+        detailsVC.userId = [NSString stringWithFormat:@"%lu",(unsigned long)userId];
+        detailsVC.iFlag = @"1";
+        [self.navigationController pushViewController:detailsVC animated:true];
+    }
 }
 
 -(void)onClickHeaderUserAvatar
 {
-    [self onClickUser:1111];
+    //[self onClickUser:1111];
 }
 
 -(void) refresh
@@ -266,6 +270,26 @@
     //接着上传图片 和 请求服务器接口
     //请求完成之后 刷新整个界面
     
+}
+
+-(void)onClickDelNews:(NSString *)newsId{
+    NSLog(@"%@",newsId);
+    [Toolkit alertView:self andTitle:@"提示" andMsg:@"确认删除动态?" andCancelButtonTitle:@"取消" andOtherButtonTitle:@"确定" handler:^(int buttonIndex, UIAlertAction *alertView) {
+        if (buttonIndex == 1) {
+            DataProvider *dataProvider = [[DataProvider alloc] init];
+            [dataProvider setDelegateObject:self setBackFunctionName:@"delNewsCallBack:"];
+            [dataProvider delDongtai:newsId];
+        }
+    }];
+}
+
+-(void)delNewsCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        [Toolkit showSuccessWithStatus:@"删除动态成功"];
+        [self refresh];
+    }else{
+        [Toolkit showErrorWithStatus:@"删除动态失败"];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

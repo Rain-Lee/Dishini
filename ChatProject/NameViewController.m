@@ -35,7 +35,7 @@
 -(void)clickRightButton:(UIButton *)sender{
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
-    [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:nameTxt.text andSex:[Toolkit getStringValueByKey:@"SexId"] andHomeAreaId:@"0" andDescription:[Toolkit getStringValueByKey:@"Sign"]];
+    [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:nameTxt.text andSex:[Toolkit getStringValueByKey:@"SexId"] andHomeAreaId:[Toolkit getStringValueByKey:@"Address"] andDescription:[Toolkit getStringValueByKey:@"Sign"]];
 }
 
 -(void)editUserInfoCallBack:(id)dict{

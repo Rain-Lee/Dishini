@@ -9,12 +9,13 @@
 #import "ChatRoomViewController.h"
 #import "DetailsViewController.h"
 #import "ChatLocationViewController.h"
-#import "SimpleMessage.h"
-#import "SimpleMessageCell.h"
 #import <CoreMotion/CoreMotion.h>
 #import <ALBBQuPaiPlugin/ALBBQuPaiPlugin.h>
 #import "PlayVideoView.h"
 #import "BigImageShowViewController.h"
+#import "GroupMoreViewController.h"
+#import "UIImageView+WebCache.h"
+#import "PersonalViewController.h"
 
 @interface ChatRoomViewController ()<RCLocationPickerViewControllerDelegate>{
     UIViewController *recordController;
@@ -32,6 +33,70 @@
     [self initView];
     
     self.conversationMessageCollectionView.frame = CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height);
+    
+    if ([_iFlag isEqual:@"2"]) {
+        
+        // 推荐好友
+        RCImageMessage *imageMsg = [RCImageMessage messageWithImage:[self setSign].image];
+        
+        [self sendMessage:imageMsg pushContent:@""];
+    }
+}
+
+-(UIImageView *)setSign{
+    // mView
+    UIView *mView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 150)];
+    mView.backgroundColor = [UIColor whiteColor];
+    mView.layer.masksToBounds = true;
+    mView.layer.cornerRadius = 6;
+    mView.layer.borderWidth = 0.5;
+    mView.layer.borderColor = [UIColor greenColor].CGColor;
+    // titleLbl
+    UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 100, 21)];
+    titleLbl.font = [UIFont systemFontOfSize:20];
+    titleLbl.textColor = [UIColor darkGrayColor];
+    titleLbl.text = @"个人名片";
+    [mView addSubview:titleLbl];
+    // lineView
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLbl.frame), CGRectGetMaxY(titleLbl.frame) + 10, CGRectGetWidth(mView.frame) - CGRectGetMinX(titleLbl.frame) * 2, 0.5)];
+    lineView.backgroundColor = [UIColor lightGrayColor];
+    [mView addSubview:lineView];
+    // photoIv
+    UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMinX(titleLbl.frame), CGRectGetMaxY(lineView.frame) + 10, 70, 70)];
+    if ([[Toolkit getStringValueByKey:@"tjPhotoPath"] isEqual:Kimg_path]) {
+        photoIv.image = [UIImage imageNamed:@"default_photos"];
+    }else{
+        [photoIv sd_setImageWithURL:[NSURL URLWithString:[Toolkit getStringValueByKey:@"tjPhotoPath"]] placeholderImage:[UIImage imageNamed:@"default_photos"]];
+    }
+    photoIv.layer.masksToBounds = true;
+    photoIv.layer.cornerRadius = 6;
+    [mView addSubview:photoIv];
+    // nameLbl
+    UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 15, CGRectGetMinY(photoIv.frame), 250, CGRectGetHeight(photoIv.frame))];
+    nameLbl.font = [UIFont systemFontOfSize:20];
+    nameLbl.text = [Toolkit getStringValueByKey:@"tjName"];
+    [mView addSubview:nameLbl];
+    
+    return [self customSnapshoFromView:mView];
+}
+
+- (UIImageView *)customSnapshoFromView:(UIView *)inputView {
+    
+    // Make an image from the input view.
+    UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, NO, 0);
+    [inputView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    // Create an image view.
+    UIImageView *snapshot = [[UIImageView alloc] initWithImage:image];
+    snapshot.layer.masksToBounds = NO;
+    snapshot.layer.cornerRadius = 0.0;
+    snapshot.layer.shadowOffset = CGSizeMake(-5.0, 0.0);
+    snapshot.layer.shadowRadius = 5.0;
+    snapshot.layer.shadowOpacity = 0.4;
+    
+    return snapshot;
 }
 
 - (void)initView{
@@ -53,11 +118,19 @@
     [leftBtn addTarget:self action:@selector(clickLeftBtnEvent) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:leftBtn];
     
-    //会话页面注册 UI
-    [self registerClass:[SimpleMessageCell class] forCellWithReuseIdentifier:@"SimpleMessageCell"];
+    if (self.conversationType == ConversationType_GROUP) {
+        // rightBtn
+        UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75 - 14, StatusBar_HEIGHT, 75, NavigationBar_HEIGHT)];
+        rightBtn.titleLabel.textColor = [UIColor whiteColor];
+        rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [rightBtn setImage:[UIImage imageNamed:@"moreNoword"] forState:UIControlStateNormal];
+        [rightBtn addTarget:self action:@selector(clickRightBtnEvent) forControlEvents:UIControlEventTouchUpInside];
+        [topView addSubview:rightBtn];
+    }
     
     //自定义面板功能扩展
-    [self.pluginBoardView insertItemWithImage:[UIImage imageNamed:@"span"]
+    [self.pluginBoardView insertItemWithImage:[UIImage imageNamed:@"sendVideo"]
                                         title:@"小视频"
                                           tag:101];
 }
@@ -66,12 +139,24 @@
     [self.navigationController popViewControllerAnimated:true];
 }
 
+-(void)clickRightBtnEvent{
+    GroupMoreViewController *groupMoreVC = [[GroupMoreViewController alloc] init];
+    groupMoreVC.groupId = self.targetId;
+    groupMoreVC.groupName = self.title;
+    [self.navigationController pushViewController:groupMoreVC animated:true];
+}
+
 - (void)didTapCellPortrait:(NSString *)userId{
     NSLog(@"%@",userId);
-    DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
-    detailsVC.userId = userId;
-    detailsVC.iFlag = @"1";
-    [self.navigationController pushViewController:detailsVC animated:true];
+    if ([userId isEqual:[Toolkit getStringValueByKey:@"Id"]]) {
+        PersonalViewController *personalVC = [[PersonalViewController alloc] init];
+        [self.navigationController pushViewController:personalVC animated:true];
+    }else{
+        DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+        detailsVC.userId = userId;
+        detailsVC.iFlag = @"1";
+        [self.navigationController pushViewController:detailsVC animated:true];
+    }
 }
 
 - (void)locationPicker:(ChatLocationViewController *)locationPicker

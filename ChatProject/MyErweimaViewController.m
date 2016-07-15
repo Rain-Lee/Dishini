@@ -27,7 +27,7 @@
 -(void)initView{
     UIImageView * img_erweima=[[UIImageView alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 200) / 2, (SCREEN_HEIGHT - 200) / 2, 200, 200)];
     //    [img_erweima sd_setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@"erweimaimg.png"]];
-    img_erweima.image=[QRCodeGenerator qrImageForString:[Toolkit getStringValueByKey:@"Id"] imageSize:img_erweima.bounds.size.width];
+    img_erweima.image=[QRCodeGenerator qrImageForString:[NSString stringWithFormat:@"IPIC:%@",[Toolkit getStringValueByKey:@"Id"]] imageSize:img_erweima.bounds.size.width];
     [self.view addSubview:img_erweima];
 }
 

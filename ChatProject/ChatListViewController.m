@@ -29,6 +29,12 @@
     
     // 设置显示的会话类型
     [self setDisplayConversationTypes:@[@(ConversationType_PRIVATE), @(ConversationType_GROUP)]];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshViewData) name:@"refreshViewData" object:nil];
+}
+
+-(void)refreshViewData{
+    [self refreshConversationTableViewIfNeeded];
 }
 
 - (void)initView{
@@ -49,12 +55,13 @@
     rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     [rightBtn setTitle:@"单聊" forState:UIControlStateNormal];
     [rightBtn addTarget:self action:@selector(clickRightBtnEvent) forControlEvents:UIControlEventTouchUpInside];
-    [topView addSubview:rightBtn];
+    //[topView addSubview:rightBtn];
 }
 
 - (void)clickRightBtnEvent{
     ChatRoomViewController *chatRoomVC = [[ChatRoomViewController alloc] init];
     chatRoomVC.conversationType = ConversationType_PRIVATE;
+    chatRoomVC.iFlag = @"1";
     chatRoomVC.targetId = [Toolkit getUserDefaultValue:@"Id"];
     chatRoomVC.title = [Toolkit getUserDefaultValue:@"NickName"];
     chatRoomVC.hidesBottomBarWhenPushed = true;
@@ -64,11 +71,14 @@
 #pragma mark - RCConversationListViewController
 - (void)onSelectedTableRow:(RCConversationModelType)conversationModelType conversationModel:(RCConversationModel *)model atIndexPath:(NSIndexPath *)indexPath{
     ChatRoomViewController *chatRoomVC = [[ChatRoomViewController alloc] init];
-    chatRoomVC.conversationType = ConversationType_PRIVATE;
+    chatRoomVC.iFlag = @"1";
+    chatRoomVC.conversationType = model.conversationType;
     chatRoomVC.targetId = model.targetId;
     chatRoomVC.title = model.conversationTitle;
     chatRoomVC.hidesBottomBarWhenPushed = true;
     [self.navigationController pushViewController:chatRoomVC animated:true];
 }
+
+
 
 @end

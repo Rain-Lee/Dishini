@@ -13,6 +13,7 @@
 #import "SVProgressHUD.h"
 #import "SBXMLParser.h"
 #import "SecurityUtil.h"
+#import "JSONKit.h"
 
 @implementation DataProvider
 
@@ -113,7 +114,7 @@
                                       @"sexuality",
                                       @"height",
                                       @"weight",
-                                      @"homeAreaId",
+                                      @"address",
                                       @"experience",
                                       @"description",
                                       @"birthday"
@@ -644,7 +645,7 @@
         NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
         
         NSString *json = [self setParam:@[@"function",
-                                          @"applyId"
+                                          @"applyid"
                                           ]
                               andResult:@[@"AgreeFriendAndSaveFriend",
                                           applyId
@@ -657,7 +658,203 @@
     }
 }
 
+-(void)getFriendForKeyValue:(NSString *)userId{
+    if (userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"GetFriendForKeyValue",
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
 
+-(void)selectAllTeamByUserId:(NSString *)userId{
+    if (userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"SelectAllTeamByUserId",
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)deleteFriend:(NSString *)userId andFriendId:(NSString *)friendId{
+    if (userId && friendId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"friendid"
+                                          ]
+                              andResult:@[@"DeleteFriend",
+                                          userId,
+                                          friendId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)editGroup:(NSString *)groupId andName:(NSString *)name andUserId:(NSString *)userId{
+    if (groupId && name && userId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"teamid",
+                                          @"name",
+                                          @"userid"
+                                          ]
+                              andResult:@[@"EditTeam",
+                                          groupId,
+                                          name,
+                                          userId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)getGroupMember:(NSString *)groupId andUserId:(NSString *)userid{
+    if (groupId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"teamid"
+                                          ]
+                              andResult:@[@"SelectTeamMember",
+                                          userid,
+                                          groupId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)changeFriendRName:(NSString *)userId andFriendId:(NSString *)friendId andRname:(NSString *)rname{
+    if (userId && friendId && rname) {
+        NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"friendid",
+                                          @"rname"
+                                          ]
+                              andResult:@[@"ChangeFriendRName",
+                                          userId,
+                                          friendId,
+                                          rname
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)yaoQing:(NSString *)idList andTeamId:(NSString *)teamid{
+    if (idList && teamid) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"idlist",
+                                          @"teamid"
+                                          ]
+                              andResult:@[@"YaoQing",
+                                          idList,
+                                          teamid
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)tiChu:(NSString *)idList andTeamId:(NSString *)teamid{
+    if (idList && teamid) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"idlist",
+                                          @"teamid"
+                                          ]
+                              andResult:@[@"TiChu",
+                                          idList,
+                                          teamid
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)dismissTeam:(NSString *)userId andGroupId:(NSString *)groupId{
+    if (userId && groupId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"teamid"
+                                          ]
+                              andResult:@[@"DismissTeam",
+                                          userId,
+                                          groupId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)delDongtai:(NSString *)newsId{
+    if (newsId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"id"
+                                          ]
+                              andResult:@[@"DelDongtai",
+                                          newsId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
 
 
 
@@ -707,6 +904,14 @@
 {
     NSString *securityStr;
     securityStr = [SecurityUtil encryptAESData:[NSString stringWithFormat:@"%lu&%@",(unsigned long)str.length,str]];
+    return securityStr;
+    
+}
+
+-(NSString *)encryptionStr11111:(NSString *)str
+{
+    NSString *securityStr;
+    securityStr = [SecurityUtil decryptAESData:str];
     return securityStr;
     
 }
@@ -802,21 +1007,21 @@
     }];
 }
 
--(NSDictionary *)getUserInfoByUserID:(NSString *)userID
+-(NSDictionary *)getUserInfoByUserIDChat:(NSString *)userID
 {
     BOOL isTrue = false;
-    NSString * urlstr=[NSString stringWithFormat:@"%@LoginAndRegister.asmx/UpdateUser",Url];
+    NSString * urlstr=[NSString stringWithFormat:@"%@/LoginAndRegister.asmx/GetUserInforForIos",Url];
     NSURL *url = [NSURL URLWithString:urlstr];
     NSMutableURLRequest *urlrequest = [[NSMutableURLRequest alloc]initWithURL:url];
     urlrequest.HTTPMethod = @"POST";
-    NSString *bodyStr = [NSString stringWithFormat:@"userid=%@",userID];
+    NSString *bodyStr = [NSString stringWithFormat:@"userid=%@&friendid=%@",[Toolkit getStringValueByKey:@"Id"],userID];
     NSData *body = [bodyStr dataUsingEncoding:NSUTF8StringEncoding];
     urlrequest.HTTPBody = body;
     AFHTTPRequestOperation *requestOperation = [[AFHTTPRequestOperation alloc] initWithRequest:urlrequest];
     requestOperation.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/plain"];
     [requestOperation start];
     [requestOperation waitUntilFinished];
-    
+    NSLog(@"%@",requestOperation.responseString);
     NSData * data =[requestOperation.responseString dataUsingEncoding:NSUTF8StringEncoding];
     
     

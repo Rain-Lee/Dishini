@@ -108,4 +108,7 @@
 #pragma mark - time 
 
 +(NSString *)GettitleForDate:(NSString *)dateStr;
+
+// 判断是否为纯数字
++ (BOOL)isNumText:(NSString *)str;
 @end

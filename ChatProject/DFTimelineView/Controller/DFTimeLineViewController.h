@@ -27,6 +27,9 @@
 //清空所有数据
 -(void)deleteAllItem;
 
+//删除动态
+-(void)onClickDelNews:(NSString *)newsId;
+
 //赞
 -(void) addLikeItem:(DFLineLikeItem *) likeItem itemId:(long long) itemId;
 

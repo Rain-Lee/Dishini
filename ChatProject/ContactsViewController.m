@@ -14,6 +14,7 @@
 #import "LaunchGroupChatViewController.h"
 #import "GroupChatViewController.h"
 #import "DetailsViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define ContactsCell @"ContactsTableViewCell"
 
@@ -39,6 +40,8 @@
     [self setNavtitle:@"通讯录"];
     
     [self initView];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mRefreshData) name:@"mRefreshData" object:nil];
 }
 
 - (void)initView{
@@ -69,6 +72,9 @@
         for (int i=0; i<contactsData.count; i++) {
             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:contactsData[i][@"Value"]];
             [tempDict setObject:contactsData[i][@"Key"] forKey:@"Key"];
+            if ([[Toolkit judgeIsNull:tempDict[@"RemarkName"]] isEqual:@""]) {
+                tempDict[@"RemarkName"] = tempDict[@"NicName"];
+            }
             [itemmutablearray addObject:tempDict];
         }
         firstLetterArray = [ChineseString mIndexArray:[itemmutablearray valueForKey:@"RemarkName"]];
@@ -111,7 +117,9 @@
             cell.nameLbl.text = @"群聊";
         }
     }else{
-        cell.photoIv.image = [UIImage imageNamed:@"default_photo"];
+        NSLog(@"%@",letterResultArray);
+        NSString *imagePhoto = [NSString stringWithFormat:@"%@%@",Kimg_path,((ChineseString *)letterResultArray[indexPath.section - 1][indexPath.row]).photoImg];
+        [cell.photoIv sd_setImageWithURL:[NSURL URLWithString:imagePhoto] placeholderImage:[UIImage imageNamed:@"default_photo"]];
         cell.nameLbl.text = ((ChineseString *)letterResultArray[indexPath.section - 1][indexPath.row]).string;
     }
     return cell;
@@ -145,18 +153,60 @@
         }else if (indexPath.row == 1){
             LaunchGroupChatViewController *launchGroupChatVC = [[LaunchGroupChatViewController alloc] init];
             launchGroupChatVC.hidesBottomBarWhenPushed = true;
+            launchGroupChatVC.iFlag = @"1";
             [self.navigationController pushViewController:launchGroupChatVC animated:true];
         }else if (indexPath.row == 2){
             GroupChatViewController *groupChatVC = [[GroupChatViewController alloc] init];
+            groupChatVC.iFlag = @"1";
             groupChatVC.hidesBottomBarWhenPushed = true;
             [self.navigationController pushViewController:groupChatVC animated:true];
         }
     }else{
         DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
         detailsVC.hidesBottomBarWhenPushed = true;
+        detailsVC.userId = ((ChineseString *)letterResultArray[indexPath.section - 1][indexPath.row]).friendID;
         detailsVC.iFlag = @"1";
         [self.navigationController pushViewController:detailsVC animated:true];
     }
+}
+
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return @"删除";
+//}
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    if (indexPath.section == 0) {
+//        return NO;
+//    }else{
+//        return YES;
+//    }
+//}
+//
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+//    NSLog(@"%@",((ChineseString *)letterResultArray[indexPath.section - 1][indexPath.row]).string);
+//    if (editingStyle == UITableViewCellEditingStyleDelete) {
+//        [Toolkit showWithStatus:@"正在删除"];
+//        DataProvider *dataProvider = [[DataProvider alloc] init];
+//        [dataProvider setDelegateObject:self setBackFunctionName:@"DelBackCall:"];
+//        NSString *friendID = ((ChineseString *)letterResultArray[indexPath.section - 1][indexPath.row]).friendID;
+//        [dataProvider deleteFriend:[Toolkit getStringValueByKey:@"Id"] andFriendId:friendID];
+//    }
+//    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+//    }
+//}
+//
+//-(void)DelBackCall:(id)dict{
+//    [SVProgressHUD dismiss];
+//    if ([dict[@"code"] intValue] == 200) {
+//        [Toolkit showSuccessWithStatus:@"删除成功"];
+//        [mTableView.header beginRefreshing];
+//    }else{
+//        [Toolkit showErrorWithStatus:@"删除失败"];
+//    }
+//}
+
+-(void)mRefreshData{
+    [mTableView.header beginRefreshing];
 }
 
 @end

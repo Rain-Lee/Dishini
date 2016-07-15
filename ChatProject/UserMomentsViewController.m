@@ -8,9 +8,12 @@
 
 #import "UserMomentsViewController.h"
 #import "MomentsItemViewController.h"
+#import "DetailsViewController.h"
+#import "PersonalViewController.h"
 
-@interface UserMomentsViewController (){
+@interface UserMomentsViewController ()<UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     int index;
+    UIImage *headImage;
 }
 
 @end
@@ -22,23 +25,26 @@
     
     [self setTopView:2 andTitle:_nickName];
     
-    [self initData];
+    [self getUserInfoById];
     
-    [self setHeader];
+    [self initData];
 }
 
--(void) setHeader
-{
-    NSString *coverUrl = [Toolkit getUserDefaultValue:@"SpaceImagePath"];
-    [self setCover:coverUrl];
-    
-    NSString *avatarUrl = [Toolkit getStringValueByKey:@"PhotoPath"];
-    [self setUserAvatar:avatarUrl];
-    
-    [self setUserNick:[Toolkit getStringValueByKey:@"NickName"]];
-    
-    //[self setUserSign:@"梦想还是要有的 万一实现了呢"];
-    
+-(void)getUserInfoById{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        DataProvider *dataUserInfo1 = [[DataProvider alloc] init];
+        [dataUserInfo1 setDelegateObject:self setBackFunctionName:@"getUserInfoCallBack:"];
+        [dataUserInfo1 getUserInfoByUserId:[Toolkit getStringValueByKey:@"Id"] andFriendId:_userId];
+    });
+}
+
+-(void)getUserInfoCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        NSString *photoPath = [NSString stringWithFormat:@"%@%@",Kimg_path,[Toolkit judgeIsNull:dict[@"data"][@"PhotoPath"]]];
+        [self setUserAvatar:photoPath];
+        NSString *nickName = [Toolkit judgeIsNull:dict[@"data"][@"NicName"]];
+        [self setUserNick:nickName];
+    }
 }
 
 -(void) initData
@@ -70,6 +76,11 @@
 -(void)addItemFunc:(id)dict{
     @try {
         if ([dict[@"code"] intValue] == 200) {
+            if (![[Toolkit judgeIsNull:dict[@"SpaceImagePath"]] isEqual:@""]) {
+                NSString *coverUrl = [NSString stringWithFormat:@"%@%@",Kimg_path, dict[@"SpaceImagePath"]];
+                [self setCover:coverUrl];
+            }
+            
             for (NSDictionary *item in dict[@"data"]) {
                 DFTextImageUserLineItem *textImageItem = [[DFTextImageUserLineItem alloc] init];
                 textImageItem.itemId = [item[@"Id"] intValue];
@@ -123,7 +134,82 @@
 }
 
 -(void)tapCoverViewEvent{
-    
+    [Toolkit actionSheetViewSecond:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:[NSArray arrayWithObjects:@"拍照", @"从手机相册选择", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
+        if (buttonIndex == 1) {
+            // 拍照
+            UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+            mImagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+            mImagePick.delegate = self;
+            mImagePick.allowsEditing = YES;
+            [self presentViewController:mImagePick animated:YES completion:nil];
+        }else if (buttonIndex == 2){
+            // 从相册中选取
+            UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+            mImagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            mImagePick.delegate = self;
+            mImagePick.allowsEditing = YES;
+            [self presentViewController:mImagePick animated:YES completion:nil];
+        }
+    }];
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(800, 800)];
+    NSData *imageData = UIImagePNGRepresentation(smallImage);
+    headImage = smallImage;
+    [self changeHeadBgImage:imageData];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(UIImage *)scaleFromImage:(UIImage *)image andSize:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(void)changeHeadBgImage:(NSData *)data{
+    [Toolkit showWithStatus:@"上传中..."];
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"didGetImageName:"];
+    NSString *imagebase64 = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    [dataProvider UploadImgWithImgdata:imagebase64];
+}
+
+-(void)didGetImageName:(id)dict{
+    [SVProgressHUD dismiss];
+    if([dict[@"code"] intValue] == 200){
+        NSLog(@"%@",dict);
+        [Toolkit showWithStatus:@"正在保存..."];
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"saveImageCallBack:"];
+        [dataProvider saveSpaceImage:[Toolkit getStringValueByKey:@"Id"] andImagePath:dict[@"data"][@"BigImagePath"]];
+    }
+}
+
+-(void)saveImageCallBack:(id)dict{
+    [SVProgressHUD dismiss];
+    NSLog(@"%@",dict);
+    if ([dict[@"code"] intValue] == 200) {
+        [self setCoverImg:headImage];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"date"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
+}
+
+-(void)onClickHeaderUserAvatar{
+    if ([[Toolkit getStringValueByKey:@"Id"] isEqual:_userId]) {
+        PersonalViewController *personalVC = [[PersonalViewController alloc] init];
+        [self.navigationController pushViewController:personalVC animated:true];
+    }else{
+        DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+        detailsVC.hidesBottomBarWhenPushed = true;
+        detailsVC.userId = _userId;
+        detailsVC.iFlag = @"1";
+        [self.navigationController pushViewController:detailsVC animated:true];
+    }
 }
 
 @end

@@ -60,6 +60,8 @@
 
 @property (nonatomic, strong) UILabel *timeLabel;
 
+@property (nonatomic, strong) UIButton *delBtn;
+
 @property (nonatomic, strong) UIButton *likeCmtButton;
 
 
@@ -105,7 +107,7 @@
         width = UserAvatarSize;
         height = width;
         _userAvatarView = [[UIImageView alloc] initWithFrame:CGRectMake(x, y, width, height)];
-        _userAvatarView.backgroundColor = [UIColor lightGrayColor];
+        //_userAvatarView.backgroundColor = [UIColor lightGrayColor];
         [self.contentView addSubview:_userAvatarView];
         
         _userAvatarButton = [[UIButton alloc] initWithFrame:_userAvatarView.frame];
@@ -166,6 +168,15 @@
         [self.contentView addSubview:_timeLabel];
     }
     
+    if (_delBtn == nil) {
+        _delBtn = [[UIButton alloc] initWithFrame:CGRectZero];
+        [_delBtn setTitleColor:[UIColor colorWithRed:0.23 green:0.60 blue:0.85 alpha:1.00] forState:UIControlStateNormal];
+        _delBtn.titleLabel.font = TimeLabelFont;
+        _delBtn.hidden = YES;
+        [_delBtn setTitle:@"删除" forState:UIControlStateNormal];
+        [_delBtn addTarget:self action:@selector(clickDelEvent:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:_delBtn];
+    }
     
     if (_likeCmtButton == nil) {
         _likeCmtButton = [[UIButton alloc] initWithFrame:CGRectZero];
@@ -211,7 +222,8 @@
     self.item = item;
     
     
-    [_userAvatarView sd_setImageWithURL:[NSURL URLWithString:item.userAvatar]];
+    //[_userAvatarView sd_setImageWithURL:[NSURL URLWithString:item.userAvatar]];
+    [_userAvatarView sd_setImageWithURL:[NSURL URLWithString:item.userAvatar] placeholderImage:[UIImage imageNamed:@"default_photo"]];
     
     NSAttributedString *userNick  = [[NSAttributedString alloc] initWithString:item.userNick];
     
@@ -232,6 +244,7 @@
     _titleLabel.frame = CGRectMake(x, y, width, height);
     _titleLabel.text = item.title;
     _titleLabel.hidden = item.title == nil || [item.title isEqualToString:@""];
+
     
     [_likeCommentToolbar updateClickZan];
 }
@@ -276,11 +289,21 @@
     
     //时间
     y = CGRectGetMaxY(_bodyView.frame) + sumHeight + Padding;
-    width = 150;
+    NSString *timeStr = [DFToolUtil preettyTime:self.item.ts];
+    CGSize textSize = [timeStr sizeWithAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:12]}];
+    width = textSize.width;
     height = TimeLabelHeight;
     _timeLabel.hidden = NO;
     _timeLabel.frame = CGRectMake(x, y, width, height);
-    _timeLabel.text = [DFToolUtil preettyTime:self.item.ts];
+    _timeLabel.text = timeStr;
+    
+    if ([[NSString stringWithFormat:@"%lu",(unsigned long)self.item.userId] isEqual:[Toolkit getStringValueByKey:@"Id"]]) {
+        _delBtn.hidden = false;
+        _delBtn.tag = self.item.itemId;
+        _delBtn.frame = CGRectMake(CGRectGetMaxX(_timeLabel.frame), CGRectGetMinY(_timeLabel.frame) - 2.5, 60, 20);
+    }else{
+        _delBtn.hidden = true;
+    }
     
     
     //点赞评论按钮
@@ -391,6 +414,12 @@
     }
     _isLikeCommentToolbarShow = NO;
     _likeCommentToolbar.hidden = YES;
+}
+
+-(void)clickDelEvent:(UIButton *)sender{
+    if ([self.delegate respondsToSelector:@selector(onClickDelNews:)]) {
+        [self.delegate onClickDelNews:[NSString stringWithFormat:@"%ld",(long)sender.tag]];
+    }
 }
 
 

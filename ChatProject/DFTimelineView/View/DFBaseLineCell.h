@@ -34,6 +34,8 @@
 
 -(void) onClickComment:(long long) commentId itemId:(long long) itemId;
 
+-(void) onClickDelNews:(NSString *)newsId;
+
 
 @end
 

@@ -12,6 +12,7 @@
 
 @interface RemarksViewController (){
     UITableView *mTableView;
+    UITextField *remarkTxt;
 }
 
 @end
@@ -26,6 +27,29 @@
     [self addRightbuttontitle:@"保存"];
     
     [self initView];
+}
+
+-(void)clickRightButton:(UIButton *)sender{
+    if ([remarkTxt.text isEqual:@""]) {
+        return;
+    }
+    [Toolkit showWithStatus:@"保存中..."];
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"changeFriendRName:"];
+    [dataProvider changeFriendRName:[Toolkit getStringValueByKey:@"Id"] andFriendId:_userId andRname:remarkTxt.text];
+}
+
+-(void)changeFriendRName:(id)dict{
+    [SVProgressHUD dismiss];
+    if ([dict[@"code"] intValue] == 200) {
+        [Toolkit showErrorWithStatus:@"保存成功"];
+        if ([self.delegate respondsToSelector:@selector(changeRemarkRefreshData)]) {
+            [self.delegate changeRemarkRefreshData];
+        }
+        [self.navigationController popViewControllerAnimated:true];
+    }else{
+        [Toolkit showErrorWithStatus:dict[@"error"]];
+    }
 }
 
 -(void)initView{
@@ -44,11 +68,11 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return 2;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0 || indexPath.row == 2 || indexPath.row == 4) {
+    if (indexPath.row == 0) {
         return 40;
     }else{
         return 50;
@@ -60,6 +84,7 @@
     for (UIView *itemView in cell.contentView.subviews) {
         [itemView removeFromSuperview];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     if (indexPath.row == 0) {
         cell.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.00];
         // remarkLbl
@@ -68,10 +93,13 @@
         remarkLbl.text = @"备注名";
         [cell.contentView addSubview:remarkLbl];
     }else if (indexPath.row == 1){
-        UITextField *remarkTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
+        remarkTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
+        remarkTxt.text = _remarkValue;
         remarkTxt.placeholder = @"添加备注名";
+        [remarkTxt addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
         [cell.contentView addSubview:remarkTxt];
-    }else if (indexPath.row == 2){
+    }
+    /*else if (indexPath.row == 2){
         cell.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.00];
         // phoneNoLbl
         UILabel *phoneNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 15, 200, 21)];
@@ -93,8 +121,14 @@
         UITextField *descriptionTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
         descriptionTxt.placeholder = @"请输入备注信息";
         [cell.contentView addSubview:descriptionTxt];
-    }
+    }*/
     return cell;
+}
+
+-(void)textFieldChange:(UITextField *)textField{
+    if (remarkTxt.text.length > 13) {
+        remarkTxt.text = [remarkTxt.text substringToIndex:13];
+    }
 }
 
 @end

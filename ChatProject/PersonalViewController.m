@@ -12,10 +12,11 @@
 #import "MyErweimaViewController.h"
 #import "MyAddressViewController.h"
 #import "UIImageView+WebCache.h"
+#import "InputAddressViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
-@interface PersonalViewController ()<UIPickerViewDataSource, UIPickerViewDelegate, SignDelegate, NameDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
+@interface PersonalViewController ()<UIPickerViewDataSource, UIPickerViewDelegate, SignDelegate, NameDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, InputAddressDelegate>{
     // view
     UITableView *mTableView;
     UIView *BackView;
@@ -51,8 +52,9 @@
     nameValue = [Toolkit getStringValueByKey:@"NickName"];
     sexValue = [Toolkit getStringValueByKey:@"Sex"];
     signValue = [Toolkit getStringValueByKey:@"Sign"];
+    addressValue = [Toolkit getStringValueByKey:@"Address"];
     
-    [self initAddressData];
+    //[self initAddressData];
     
     [self initView];
 }
@@ -204,12 +206,12 @@
         // wechatNoLbl
         UILabel *wechatNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, 50)];
         wechatNoLbl.textAlignment = NSTextAlignmentLeft;
-        wechatNoLbl.text = @"微信号";
+        wechatNoLbl.text = @"IPIC";
         [cell.contentView addSubview:wechatNoLbl];
         // wechatNoShowLbl
         UILabel *wechatNoShowLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 20 - 200, 0, 200, 45)];
         wechatNoShowLbl.font = [UIFont systemFontOfSize:16];
-        wechatNoShowLbl.text = @"ddaddfa";
+        wechatNoShowLbl.text = [Toolkit getStringValueByKey:@"Phone"];
         wechatNoShowLbl.textAlignment = NSTextAlignmentRight;
         wechatNoShowLbl.textColor = [UIColor grayColor];
         [cell.contentView addSubview:wechatNoShowLbl];
@@ -220,6 +222,10 @@
         qrCodeLbl.textAlignment = NSTextAlignmentLeft;
         qrCodeLbl.text = @"我的二维码";
         [cell.contentView addSubview:qrCodeLbl];
+        // erweimaIv
+        UIImageView *erweimaIv = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 28 - 20, (CGRectGetHeight(cell.frame) - 20) / 2, 20, 20)];
+        erweimaIv.image = [UIImage imageNamed:@"erweima"];
+        [cell.contentView addSubview:erweimaIv];
     }
 //    else if (indexPath.row == 4){
 //        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -339,11 +345,17 @@
             }
             DataProvider *dataProvider = [[DataProvider alloc] init];
             [dataProvider setDelegateObject:self setBackFunctionName:@"UpdateSexCallBack:"];
-            [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:[Toolkit getStringValueByKey:@"NickName"] andSex:[NSString stringWithFormat:@"%d",buttonIndex] andHomeAreaId:@"0" andDescription:[Toolkit getStringValueByKey:@"Sign"]];
+            [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:[Toolkit getStringValueByKey:@"NickName"] andSex:[NSString stringWithFormat:@"%d",buttonIndex] andHomeAreaId:[Toolkit getStringValueByKey:@"Address"] andDescription:[Toolkit getStringValueByKey:@"Sign"]];
         }];
     }else if (indexPath.row == 7){
-        [self.view addSubview:BackView];
-        [self.view addSubview:addressPickView];
+        InputAddressViewController *inputAddressVC = [[InputAddressViewController alloc] init];
+        inputAddressVC.delegate = self;
+        inputAddressVC.addressStr = addressValue;
+        [self.navigationController pushViewController:inputAddressVC animated:true];
+        
+        
+//        [self.view addSubview:BackView];
+//        [self.view addSubview:addressPickView];
     }else if (indexPath.row == 8){
         SignViewController *signVC = [[SignViewController alloc] init];
         signVC.delegate = self;
@@ -445,6 +457,11 @@
 -(void)getName:(NSString *)nameStr{
     nameValue = nameStr;
     [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+
+-(void)getAddress:(NSString *)addressStr{
+    addressValue = addressStr;
+    [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:7 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 @end

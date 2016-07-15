@@ -125,7 +125,7 @@
 
 //过滤指定字符串   里面的指定字符根据自己的需要添加
 +(NSString*)RemoveSpecialCharacter: (NSString *)str {
-    NSRange urgentRange = [str rangeOfCharacterFromSet: [NSCharacterSet characterSetWithCharactersInString: @",.？、 ~￥#&<>《》()[]{}【】^@/￡¤|§¨「」『』￠￢￣~@#&*（）——+|《》$_€"]];
+    NSRange urgentRange = [str rangeOfCharacterFromSet: [NSCharacterSet characterSetWithCharactersInString: @",.？、 ~￥#&<>《》()[]{}【】^@/￡¤|§¨「」『』￠￢￣~@#&（）——+|《》$_€"]];
     if (urgentRange.location != NSNotFound)
     {
         return [self RemoveSpecialCharacter:[str stringByReplacingCharactersInRange:urgentRange withString:@""]];

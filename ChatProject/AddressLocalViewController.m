@@ -610,18 +610,15 @@
     
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendCallBack:"];
-    //[dataProvider SaveFriend:get_sp(@"id") andFriendid:selectFriendID];
+    [dataProvider addFriend:[Toolkit getStringValueByKey:@"Id"] andFriendId:selectFriendID];
 }
 
 -(void)addFriendCallBack:(id)dict{
-    [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
-        NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
-        [userDefault setValue:@"1" forKey:@"updateMyFriend"];
-        [Toolkit showSuccessWithStatus:@"添加成功"];
-        [_tableView.header beginRefreshing];
-    }else{
-        [Toolkit showSuccessWithStatus:@"添加失败"];
+        [Toolkit showSuccessWithStatus:@"申请添加好友成功"];
+    }
+    else{
+        [Toolkit showErrorWithStatus:dict[@"data"]];
     }
 }
 

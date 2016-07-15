@@ -11,6 +11,7 @@
 #import "MJRefresh.h"
 #import "UIImageView+WebCache.h"
 #import "DetailsViewController.h"
+#import "PersonalViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -118,10 +119,12 @@
 
 -(void)stateBtnCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendFunc" object:nil];
         [self.navigationController popToRootViewControllerAnimated:true];
-        [Toolkit showInfoWithStatus:@"操作成功"];
+        [Toolkit showSuccessWithStatus:@"操作成功"];
     }else{
-        [Toolkit showInfoWithStatus:dict[@"error"]];
+        [Toolkit showErrorWithStatus:dict[@"error"]];
     }
 }
 
@@ -165,7 +168,7 @@
             // searchTxt
             searchTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
             searchTxt.delegate = self;
-            searchTxt.keyboardType = UIKeyboardTypeNumberPad;
+            searchTxt.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
             searchTxt.returnKeyType = UIReturnKeySearch;
             searchTxt.placeholder = @"请输入手机号";
             [cell.contentView addSubview:searchTxt];
@@ -282,12 +285,16 @@
     if ([textField.text isEqual:@""]) {
         return;
     }
-    
-    DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
-    detailsVC.iFlag = @"2";
-    detailsVC.userId = [Toolkit getStringValueByKey:@"Id"];
-    detailsVC.phone = searchTxt.text;
-    [self.navigationController pushViewController:detailsVC animated:true];
+    if ([[Toolkit getStringValueByKey:@"Phone"] isEqual:searchTxt.text]){
+        PersonalViewController *personalVC = [[PersonalViewController alloc] init];
+        [self.navigationController pushViewController:personalVC animated:true];
+    }else{
+        DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+        detailsVC.iFlag = @"2";
+        detailsVC.userId = [Toolkit getStringValueByKey:@"Id"];
+        detailsVC.phone = searchTxt.text;
+        [self.navigationController pushViewController:detailsVC animated:true];
+    }
 }
 
 @end

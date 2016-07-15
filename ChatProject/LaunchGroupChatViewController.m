@@ -9,6 +9,9 @@
 #import "LaunchGroupChatViewController.h"
 #import "MJRefresh.h"
 #import "ChineseString.h"
+#import "GroupChatViewController.h"
+#import "ChatRoomViewController.h"
+#import "UIImageView+WebCache.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -18,10 +21,13 @@
     UITextField *searchTxt;
     
     // data
+    NSMutableArray *oFriendArray;
+    NSMutableArray *friendArray;
     NSMutableArray *firstLetterArray;
-    NSMutableArray *contactsData;
     NSMutableArray *letterResultArray;
     NSMutableArray *selectFriends;
+    NSMutableArray *filterGroupData;
+    NSString *filterValue;
 }
 
 @end
@@ -43,14 +49,30 @@
 }
 
 -(void)clickRightButton:(UIButton *)sender{
-    DataProvider *dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"createGroupCallBack:"];
-    [dataProvider createGroup:[Toolkit getStringValueByKey:@"Id"] andIdList:@"2013A1014"];
+    if (selectFriends.count > 0) {
+        NSString *selectFriendStr = @"";
+        for (NSString *item in selectFriends) {
+            selectFriendStr = [NSString stringWithFormat:@"%@A%@",selectFriendStr,item];
+        }
+        selectFriendStr = [selectFriendStr substringFromIndex:1];
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"createGroupCallBack:"];
+        [dataProvider createGroup:[Toolkit getStringValueByKey:@"Id"] andIdList:selectFriendStr];
+    }
 }
 
 -(void)createGroupCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
-        [Toolkit showSuccessWithStatus:@"创建群组成功"];
+        // 刷新会话列表页面
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
+        
+        //显示聊天会话界面
+        ChatRoomViewController *chat = [[ChatRoomViewController alloc] init];
+        chat.iFlag = _iFlag;
+        chat.conversationType = ConversationType_GROUP;
+        chat.targetId = [NSString stringWithFormat:@"%@",dict[@"data"][@"TeamId"]];
+        chat.title = @"未命名";
+        [self.navigationController pushViewController:chat animated:YES];
     }else{
         [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
@@ -70,21 +92,25 @@
 }
 
 - (void)refreshData{
+    filterValue = @"";
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendsCallBack:"];
-    [dataProvider getFriends:@"2"];
+    [dataProvider getFriends:[Toolkit getStringValueByKey:@"Id"]];
 }
 
 - (void)getFriendsCallBack:(id)dict{
-    contactsData = [[NSMutableArray alloc] init];
+    oFriendArray = [[NSMutableArray alloc] init];
     firstLetterArray = [[NSMutableArray alloc] init];
     letterResultArray = [[NSMutableArray alloc] init];
     if ([dict[@"code"] intValue] == 200) {
-        contactsData = dict[@"data"];
+        oFriendArray = dict[@"data"];
         NSMutableArray * itemmutablearray=[[NSMutableArray alloc] init];
-        for (int i=0; i<contactsData.count; i++) {
-            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:contactsData[i][@"Value"]];
-            [tempDict setObject:contactsData[i][@"Key"] forKey:@"Key"];
+        for (int i=0; i<oFriendArray.count; i++) {
+            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:oFriendArray[i][@"Value"]];
+            [tempDict setObject:oFriendArray[i][@"Key"] forKey:@"Key"];
+            if ([[Toolkit judgeIsNull:tempDict[@"RemarkName"]] isEqual:@""]) {
+                tempDict[@"RemarkName"] = tempDict[@"NicName"];
+            }
             [itemmutablearray addObject:tempDict];
         }
         firstLetterArray = [ChineseString mIndexArray:[itemmutablearray valueForKey:@"RemarkName"]];
@@ -92,6 +118,42 @@
         [mTableView reloadData];
     }
     [mTableView.header endRefreshing];
+}
+
+-(void)mReloadData:(NSString *)filterStr{
+    filterValue = filterStr;
+    NSMutableArray * itemmutablearray=[[NSMutableArray alloc] init];
+    if ([filterStr isEqual:@""]) {
+        friendArray = [[NSMutableArray alloc] initWithArray:oFriendArray];
+        for (int i=0; i<friendArray.count; i++) {
+            [itemmutablearray addObject:friendArray[i][@"Value"]];
+        }
+    }else{
+        for (int i = 0; i < oFriendArray.count; i++) {
+            NSString *itemName = oFriendArray[i][@"Value"][@"RemarkName"];
+            if ([itemName isEqual:@""]) {
+                itemName = oFriendArray[i][@"Value"][@"NicName"];
+            }
+            if ([itemName containsString:filterStr]) {
+                NSMutableDictionary *tempDict = [[NSMutableDictionary alloc] initWithDictionary:oFriendArray[i][@"Value"]];
+                if ([[Toolkit judgeIsNull:tempDict[@"RemarkName"]] isEqual:@""]) {
+                    tempDict[@"RemarkName"] = tempDict[@"NicName"];
+                }
+                [itemmutablearray addObject:tempDict];
+            }
+        }
+    }
+    @try {
+        firstLetterArray = [ChineseString IndexArray:[itemmutablearray valueForKey:@"RemarkName"]];
+        letterResultArray = [ChineseString mLetterSortArray:itemmutablearray];
+    }
+    @catch (NSException *exception) {
+        
+    }
+    @finally {
+        
+    }
+    [mTableView reloadData];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -121,7 +183,9 @@
             // searchTxt
             searchTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
             searchTxt.delegate = self;
+            searchTxt.returnKeyType = UIReturnKeySearch;
             searchTxt.placeholder = @"请输入名称";
+            searchTxt.text = filterValue;
             [cell.contentView addSubview:searchTxt];
             // searchIv
             UIImageView *searchIv = [[UIImageView alloc] initWithFrame:CGRectMake(0, (CGRectGetHeight(searchTxt.frame) - 22) / 2, 35, 22)];
@@ -151,7 +215,8 @@
         
         // photoIv
         UIImageView *photoIv = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(checkIv.frame) + 7, (CGRectGetHeight(cell.frame) - 40) / 2, 40, 40)];
-        photoIv.image = [UIImage imageNamed:@"default_photo"];
+        NSString *photoPath = [NSString stringWithFormat:@"%@%@",Kimg_path,((ChineseString *)letterResultArray[indexPath.section - 1][indexPath.row]).photoImg];
+        [photoIv sd_setImageWithURL:[NSURL URLWithString:photoPath] placeholderImage:[UIImage imageNamed:@"default_photo"]];
         [cell.contentView addSubview:photoIv];
         
         // nameLbl
@@ -197,7 +262,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    if (indexPath.section >= 1) {
+    if (indexPath.section == 0){
+        if (indexPath.row == 1) {
+            GroupChatViewController *groupChatVC = [[GroupChatViewController alloc] init];
+            groupChatVC.iFlag = @"2";
+            [self.navigationController pushViewController:groupChatVC animated:true];
+        }
+    }else{
         if (selectFriends == nil) {
             selectFriends = [[NSMutableArray alloc] init];
         }
@@ -210,11 +281,11 @@
         
         [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-    NSLog(@"%@",selectFriends);
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
+    [self mReloadData:searchTxt.text];
     return true;
 }
 

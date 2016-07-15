@@ -32,7 +32,7 @@
 -(void)clickRightButton:(UIButton *)sender{
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"signCallBack:"];
-    [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:[Toolkit getStringValueByKey:@"NickName"] andSex:[Toolkit getStringValueByKey:@"SexId"] andHomeAreaId:@"0" andDescription:contentTv.text];
+    [dataProvider editUserInfo:[Toolkit getStringValueByKey:@"Id"] andNickName:[Toolkit getStringValueByKey:@"NickName"] andSex:[Toolkit getStringValueByKey:@"SexId"] andHomeAreaId:[Toolkit getStringValueByKey:@"Address"] andDescription:contentTv.text];
 }
 
 -(void)signCallBack:(id)dict{

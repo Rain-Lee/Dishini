@@ -10,4 +10,9 @@
 
 @interface GroupChatViewController : BaseNavigationController<UITableViewDataSource, UITableViewDelegate>
 
+/**
+ * 1：正常    2：推荐好友
+ */
+@property(nonatomic,strong) NSString *iFlag;
+
 @end

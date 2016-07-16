@@ -47,22 +47,24 @@
         [Toolkit alertView:self andTitle:@"提示" andMsg:@"两次密码输入不一致" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         return;
     }
+    [Toolkit showWithStatus:@"请稍等..."];
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"saveCallBack:"];
     [dataProvider registerUser:_phone andPassword:passwordTxt.text];
 }
 
 -(void)saveCallBack:(id)dict{// 18810375184
-    dispatch_async(dispatch_get_main_queue(), ^{
-        DataProvider *dataProvider2 = [[DataProvider alloc] init];
-        [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
-        [dataProvider2 editUserInfo:dict[@"data"] andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"0" andDescription:@""];
-    });
-//    if ([dict[@"code"] intValue] == 200) {
-//        
-//    }else{
-//        [SVProgressHUD showInfoWithStatus:dict[@"data"]];
-//    }
+    @try {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            DataProvider *dataProvider2 = [[DataProvider alloc] init];
+            [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
+            [dataProvider2 editUserInfo:dict[@"data"] andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"0" andDescription:@""];
+        });
+    } @catch (NSException *exception) {
+        [SVProgressHUD dismiss];
+    } @finally {
+        
+    }
 }
 
 -(void)editUserInfoCallBack:(id)dict{
@@ -73,10 +75,13 @@
             [dataProvider3 setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
             [dataProvider3 login:_phone andPassword:passwordTxt.text];
         });
+    }else{
+        [SVProgressHUD dismiss];
     }
 }
 
 -(void)loginCallBack:(id)dict{
+    [SVProgressHUD dismiss];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"loginCallBackSetting" object:nil userInfo:dict];
 }
 

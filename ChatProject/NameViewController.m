@@ -64,12 +64,19 @@
     nameTxt.placeholder = @"请输入名称";
     nameTxt.backgroundColor = [UIColor whiteColor];
     nameTxt.text = _nameStr;
+    [nameTxt addTarget:self action:@selector(textFieldChange:) forControlEvents:UIControlEventEditingChanged];
     [cusView addSubview:nameTxt];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     return true;
+}
+
+-(void)textFieldChange:(UITextField *)textField{
+    if (nameTxt.text.length > 13) {
+        nameTxt.text = [nameTxt.text substringToIndex:13];
+    }
 }
 
 @end

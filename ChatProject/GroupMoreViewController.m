@@ -177,7 +177,7 @@
             [cell.photoIv sd_setImageWithURL:[NSURL URLWithString:photoPath] placeholderImage:[UIImage imageNamed:@"default_photo"]];
             cell.photoIv.layer.masksToBounds = true;
             cell.photoIv.layer.cornerRadius = 6;
-            cell.nameLbl.text = groupMemberData[indexPath.item][@"RemarkName"];
+            cell.nameLbl.text = [groupMemberData[indexPath.item][@"RemarkName"] isEqual:@""] ? groupMemberData[indexPath.item][@"NicName"] : groupMemberData[indexPath.item][@"RemarkName"];
         }
     }
     @catch (NSException *exception) {

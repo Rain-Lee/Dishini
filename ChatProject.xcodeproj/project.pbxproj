@@ -20,6 +20,7 @@
 		B70AE0381D23717600DB3C8C /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AE0371D23717600DB3C8C /* Model.m */; };
 		B70AE03B1D23A0B500DB3C8C /* LaunchGroupChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AE03A1D23A0B500DB3C8C /* LaunchGroupChatViewController.m */; };
 		B70AE03E1D23CC9700DB3C8C /* GroupChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AE03D1D23CC9700DB3C8C /* GroupChatViewController.m */; };
+		B71D89FE1D39B503000B06E1 /* QPLocalizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = B71D89FD1D39B503000B06E1 /* QPLocalizable_en.plist */; };
 		B71F9D031D220FEB00994D6E /* DataSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D021D220FEA00994D6E /* DataSettingViewController.m */; };
 		B71F9D061D221D3900994D6E /* RemarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D051D221D3900994D6E /* RemarksViewController.m */; };
 		B7272C091D2C9DCD00149919 /* MomentsItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7272C081D2C9DCD00149919 /* MomentsItemViewController.m */; };
@@ -248,6 +249,7 @@
 		B70AE03A1D23A0B500DB3C8C /* LaunchGroupChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchGroupChatViewController.m; sourceTree = "<group>"; };
 		B70AE03C1D23CC9700DB3C8C /* GroupChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupChatViewController.h; sourceTree = "<group>"; };
 		B70AE03D1D23CC9700DB3C8C /* GroupChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupChatViewController.m; sourceTree = "<group>"; };
+		B71D89FD1D39B503000B06E1 /* QPLocalizable_en.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = QPLocalizable_en.plist; sourceTree = "<group>"; };
 		B71F9D011D220FEA00994D6E /* DataSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSettingViewController.h; sourceTree = "<group>"; };
 		B71F9D021D220FEA00994D6E /* DataSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSettingViewController.m; sourceTree = "<group>"; };
 		B71F9D041D221D3800994D6E /* RemarksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemarksViewController.h; sourceTree = "<group>"; };
@@ -924,6 +926,7 @@
 		B7A03C6B1D18DBA300A48C39 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B71D89FD1D39B503000B06E1 /* QPLocalizable_en.plist */,
 				B7A03C711D18DBA300A48C39 /* ViewController.h */,
 				B7A03C721D18DBA300A48C39 /* ViewController.m */,
 				B7A03C741D18DBA300A48C39 /* Main.storyboard */,
@@ -1592,6 +1595,7 @@
 				B7D427191D1A29EE0089A263 /* AlbumComment@2x.png in Resources */,
 				B748AF5D1D275F7D002DC0F7 /* yinliangda.png in Resources */,
 				B7D4271A1D1A29EE0089A263 /* AlbumComment@3x.png in Resources */,
+				B71D89FE1D39B503000B06E1 /* QPLocalizable_en.plist in Resources */,
 				B748AFD01D275FC7002DC0F7 /* WechatShortVideo_scan_focus.png in Resources */,
 				B748AFD51D275FC7002DC0F7 /* WechatShortVideoController.xib in Resources */,
 				B748AFCD1D275FC7002DC0F7 /* WechatShortVideo_close.png in Resources */,

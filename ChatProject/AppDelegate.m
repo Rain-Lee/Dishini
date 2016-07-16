@@ -70,7 +70,7 @@
     [SMSSDK enableAppContactFriends:false];
     
     //注册趣拍
-    [[QupaiSDK shared] registerAppWithKey:@"2052a8cb76e5aa7" secret:@"9788da8ec0ce45f4935bcad6dccf20e4" space:@"space" success:^(NSString *accessToken) {
+    [[QupaiSDK shared] registerAppWithKey:@"209c2ed064f8e5b" secret:@"af0b6db7e8ad47328dc8949871575b05" space:@"comzykjchatproject" success:^(NSString *accessToken) {
         [[NSUserDefaults standardUserDefaults] setObject:accessToken forKey:@"accessToken"];
     } failure:^(NSError *error) {
         

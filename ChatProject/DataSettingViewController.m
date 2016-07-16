@@ -142,7 +142,7 @@
         [self.navigationController pushViewController:remarksVC animated:TRUE];
     }else if (indexPath.row == 2){
         SelectFriendOrGroupViewController *selectFriendOrGroupVC = [[SelectFriendOrGroupViewController alloc] init];
-        [Toolkit setUserDefaultValue:_userId andKey:@"tjUserID"];
+        [Toolkit setUserDefaultValue:_userId andKey:@"tjUserId"];
         [Toolkit setUserDefaultValue:_remarkValue andKey:@"tjName"];
         [Toolkit setUserDefaultValue:_photoPath andKey:@"tjPhotoPath"];
         [self.navigationController pushViewController:selectFriendOrGroupVC animated:true];

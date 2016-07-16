@@ -9,6 +9,7 @@
 #import "DataSettingViewController.h"
 #import "RemarksViewController.h"
 #import "SelectFriendOrGroupViewController.h"
+#import <RongIMKit/RongIMKit.h>
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -60,6 +61,7 @@
     [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
         [Toolkit showSuccessWithStatus:@"删除成功"];
+        [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:[NSString stringWithFormat:@"%@",_userId]];
         [self.navigationController popToRootViewControllerAnimated:true];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
     }else{

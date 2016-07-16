@@ -14,6 +14,7 @@
 #import "MJRefresh.h"
 #import "DetailsViewController.h"
 #import "SelectMemberViewController.h"
+#import <RongIMKit/RongIMKit.h>
 
 #define cellIdentifier  @"GroupMoreCell"
 #define headCellIdentifier  @"HeadCellIdentifier"
@@ -143,6 +144,7 @@
     [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshDataNotification" object:nil];
+        [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:_groupId];
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3] animated:true];
     }else{
         [Toolkit showErrorWithStatus:@"删除失败"];

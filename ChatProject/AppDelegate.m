@@ -149,12 +149,17 @@
     
     RCGroup *group = [[RCGroup alloc]init];
     group.groupId = groupId;
+    BOOL isExitGroup = false;
     for (NSDictionary *itemDict in groupArray) {
         if ([[itemDict[@"Id"] stringValue] isEqual:groupId]) {
+            isExitGroup = true;
             group.groupName =[itemDict valueForKey:@"Name"];
             group.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,[itemDict valueForKey:@"ImagePath"]];
             break;
         }
+    }
+    if (!isExitGroup) {
+        group.groupName =@"未命名";
     }
     
     return completion(group);

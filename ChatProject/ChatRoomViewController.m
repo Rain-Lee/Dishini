@@ -21,6 +21,7 @@
     UIViewController *recordController;
     PlayVideoView *playVideoView;
     UIImage *selectImage;
+    BOOL isInGroup;
 }
 
 @end
@@ -29,6 +30,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    isInGroup = true;
+    
+    [[RCIMClient sharedRCIMClient] getConversationNotificationStatus:ConversationType_GROUP targetId:self.targetId success:^(RCConversationNotificationStatus nStatus) {
+        NSLog(@"success");
+        NSLog(@"%lu",(unsigned long)nStatus);
+    } error:^(RCErrorCode status) {
+        NSLog(@"fail");
+        isInGroup = false;
+    }];
     
     [self initView];
     
@@ -117,7 +128,7 @@
     [leftBtn addTarget:self action:@selector(clickLeftBtnEvent) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:leftBtn];
     
-    if (self.conversationType == ConversationType_GROUP) {
+    if (self.conversationType == ConversationType_GROUP && isInGroup) {
         // rightBtn
         UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75 - 14, StatusBar_HEIGHT, 75, NavigationBar_HEIGHT)];
         rightBtn.titleLabel.textColor = [UIColor whiteColor];
@@ -139,10 +150,12 @@
 }
 
 -(void)clickRightBtnEvent{
-    GroupMoreViewController *groupMoreVC = [[GroupMoreViewController alloc] init];
-    groupMoreVC.groupId = self.targetId;
-    groupMoreVC.groupName = self.title;
-    [self.navigationController pushViewController:groupMoreVC animated:true];
+    if (isInGroup) {
+        GroupMoreViewController *groupMoreVC = [[GroupMoreViewController alloc] init];
+        groupMoreVC.groupId = self.targetId;
+        groupMoreVC.groupName = self.title;
+        [self.navigationController pushViewController:groupMoreVC animated:true];
+    }
 }
 
 - (void)didTapCellPortrait:(NSString *)userId{

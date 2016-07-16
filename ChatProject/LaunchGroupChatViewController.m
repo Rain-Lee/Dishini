@@ -60,11 +60,10 @@
 
 -(void)createGroupCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
-        NSString *selectFriendStr = @"";
+        NSString *selectFriendStr = [Toolkit getStringValueByKey:@"Id"];
         for (NSString *item in selectFriends) {
             selectFriendStr = [NSString stringWithFormat:@"%@A%@",selectFriendStr,item];
         }
-        selectFriendStr = [selectFriendStr substringFromIndex:1];
         currentTeamId = [NSString stringWithFormat:@"%@",dict[@"data"][@"TeamId"]];
         DataProvider *dataProvider = [[DataProvider alloc] init];
         [dataProvider setDelegateObject:self setBackFunctionName:@"yaoqingCallBack:"];

@@ -122,6 +122,7 @@
         chatRoomVC.title = userInfoDict[@"NicName"];
         [self.navigationController pushViewController:chatRoomVC animated:true];
     }else{
+        [Toolkit showWithStatus:@"请稍等..."];
         DataProvider *dataProvider = [[DataProvider alloc] init];
         [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendCallBack:"];
         [dataProvider addFriend:[Toolkit getStringValueByKey:@"Id"] andFriendId:userInfoDict[@"Id"]];
@@ -136,6 +137,7 @@
     else{
         [Toolkit showErrorWithStatus:dict[@"data"]];
     }
+    [SVProgressHUD dismiss];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{

@@ -22,6 +22,7 @@
     PlayVideoView *playVideoView;
     UIImage *selectImage;
     BOOL isInGroup;
+    NSString *errorInfo;
 }
 
 @end
@@ -30,16 +31,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    isInGroup = true;
-    
-    [[RCIMClient sharedRCIMClient] getConversationNotificationStatus:ConversationType_GROUP targetId:self.targetId success:^(RCConversationNotificationStatus nStatus) {
-        NSLog(@"success");
-        NSLog(@"%lu",(unsigned long)nStatus);
-    } error:^(RCErrorCode status) {
-        NSLog(@"fail");
-        isInGroup = false;
-    }];
     
     [self initView];
     
@@ -128,7 +119,7 @@
     [leftBtn addTarget:self action:@selector(clickLeftBtnEvent) forControlEvents:UIControlEventTouchUpInside];
     [topView addSubview:leftBtn];
     
-    if (self.conversationType == ConversationType_GROUP && isInGroup) {
+    if (self.conversationType == ConversationType_GROUP) {
         // rightBtn
         UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75 - 14, StatusBar_HEIGHT, 75, NavigationBar_HEIGHT)];
         rightBtn.titleLabel.textColor = [UIColor whiteColor];
@@ -137,12 +128,42 @@
         [rightBtn setImage:[UIImage imageNamed:@"moreNoword"] forState:UIControlStateNormal];
         [rightBtn addTarget:self action:@selector(clickRightBtnEvent) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:rightBtn];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            DataProvider *dataProvider = [[DataProvider alloc] init];
+            [dataProvider setDelegateObject:self setBackFunctionName:@"getGroupCallBack:"];
+            [dataProvider getGroupMember:self.targetId andUserId:[Toolkit getStringValueByKey:@"Id"]];
+        });
     }
     
     //自定义面板功能扩展
     [self.pluginBoardView insertItemWithImage:[UIImage imageNamed:@"sendVideo"]
                                         title:@"小视频"
                                           tag:101];
+}
+
+-(void)getGroupCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200){
+        NSArray *memberArray = [NSArray arrayWithArray:dict[@"data"]];
+        NSLog(@"%@",[Toolkit getStringValueByKey:@"Id"]);
+        for (int i = 0; i < memberArray.count; i++) {
+            if ([[NSString stringWithFormat:@"%@",memberArray[i][@"MemnerId"]] isEqual:[Toolkit getStringValueByKey:@"Id"]]) {
+                isInGroup = true;
+                break;
+            }
+        }
+        if (!isInGroup) {
+            errorInfo = @"您不在该群组中";
+            [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:self.targetId];
+            [self.navigationController popViewControllerAnimated:true];
+            [Toolkit showInfoWithStatus:errorInfo];
+        }
+    }else if ([dict[@"code"] intValue] == 1){
+        errorInfo = @"该群组已解散";
+        [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:self.targetId];
+        [self.navigationController popViewControllerAnimated:true];
+        [Toolkit showInfoWithStatus:errorInfo];
+    }
 }
 
 - (void)clickLeftBtnEvent{

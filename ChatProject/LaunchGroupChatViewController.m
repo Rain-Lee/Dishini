@@ -28,6 +28,7 @@
     NSMutableArray *selectFriends;
     NSMutableArray *filterGroupData;
     NSString *filterValue;
+    NSString *currentTeamId;
 }
 
 @end
@@ -50,18 +51,31 @@
 
 -(void)clickRightButton:(UIButton *)sender{
     if (selectFriends.count > 0) {
-        NSString *selectFriendStr = @"";
-        for (NSString *item in selectFriends) {
-            selectFriendStr = [NSString stringWithFormat:@"%@A%@",selectFriendStr,item];
-        }
-        selectFriendStr = [selectFriendStr substringFromIndex:1];
+        [Toolkit showWithStatus:@"加载中..."];
         DataProvider *dataProvider = [[DataProvider alloc] init];
         [dataProvider setDelegateObject:self setBackFunctionName:@"createGroupCallBack:"];
-        [dataProvider createGroup:[Toolkit getStringValueByKey:@"Id"] andIdList:selectFriendStr];
+        [dataProvider createGroup:[Toolkit getStringValueByKey:@"Id"] andIdList:@"0"];
     }
 }
 
 -(void)createGroupCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        NSString *selectFriendStr = [Toolkit getStringValueByKey:@"Id"];
+        for (NSString *item in selectFriends) {
+            selectFriendStr = [NSString stringWithFormat:@"%@A%@",selectFriendStr,item];
+        }
+        currentTeamId = [NSString stringWithFormat:@"%@",dict[@"data"][@"TeamId"]];
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"yaoqingCallBack:"];
+        [dataProvider yaoQing:selectFriendStr andTeamId:currentTeamId];
+    }else{
+        [SVProgressHUD dismiss];
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
+}
+
+-(void)yaoqingCallBack:(id)dict{
+    [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
         // 刷新会话列表页面
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
@@ -70,11 +84,9 @@
         ChatRoomViewController *chat = [[ChatRoomViewController alloc] init];
         chat.iFlag = _iFlag;
         chat.conversationType = ConversationType_GROUP;
-        chat.targetId = [NSString stringWithFormat:@"%@",dict[@"data"][@"TeamId"]];
+        chat.targetId = currentTeamId;
         chat.title = @"未命名";
         [self.navigationController pushViewController:chat animated:YES];
-    }else{
-        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
 }
 

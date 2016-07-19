@@ -21,6 +21,8 @@
     UIViewController *recordController;
     PlayVideoView *playVideoView;
     UIImage *selectImage;
+    BOOL isInGroup;
+    NSString *errorInfo;
 }
 
 @end
@@ -35,10 +37,9 @@
     self.conversationMessageCollectionView.frame = CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height);
     
     if ([_iFlag isEqual:@"2"]) {
-        
         // 推荐好友
         RCImageMessage *imageMsg = [RCImageMessage messageWithImage:[self setSign].image];
-        
+        imageMsg.extra = [NSString stringWithFormat:@"654321;%@",[Toolkit getStringValueByKey:@"tjUserId"]];
         [self sendMessage:imageMsg pushContent:@""];
     }
 }
@@ -127,6 +128,12 @@
         [rightBtn setImage:[UIImage imageNamed:@"moreNoword"] forState:UIControlStateNormal];
         [rightBtn addTarget:self action:@selector(clickRightBtnEvent) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:rightBtn];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            DataProvider *dataProvider = [[DataProvider alloc] init];
+            [dataProvider setDelegateObject:self setBackFunctionName:@"getGroupCallBack:"];
+            [dataProvider getGroupMember:self.targetId andUserId:[Toolkit getStringValueByKey:@"Id"]];
+        });
     }
     
     //自定义面板功能扩展
@@ -135,15 +142,41 @@
                                           tag:101];
 }
 
+-(void)getGroupCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200){
+        NSArray *memberArray = [NSArray arrayWithArray:dict[@"data"]];
+        NSLog(@"%@",[Toolkit getStringValueByKey:@"Id"]);
+        for (int i = 0; i < memberArray.count; i++) {
+            if ([[NSString stringWithFormat:@"%@",memberArray[i][@"MemnerId"]] isEqual:[Toolkit getStringValueByKey:@"Id"]]) {
+                isInGroup = true;
+                break;
+            }
+        }
+        if (!isInGroup) {
+            errorInfo = @"您不在该群组中";
+            [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:self.targetId];
+            [self.navigationController popViewControllerAnimated:true];
+            [Toolkit showInfoWithStatus:errorInfo];
+        }
+    }else if ([dict[@"code"] intValue] == 1){
+        errorInfo = @"该群组已解散";
+        [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:self.targetId];
+        [self.navigationController popViewControllerAnimated:true];
+        [Toolkit showInfoWithStatus:errorInfo];
+    }
+}
+
 - (void)clickLeftBtnEvent{
     [self.navigationController popViewControllerAnimated:true];
 }
 
 -(void)clickRightBtnEvent{
-    GroupMoreViewController *groupMoreVC = [[GroupMoreViewController alloc] init];
-    groupMoreVC.groupId = self.targetId;
-    groupMoreVC.groupName = self.title;
-    [self.navigationController pushViewController:groupMoreVC animated:true];
+    if (isInGroup) {
+        GroupMoreViewController *groupMoreVC = [[GroupMoreViewController alloc] init];
+        groupMoreVC.groupId = self.targetId;
+        groupMoreVC.groupName = self.title;
+        [self.navigationController pushViewController:groupMoreVC animated:true];
+    }
 }
 
 - (void)didTapCellPortrait:(NSString *)userId{
@@ -220,49 +253,28 @@
 
 -(void)qupaiSDK:(QupaiSDK *)sdk compeleteVideoPath:(NSString *)videoPath thumbnailPath:(NSString *)thumbnailPath
 {
-    NSLog(@"%@",videoPath);
-    
-    UIImage *mImage = [self addImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img.ivsky.com/img/tupian/pre/201312/04/nelumbo_nucifera-009.jpg"]]] toImage:[UIImage imageNamed:@"ltplay"]];
-    
-    RCImageMessage *imageMsg = [RCImageMessage messageWithImage:mImage];
-    //imageMsg.extra = [NSString stringWithFormat:@"%@;%@",@"123456",[NSString stringWithFormat:@"%@%@",Url,[dict[@"data"] valueForKey:@"VideoName"]]];
-    imageMsg.imageUrl = @"http://img.ivsky.com/img/tupian/pre/201312/04/nelumbo_nucifera-009.jpg";
-    [self sendImageMessage:imageMsg pushContent:@"nihao"];
-    
     [recordController dismissViewControllerAnimated:YES completion:nil];
-    
-    //DataProvider * dataprovider=[[DataProvider alloc] init];
-    
-    //[dataprovider setDelegateObject:self setBackFunctionName:@"sendVideoCallBack:"];
-    
-    //[dataprovider uploadVideoWithPath:filePath];
-    //[SVProgressHUD showWithStatus:nil maskType:SVProgressHUDMaskTypeBlack];
-}
-
-#pragma mark - WechatShortVideoDelegate
-- (void)finishWechatShortVideoCapture:(NSURL *)filePath {
-    NSLog(@"filePath is %@", filePath);
-    //UIImage *mImage = [self addImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img.ivsky.com/img/tupian/pre/201312/04/nelumbo_nucifera-009.jpg"]]] toImage:[UIImage imageNamed:@"ltplay"]];
-    
-    //RCImageMessage *imageMsg = [RCImageMessage messageWithImage:mImage];
-    //imageMsg.extra = [NSString stringWithFormat:@"%@;%@",@"123456",[NSString stringWithFormat:@"%@%@",Url,[dict[@"data"] valueForKey:@"VideoName"]]];
-    //imageMsg.imageUrl = @"http://img.ivsky.com/img/tupian/pre/201312/04/nelumbo_nucifera-009.jpg";
-    //[self sendImageMessage:imageMsg pushContent:@"nihao"];
-    //DataProvider * dataprovider=[[DataProvider alloc] init];
-    
-    //[dataprovider setDelegateObject:self setBackFunctionName:@"sendVideoCallBack:"];
-    
-    //[dataprovider uploadVideoWithPath:filePath];
-    //[SVProgressHUD showWithStatus:nil maskType:SVProgressHUDMaskTypeBlack];
+    NSLog(@"%@",videoPath);
+    [Toolkit showWithStatus:@"发送中..."];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"sendVideoCallBack:"];
+    [dataprovider upLoadVideo:[NSURL fileURLWithPath:videoPath]];
 }
 
 -(void)sendVideoCallBack:(id)dict{
-    UIImage *mImage = [self addImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://img.ivsky.com/img/tupian/pre/201312/04/nelumbo_nucifera-009.jpg"]]] toImage:[UIImage imageNamed:@"ltplay"]];
-    
-    RCImageMessage *imageMsg = [RCImageMessage messageWithImage:mImage];
-    imageMsg.extra = [NSString stringWithFormat:@"%@;%@",@"123456",[NSString stringWithFormat:@"%@%@",Url,[dict[@"data"] valueForKey:@"VideoName"]]];
-    imageMsg.imageUrl = [NSString stringWithFormat:@"%@%@",Url,[dict[@"data"] valueForKey:@"ImageName"]];
-    [self sendImageMessage:imageMsg pushContent:@"nihao"];
+    [SVProgressHUD dismiss];
+    @try {
+        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"ImagePath"]];
+        UIImage *mImage = [self addImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]] toImage:[UIImage imageNamed:@"ltplay"]];
+        RCImageMessage *imageMsg = [RCImageMessage messageWithImage:mImage];
+        imageMsg.extra = [NSString stringWithFormat:@"%@;%@",@"123456",[NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"VideoPath"]]];
+        imageMsg.imageUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"ImagePath"]];
+        [self sendImageMessage:imageMsg pushContent:@"nihao"];
+    } @catch (NSException *exception) {
+        
+    } @finally {
+        
+    }
 }
 
 - (UIImage *)addImage:(UIImage *)image1 toImage:(UIImage *)image2 {
@@ -272,28 +284,46 @@
     [image1 drawInRect:CGRectMake(0, 0, image1.size.width, image1.size.height)];
     
     // Draw image2
-    [image2 drawInRect:CGRectMake((image1.size.width - 120) / 2, (image1.size.height - 120) / 2, 120, 120)];
+    [image2 drawInRect:CGRectMake((image1.size.width - 80) / 2, (image1.size.height - 80) / 2, 80, 80)];
     
     UIImage *resultingImage = UIGraphicsGetImageFromCurrentImageContext();
-    
+
     UIGraphicsEndImageContext();
     
     return resultingImage;
 }
 
 - (void)presentImagePreviewController:(RCMessageModel *)model{
-    NSString *mExtra = ((RCImageMessage *)model.content).extra;
-    NSString *sendContentType = [mExtra substringToIndex:6];
-    if ([sendContentType isEqual:@"123456"]) {
-        NSString *videoUrl = [mExtra substringFromIndex:7];
-        playVideoView = [[PlayVideoView alloc] initWithContent:@"" andVideoUrl:videoUrl];
-        [playVideoView show];
-    }else{
-        BigImageShowViewController *bigImageShowVC = [[BigImageShowViewController alloc] init];
-        bigImageShowVC.imgUrl = ((RCImageMessage *)model.content).imageUrl;
-        NSLog(@"%@",model.extra);
-        selectImage = [UIImage imageWithData:[NSData dataWithContentsOfFile:((RCImageMessage *)model.content).imageUrl]];
-        [self.navigationController pushViewController:bigImageShowVC animated:YES];
+    @try {
+        NSString *mExtra = ((RCImageMessage *)model.content).extra;
+        NSString *sendContentType = [mExtra substringToIndex:6];
+        NSLog(@"%@",sendContentType);
+        if ([sendContentType isEqual:@"123456"]) {
+            NSString *videoUrl = [mExtra substringFromIndex:7];
+            playVideoView = [[PlayVideoView alloc] initWithContent:@"" andVideoUrl:videoUrl];
+            [playVideoView show];
+        }else if ([sendContentType isEqual:@"654321"]){
+            NSString *userId = [mExtra substringFromIndex:7];
+            if ([userId isEqual:[NSString stringWithFormat:@"Id"]]) {
+                PersonalViewController *personalVC = [[PersonalViewController alloc] init];
+                [self.navigationController pushViewController:personalVC animated:true];
+            }else{
+                DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+                detailsVC.userId = userId;
+                detailsVC.iFlag = @"1";
+                [self.navigationController pushViewController:detailsVC animated:true];
+            }
+        }else{
+            BigImageShowViewController *bigImageShowVC = [[BigImageShowViewController alloc] init];
+            bigImageShowVC.imgUrl = ((RCImageMessage *)model.content).imageUrl;
+            NSLog(@"%@",model.extra);
+            selectImage = [UIImage imageWithData:[NSData dataWithContentsOfFile:((RCImageMessage *)model.content).imageUrl]];
+            [self.navigationController pushViewController:bigImageShowVC animated:YES];
+        }
+    } @catch (NSException *exception) {
+        
+    } @finally {
+        
     }
 }
 

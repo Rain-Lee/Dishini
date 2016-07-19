@@ -21,7 +21,7 @@
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="b9M-zR-XBv"/>
                         </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -42,7 +42,7 @@
                 <outlet property="nameLbl" destination="GIT-vs-LKF" id="kTm-Ug-edu"/>
                 <outlet property="photoIv" destination="jlA-bE-Yyg" id="OCT-Fe-fQU"/>
             </connections>
-            <point key="canvasLocation" x="423" y="240"/>
+            <point key="canvasLocation" x="21" y="203.5"/>
         </collectionViewCell>
     </objects>
 </document>

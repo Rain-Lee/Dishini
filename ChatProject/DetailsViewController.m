@@ -82,7 +82,8 @@
             
         }
     }else{
-        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+        [self.navigationController popViewControllerAnimated:true];
+        [Toolkit alertView:self andTitle:@"提示" andMsg:@"该手机号不存在" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
 }
 

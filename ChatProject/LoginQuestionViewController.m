@@ -27,7 +27,7 @@
 -(void)initView{
     // titleLbl
     UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(20, Header_Height + 125, SCREEN_WIDTH - 40, 55)];
-    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"你可以通过手机号+短信验证码登陆微信"];
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"你可以通过手机号+短信验证码登陆IPIC"];
     [str addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.02 green:0.75 blue:0.00 alpha:1.00] range:NSMakeRange(5, 9)];
     titleLbl.attributedText = str;
     titleLbl.numberOfLines = 0;

@@ -784,11 +784,13 @@
         
         NSString *json = [self setParam:@[@"function",
                                           @"idlist",
-                                          @"teamid"
+                                          @"teamid",
+                                          @"userid"
                                           ]
                               andResult:@[@"YaoQing",
                                           idList,
-                                          teamid
+                                          teamid,
+                                          [Toolkit getStringValueByKey:@"Id"]
                                           ]];
         
         NSDictionary * prm=@{@"args":json};

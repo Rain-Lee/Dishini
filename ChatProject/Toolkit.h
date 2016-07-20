@@ -36,6 +36,8 @@
 
 +(BOOL)getBoolValueByKey:(NSString *)key;
 
++(void)removeUserDefault:(NSString *)key;
+
 +(void)clearUserDefaultCache; // 清空NSUserDefault
 
 +(NSString *)phoneEdit:(NSString *)phoneNum;

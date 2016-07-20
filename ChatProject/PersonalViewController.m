@@ -13,6 +13,7 @@
 #import "MyAddressViewController.h"
 #import "UIImageView+WebCache.h"
 #import "InputAddressViewController.h"
+#import <RongIMKit/RongIMKit.h>
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -407,6 +408,10 @@
         [Toolkit setUserDefaultValue:[NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"date"][@"ImageName"]] andKey:@"PhotoPath"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setHeader" object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updateData" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"initData" object:nil];
+        RCUserInfo *userInfo = [RCIM sharedRCIM].currentUserInfo;
+        userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"date"][@"ImageName"]];
+        [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:[Toolkit getStringValueByKey:@"Id"]];
     }else{
         [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"date"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
@@ -456,6 +461,8 @@
 
 -(void)getName:(NSString *)nameStr{
     nameValue = nameStr;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setHeader" object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"initData" object:nil];
     [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 

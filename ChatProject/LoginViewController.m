@@ -208,7 +208,7 @@
                 appDelegate.window.rootViewController = customTabBarVC;
             });
         }else{
-            [self loginRongCloud:userInfo[@"data"][@"Token"]];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"loginRongCloud" object:nil];;
         }
     }else{
         [SVProgressHUD dismiss];
@@ -217,6 +217,9 @@
 }
 
 -(void)saveParam:(id)dataParam{
+    [Toolkit setUserDefaultValue:phoneTxt.text andKey:@"Account"];
+    [Toolkit setUserDefaultValue:passwordTxt.text andKey:@"Password"];
+    [Toolkit setUserDefaultValue:dataParam[@"Token"] andKey:@"Token"];
     [Toolkit setUserDefaultValue:dataParam[@"Id"] andKey:@"Id"];
     [Toolkit setUserDefaultValue:dataParam[@"NicName"] andKey:@"NickName"];
     [Toolkit setUserDefaultValue:dataParam[@"Phone"] andKey:@"Phone"];
@@ -232,34 +235,6 @@
     }
     [Toolkit setUserDefaultValue:[NSString stringWithFormat:@"%@%@",Kimg_path,dataParam[@"PhotoPath"]] andKey:@"PhotoPath"];
     [Toolkit setUserDefaultValue:dataParam[@"Description"] andKey:@"Sign"];
-}
-
-- (void)loginRongCloud:(NSString *)token{
-    //登录融云服务器的token。需要您向您的服务器请求，您的服务器调用server api获取token
-    //开发初始阶段，您可以先在融云后台API调试中获取
-    //NSString *token = @"aMarGu0LiLfZOWfn0arm3s932yYPkxRuRpimyIBV2104Bj3ase1ttkNwNp/MFg3t7Gmz+GPVuYNvQNxqZOi1OQ==";
-    //连接融云服务器
-    [[RCIM sharedRCIM] connectWithToken:token success:^(NSString *userId) {
-        [SVProgressHUD dismiss];
-        [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:userId name:[Toolkit getUserDefaultValue:@"NickName"] portrait:[Toolkit getUserDefaultValue:@"PhotoPath"]];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CustomTabBarViewController *customTabBarVC = [[CustomTabBarViewController alloc] init];
-            AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
-            appDelegate.window.rootViewController = customTabBarVC;
-        });
-    } error:^(RCConnectErrorCode status) {
-        [SVProgressHUD dismiss];
-        NSLog(@"登陆的错误码为:%ld", (long)status);
-        if (status == RC_DISCONN_KICK) {
-            // 当前用户在其他设备上登陆，此设备被踢下线
-        }
-    } tokenIncorrect:^{
-        [SVProgressHUD dismiss];
-        //token过期或者不正确。
-        //如果设置了token有效期并且token过期，请重新请求您的服务器获取新的token
-        //如果没有设置token有效期却提示token错误，请检查您客户端和服务器的appkey是否匹配，还有检查您获取token的流程。
-        NSLog(@"token错误");
-    }];
 }
 
 -(void)loginQuestionEvent{

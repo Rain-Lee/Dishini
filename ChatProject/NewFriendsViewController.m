@@ -20,6 +20,7 @@
     // view
     UITableView *mTableView;
     UITextField *searchTxt;
+    UIView *bgView;
     
     // data
     NSMutableArray *userDataArray;
@@ -55,6 +56,11 @@
     [mTableView.header beginRefreshing];
     
     mTableView.footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMore)];
+    
+    bgView = [[UIView alloc] initWithFrame:CGRectMake(0, Header_Height + 70, SCREEN_WIDTH, SCREEN_HEIGHT - (Header_Height + 70))];
+    bgView.backgroundColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:0.60];
+    bgView.hidden = true;
+    [self.view addSubview:bgView];
 }
 
 -(void)refreshData{
@@ -168,7 +174,7 @@
             // searchTxt
             searchTxt = [[UITextField alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 30, CGRectGetHeight(cell.frame))];
             searchTxt.delegate = self;
-            searchTxt.keyboardType = UIKeyboardTypeNumbersAndPunctuation;
+            searchTxt.keyboardType = UIKeyboardTypePhonePad;
             searchTxt.returnKeyType = UIReturnKeySearch;
             searchTxt.placeholder = @"请输入手机号";
             [cell.contentView addSubview:searchTxt];
@@ -282,6 +288,7 @@
 }
 
 -(void)textFieldDidEndEditing:(UITextField *)textField{
+    bgView.hidden = true;
     if ([textField.text isEqual:@""]) {
         return;
     }
@@ -295,6 +302,11 @@
         detailsVC.phone = searchTxt.text;
         [self.navigationController pushViewController:detailsVC animated:true];
     }
+}
+
+-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
+    bgView.hidden = false;
+    return true;
 }
 
 @end

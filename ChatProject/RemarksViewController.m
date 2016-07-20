@@ -7,6 +7,7 @@
 //
 
 #import "RemarksViewController.h"
+#import <RongIMKit/RongIMKit.h>
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -43,6 +44,9 @@
     [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
         [Toolkit showErrorWithStatus:@"保存成功"];
+        RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:_userId];
+        userInfo.name = remarkTxt.text;
+        [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:_userId];
         if ([self.delegate respondsToSelector:@selector(changeRemarkRefreshData)]) {
             [self.delegate changeRemarkRefreshData];
         }

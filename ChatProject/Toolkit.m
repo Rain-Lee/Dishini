@@ -80,6 +80,11 @@
     }
 }
 
++(void)removeUserDefault:(NSString *)key{
+    NSUserDefaults *userDefault = [NSUserDefaults standardUserDefaults];
+    [userDefault removeObjectForKey:key];
+}
+
 +(void)clearUserDefaultCache{
     //清空 NSUserDefaults
     NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];

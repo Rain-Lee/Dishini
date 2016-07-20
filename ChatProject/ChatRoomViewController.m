@@ -138,6 +138,8 @@
         [self setDisplayUserNameInCell:false];
     }
     
+    self.enableUnreadMessageIcon = true;
+    
     //自定义面板功能扩展
     [self.pluginBoardView insertItemWithImage:[UIImage imageNamed:@"sendVideo"]
                                         title:@"小视频"

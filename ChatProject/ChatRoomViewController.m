@@ -134,7 +134,11 @@
             [dataProvider setDelegateObject:self setBackFunctionName:@"getGroupCallBack:"];
             [dataProvider getGroupMember:self.targetId andUserId:[Toolkit getStringValueByKey:@"Id"]];
         });
+    }else{
+        [self setDisplayUserNameInCell:false];
     }
+    
+    self.enableUnreadMessageIcon = true;
     
     //自定义面板功能扩展
     [self.pluginBoardView insertItemWithImage:[UIImage imageNamed:@"sendVideo"]

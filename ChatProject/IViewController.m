@@ -236,6 +236,8 @@
                 // 断开融云连接
                 [[RCIM sharedRCIM] disconnect];
                 
+                [Toolkit removeUserDefault:@"Password"];
+                
                 LoginViewController *loginVC = [[LoginViewController alloc] init];
                 UINavigationController *navLoginVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
                 navLoginVC.navigationBar.hidden = true;

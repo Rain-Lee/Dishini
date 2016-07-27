@@ -122,6 +122,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     ContactsTableViewCell *cell = (ContactsTableViewCell *)[tableView dequeueReusableCellWithIdentifier:ContactsCell forIndexPath:indexPath];
+    [cell.nameLbl showBadgeWithStyle:WBadgeStyleNumber value:0 animationType:WBadgeAnimTypeNone];
     if (indexPath.section == 0) {
         if (indexPath.row == 0) {
             cell.photoIv.image = [UIImage imageNamed:@"32"];
@@ -227,7 +228,7 @@
 }
 
 -(void)mRefreshData{
-    [mTableView.header beginRefreshing];
+    [self refreshData];
 }
 
 @end

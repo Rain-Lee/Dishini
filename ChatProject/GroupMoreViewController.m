@@ -191,7 +191,7 @@
             [cell.contentView addSubview:lineView];
             // titleLbl
             UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 1, SCREEN_WIDTH - 15, cell.frame.size.height - 0.5)];
-            titleLbl.text = [NSString stringWithFormat:@"全部群成员(%@)",@"15"];
+            titleLbl.text = [NSString stringWithFormat:@"全部群成员(%lu)",(unsigned long)groupMemberData.count];
             titleLbl.font = [UIFont systemFontOfSize:15];
             [cell.contentView addSubview:titleLbl];
         }else if (indexPath.section == 2){

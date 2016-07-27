@@ -26,6 +26,7 @@
     // data
     NSMutableArray *userDataArray;
     int index;
+    NSString *selectUserId;
 }
 
 @end
@@ -120,9 +121,10 @@
 
 -(void)stateBtnEvent:(UIButton *)sender{
     DataProvider *dataProvider = [[DataProvider alloc] init];
-    NSLog(@"%@",userDataArray);
+    NSLog(@"%ld",(long)sender.tag);
+    selectUserId = [userDataArray[sender.tag][@"Key"] stringValue];
     [dataProvider setDelegateObject:self setBackFunctionName:@"stateBtnCallBack:"];
-    [dataProvider agreeFriendAndSaveFriend:[NSString stringWithFormat:@"%ld",(long)sender.tag]];
+    [dataProvider agreeFriendAndSaveFriend:[NSString stringWithFormat:@"%@",userDataArray[sender.tag][@"Value"][@"Id"]]];
 }
 
 -(void)stateBtnCallBack:(id)dict{
@@ -131,9 +133,11 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendFunc" object:nil];
         [self.navigationController popToRootViewControllerAnimated:true];
         
-        RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"添加好友成功"];
+        RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"我已成为你的好友，现在我们可以开始聊天了"];
         txtMessage.extra = @"jieshou";
-        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:@"" content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:selectUserId content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
+//        [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:selectUserId];
+//        [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:selectUserId];
         
         [Toolkit showSuccessWithStatus:@"操作成功"];
     }else{
@@ -244,7 +248,7 @@
             stateBtn.titleLabel.font = [UIFont systemFontOfSize:15];
             stateBtn.layer.masksToBounds = true;
             stateBtn.layer.cornerRadius = 6;
-            stateBtn.tag = [valueDict[@"Id"] intValue];
+            stateBtn.tag = indexPath.row;//[valueDict[@"Id"] intValue];
             [stateBtn addTarget:self action:@selector(stateBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
             [cell.contentView addSubview:stateBtn];
         }

@@ -14,6 +14,8 @@
 
 @interface Toolkit : NSObject
 
++(NSString *)getCurrentDate;
+
 +(NSDate*)getDateFromString:(NSString*)dateString;
 
 +(NSTimeInterval)getTimeIntervalFromString:(NSString *)dateString;

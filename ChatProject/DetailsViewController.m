@@ -12,6 +12,7 @@
 #import "ChatRoomViewController.h"
 #import "RemarksViewController.h"
 #import "UIImageView+WebCache.h"
+#import <RongIMKit/RongIMKit.h>
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -132,8 +133,11 @@
 
 -(void)addFriendCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
+        RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@""];
+        txtMessage.extra = @"jiahaoyou";
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:_userId content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
+        
         [self.navigationController popViewControllerAnimated:true];
-        [Toolkit showSuccessWithStatus:@"申请添加好友成功"];
     }
     else{
         [Toolkit showErrorWithStatus:dict[@"data"]];

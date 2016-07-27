@@ -42,6 +42,11 @@
         imageMsg.extra = [NSString stringWithFormat:@"654321;%@",[Toolkit getStringValueByKey:@"tjUserId"]];
         [self sendMessage:imageMsg pushContent:@""];
     }
+    
+//    RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"消息内容"];
+//    RCMessage *message = [[RCMessage alloc] init];
+//    message.content = txtMessage;
+//    [RCIMClient sharedRCIMClient]
 }
 
 -(UIImageView *)setSign{

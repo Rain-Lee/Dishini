@@ -858,9 +858,60 @@
     }
 }
 
+-(void)selectGongGaoList:(NSString *)startRowIndex andmaximumRows:(NSString *)maximumRows{
+    NSString *url = [NSString stringWithFormat:@"%@/SystemNews.asmx/Entry",Url];
+    
+    NSString *json = [self setParam:@[@"function",
+                                      @"startRowIndex",
+                                      @"maximumRows"
+                                      ]
+                          andResult:@[@"SelectGongGaoList",
+                                      startRowIndex,
+                                      maximumRows
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
 
+-(void)updateSuggestion:(NSString *)userid andusername:(NSString *)username andtitle:(NSString *)title andcontent:(NSString *)content andpublishtime:(NSString *)publishtime anduserphone:(NSString *)userphone{
+    if (userid && username && title && content && publishtime && userphone) {
+        NSString *url = [NSString stringWithFormat:@"%@/Suggestion.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"userid",
+                                          @"username",
+                                          @"title",
+                                          @"content",
+                                          @"publishtime",
+                                          @"userphone"
+                                          ]
+                              andResult:@[@"UpdateSuggestion",
+                                          userid,
+                                          username,
+                                          title,
+                                          content,
+                                          publishtime,
+                                          userphone
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
 
-
+-(void)aboutUs{
+    NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+    NSString *json = [self setParam:@[@"function"
+                                      ]
+                          andResult:@[@"SelectAboutUs"
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
 
 #pragma mark - 加密
 #define YZkey @"fd15f548-7559-4d40-80a1-f00ca9bfcc02"

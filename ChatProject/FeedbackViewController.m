@@ -9,6 +9,7 @@
 #import "FeedbackViewController.h"
 
 @interface FeedbackViewController ()<UITextViewDelegate>{
+    UITextField *titleTxt;
     UITextView *contentTv;
     UILabel *placeholderLbl;
 }
@@ -30,12 +31,39 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [titleTxt resignFirstResponder];
     [contentTv resignFirstResponder];
 }
 
+-(void)clickRightButton:(UIButton *)sender{
+    if ([titleTxt.text isEqual:@""] || [contentTv.text isEqual:@""]) {
+        [Toolkit showInfoWithStatus:@"请先完善信息"];
+        return;
+    }
+    
+    [Toolkit showWithStatus:@"加载中"];
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"FeedbackCallBack:"];
+    [dataProvider updateSuggestion:[Toolkit getStringValueByKey:@"Id"] andusername:[Toolkit getStringValueByKey:@"NickName"] andtitle:titleTxt.text andcontent:contentTv.text andpublishtime:[Toolkit getCurrentDate] anduserphone:[Toolkit getStringValueByKey:@"Phone"]];
+}
+
+-(void)FeedbackCallBack:(id)dict{
+    [SVProgressHUD dismiss];
+    if ([dict[@"code"] intValue] == 200) {
+        [self.navigationController popViewControllerAnimated:true];
+    }else{
+        [Toolkit showErrorWithStatus:@"提交失败"];
+    }
+}
+
 -(void)initView{
+    // titleTxt
+    titleTxt = [[UITextField alloc] initWithFrame:CGRectMake(10, Header_Height + 20, SCREEN_WIDTH - 20, 44)];
+    titleTxt.placeholder = @"请输入标题";
+    titleTxt.backgroundColor = [UIColor whiteColor];
+    [self.view addSubview:titleTxt];
     // contentTv
-    contentTv = [[UITextView alloc] initWithFrame:CGRectMake(10, Header_Height + 20, SCREEN_WIDTH - 20, SCREEN_WIDTH * 0.6)];
+    contentTv = [[UITextView alloc] initWithFrame:CGRectMake(10, CGRectGetMaxY(titleTxt.frame) + 10, SCREEN_WIDTH - 20, SCREEN_WIDTH * 0.6)];
     contentTv.delegate = self;
     contentTv.layer.masksToBounds = true;
     contentTv.layer.cornerRadius = 5;

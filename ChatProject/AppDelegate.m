@@ -211,31 +211,38 @@
 
 -(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
     if (message.conversationType == ConversationType_PRIVATE) { // 单聊
-        NSString *extra = ((RCTextMessage *)message.content).extra;
-        if ([extra isEqual:@"jiahaoyou"]) {
-            [Toolkit showInfoWithStatus:@"有人请求添加您为好友"];
+        @try {
+            NSString *extra = ((RCTextMessage *)message.content).extra;
+            if ([extra isEqual:@"jiahaoyou"]) {
+                [Toolkit showInfoWithStatus:@"有人请求添加您为好友"];
+                
+                [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:message.targetId];
+                [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:message.targetId];
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
+            }else if ([extra isEqual:@"jieshou"]){
+                [Toolkit showInfoWithStatus:@"您的好友申请已被接受"];
+                
+//                [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:message.targetId];
+//                [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:message.targetId];
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
+                
+                [self getFriendFunc];
+                //            BOOL isContain = false;
+                //            for (NSDictionary *itemDict in friendArray) {
+                //                if ([[NSString stringWithFormat:@"%@",itemDict[@"Key"]] isEqual:[NSString stringWithFormat:@"%@",message.senderUserId]]) {
+                //                    isContain = true;
+                //                    break;
+                //                }
+                //            }
+                //            if (!isContain) {
+                //                [self getFriendFunc];
+                //            }
+            }
+        } @catch (NSException *exception) {
             
-            [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:message.targetId];
-            [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:message.targetId];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
-        }else if ([extra isEqual:@"jieshou"]){
-            RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:message.senderUserId];
-            [Toolkit showInfoWithStatus:[NSString stringWithFormat:@"%@已接受您的好友申请",userInfo.name]];
+        } @finally {
             
-            [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:message.targetId];
-            [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:message.targetId];
-            
-            [self getFriendFunc];
-//            BOOL isContain = false;
-//            for (NSDictionary *itemDict in friendArray) {
-//                if ([[NSString stringWithFormat:@"%@",itemDict[@"Key"]] isEqual:[NSString stringWithFormat:@"%@",message.senderUserId]]) {
-//                    isContain = true;
-//                    break;
-//                }
-//            }
-//            if (!isContain) {
-//                [self getFriendFunc];
-//            }
         }
     }else{ // 群聊
         NSLog(@"%@",groupArray);

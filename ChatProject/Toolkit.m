@@ -43,16 +43,19 @@
 }
 
 +(void)showInfoWithStatus:(NSString *)msg{
+    [SVProgressHUD setMinimumDismissTimeInterval:2];
     [SVProgressHUD showInfoWithStatus:msg];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 }
 
 +(void)showSuccessWithStatus:(NSString *)msg{
+    [SVProgressHUD setMinimumDismissTimeInterval:2];
     [SVProgressHUD showSuccessWithStatus:msg];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 }
 
 +(void)showErrorWithStatus:(NSString *)msg{
+    [SVProgressHUD setMinimumDismissTimeInterval:2];
     [SVProgressHUD showErrorWithStatus:msg];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
 }

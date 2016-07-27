@@ -13,6 +13,7 @@
 #import "DataProvider.h"
 #import "SVProgressHUD.h"
 #import "MJRefresh.h"
+#import <RongIMKit/RongIMKit.h>
 //#import "UMSocial.h"
 //#import "UMSocialSnsService.h"
 
@@ -23,6 +24,7 @@
     NSMutableArray *mDictInfo;
     NSString *currentFriendID;
     UITableView *_tableView;
+    NSString *selectFriendID;
 }
 
 @end
@@ -606,7 +608,7 @@
     UITableViewCell *cell = (UITableViewCell *)[v superview];
     NSIndexPath *mIndexPath = [_tableView indexPathForCell:cell];
     NSString *firstKey = [userSource[mIndexPath.section] allKeys][0];
-    NSString *selectFriendID = [userSource[mIndexPath.section] objectForKey:firstKey][mIndexPath.row][3];
+    selectFriendID = [[userSource[mIndexPath.section] objectForKey:firstKey][mIndexPath.row][3] stringValue];
     
     dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"addFriendCallBack:"];
@@ -616,6 +618,12 @@
 -(void)addFriendCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
         [Toolkit showSuccessWithStatus:@"申请添加好友成功"];
+        
+        RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"申请添加好友"];
+        txtMessage.extra = @"jiahaoyou";
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:selectFriendID content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
+//        [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:selectFriendID];
+//        [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:selectFriendID];
     }
     else{
         [Toolkit showErrorWithStatus:dict[@"data"]];

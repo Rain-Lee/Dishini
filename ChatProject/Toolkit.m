@@ -14,6 +14,11 @@
 
 #pragma mark - add by wangjc
 
++(NSString *)getCurrentDate{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    return [dateFormatter stringFromDate:[NSDate date]];
+}
 
 +(NSDate*)getDateFromString:(NSString*)dateString{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];

@@ -316,4 +316,27 @@
  */
 -(void)delDongtai:(NSString *)newsId;
 
+/**
+ * 获取公告
+ * @param startRowIndex 开始索引
+ * @param maximumRows   每页个数
+ */
+-(void)selectGongGaoList:(NSString *)startRowIndex andmaximumRows:(NSString *)maximumRows;
+
+/**
+ * 意见反馈
+ * @param userid      用户Id
+ * @param username    用户名
+ * @param title       标题
+ * @param content     内容
+ * @param publishtime 发布时间
+ * @param userphone   电话
+ */
+-(void)updateSuggestion:(NSString *)userid andusername:(NSString *)username andtitle:(NSString *)title andcontent:(NSString *)content andpublishtime:(NSString *)publishtime anduserphone:(NSString *)userphone;
+
+/**
+ * 关于我们
+ */
+-(void)aboutUs;
+
 @end

@@ -123,8 +123,8 @@ typedef NS_ENUM(NSUInteger, RCCustomerServiceStatus) {
  进入该会话后，会在右上角提示用户上方存在的未读消息数，用户点击该提醒按钮，会跳转到最开始的未读消息。
  */
 @property(nonatomic, assign) BOOL enableUnreadMessageIcon;
-
 /*!
+
  右上角提示的未读消息数
  
  @discussion 右上角未读消息数支持的最大值是150。

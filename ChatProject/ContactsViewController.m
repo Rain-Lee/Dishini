@@ -16,6 +16,8 @@
 #import "DetailsViewController.h"
 #import "UIImageView+WebCache.h"
 #import <RongIMKit/RongIMKit.h>
+#import "WZLBadgeImport.h"
+#import "UIView+Frame.h"
 
 #define ContactsCell @"ContactsTableViewCell"
 
@@ -29,7 +31,7 @@
     NSMutableArray *contactsData;
     NSMutableArray *letterResultArray;
     NSString *currentDelId;
-    
+    NSInteger applyNum;
 }
 
 @end
@@ -56,6 +58,18 @@
     
     mTableView.header = [MJRefreshNormalHeader headerWithRefreshingTarget:self refreshingAction:@selector(refreshData)];
     [mTableView.header beginRefreshing];
+}
+
+-(void)getApplyData{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getApplyCallBack:"];
+    [dataProvider selectApplyList:@"0" andMaximumRows:@"10000" andUserId:[Toolkit getStringValueByKey:@"Id"]];
+}
+
+-(void)getApplyCallBack:(id)dict{
+    NSArray *resultData = [NSArray arrayWithArray:dict[@"data"]];
+    applyNum = resultData.count;
+    [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (void)refreshData{
@@ -86,6 +100,7 @@
         [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
     [mTableView.header endRefreshing];
+    [self getApplyData];
 }
 
 // UITableViewDataSource
@@ -111,6 +126,9 @@
         if (indexPath.row == 0) {
             cell.photoIv.image = [UIImage imageNamed:@"32"];
             cell.nameLbl.text = @"添加好友";
+            [cell.nameLbl showBadgeWithStyle:WBadgeStyleNumber value:applyNum animationType:WBadgeAnimTypeNone];
+            cell.nameLbl.badge.x = cell.nameLbl.badge.x - 160;
+            cell.nameLbl.badge.y = 0;
         }else if (indexPath.row == 1){
             cell.photoIv.image = [UIImage imageNamed:@"33"];
             cell.nameLbl.text = @"发起群聊";

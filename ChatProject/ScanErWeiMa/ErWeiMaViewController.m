@@ -193,7 +193,11 @@
                                 [self.navigationController pushViewController:detailsVC animated:true];
                             }
                         });
+                    }else{
+                        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:resultStr]];
                     }
+                }else{
+                    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:resultStr]];
                 }
             } @catch (NSException *exception) {
                 

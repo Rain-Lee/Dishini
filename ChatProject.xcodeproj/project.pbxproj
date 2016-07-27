@@ -23,11 +23,18 @@
 		B71D89FE1D39B503000B06E1 /* QPLocalizable_en.plist in Resources */ = {isa = PBXBuildFile; fileRef = B71D89FD1D39B503000B06E1 /* QPLocalizable_en.plist */; };
 		B71F9D031D220FEB00994D6E /* DataSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D021D220FEA00994D6E /* DataSettingViewController.m */; };
 		B71F9D061D221D3900994D6E /* RemarksViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B71F9D051D221D3900994D6E /* RemarksViewController.m */; };
+		B72663011D48550700BE3E6A /* AnnouncementDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B72663001D48550700BE3E6A /* AnnouncementDetailViewController.m */; };
 		B7272C091D2C9DCD00149919 /* MomentsItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B7272C081D2C9DCD00149919 /* MomentsItemViewController.m */; };
 		B72D22291D377E0600AFBA4B /* MyFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D22281D377E0600AFBA4B /* MyFooterView.m */; };
 		B72D222C1D3793E600AFBA4B /* SelectFriendOrGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D222B1D3793E600AFBA4B /* SelectFriendOrGroupViewController.m */; };
 		B72D22301D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B72D222E1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.m */; };
 		B72D22311D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B72D222F1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.xib */; };
+		B732C11B1D4712AF004AD901 /* GroupNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B732C11A1D4712AF004AD901 /* GroupNameViewController.m */; };
+		B732C12E1D475820004AD901 /* UIBarButtonItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = B732C11F1D475820004AD901 /* UIBarButtonItem+WZLBadge.m */; };
+		B732C12F1D475820004AD901 /* UITabBarItem+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = B732C1211D475820004AD901 /* UITabBarItem+WZLBadge.m */; };
+		B732C1301D475820004AD901 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = B732C1241D475820004AD901 /* UIView+Frame.m */; };
+		B732C1311D475820004AD901 /* CAAnimation+WAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = B732C1271D475820004AD901 /* CAAnimation+WAnimation.m */; };
+		B732C1321D475820004AD901 /* UIView+WZLBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = B732C12C1D475820004AD901 /* UIView+WZLBadge.m */; };
 		B74496551D1BBD290012C9AA /* RegisterFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */; };
 		B748AEFF1D274D1B002DC0F7 /* SendNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B748AEFE1D274D1B002DC0F7 /* SendNewsViewController.m */; };
 		B748AF231D274DB1002DC0F7 /* JKImagePickerController.strings in Resources */ = {isa = PBXBuildFile; fileRef = B748AF021D274DB1002DC0F7 /* JKImagePickerController.strings */; };
@@ -254,6 +261,8 @@
 		B71F9D021D220FEA00994D6E /* DataSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSettingViewController.m; sourceTree = "<group>"; };
 		B71F9D041D221D3800994D6E /* RemarksViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemarksViewController.h; sourceTree = "<group>"; };
 		B71F9D051D221D3900994D6E /* RemarksViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RemarksViewController.m; sourceTree = "<group>"; };
+		B72662FF1D48550700BE3E6A /* AnnouncementDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnnouncementDetailViewController.h; sourceTree = "<group>"; };
+		B72663001D48550700BE3E6A /* AnnouncementDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnnouncementDetailViewController.m; sourceTree = "<group>"; };
 		B7272C071D2C9DCD00149919 /* MomentsItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MomentsItemViewController.h; sourceTree = "<group>"; };
 		B7272C081D2C9DCD00149919 /* MomentsItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MomentsItemViewController.m; sourceTree = "<group>"; };
 		B72D22271D377E0600AFBA4B /* MyFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyFooterView.h; sourceTree = "<group>"; };
@@ -263,6 +272,20 @@
 		B72D222D1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectFriendOrGroupTableViewCell.h; sourceTree = "<group>"; };
 		B72D222E1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectFriendOrGroupTableViewCell.m; sourceTree = "<group>"; };
 		B72D222F1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SelectFriendOrGroupTableViewCell.xib; sourceTree = "<group>"; };
+		B732C1191D4712AF004AD901 /* GroupNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupNameViewController.h; sourceTree = "<group>"; };
+		B732C11A1D4712AF004AD901 /* GroupNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupNameViewController.m; sourceTree = "<group>"; };
+		B732C11E1D475820004AD901 /* UIBarButtonItem+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+WZLBadge.h"; sourceTree = "<group>"; };
+		B732C11F1D475820004AD901 /* UIBarButtonItem+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+WZLBadge.m"; sourceTree = "<group>"; };
+		B732C1201D475820004AD901 /* UITabBarItem+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+WZLBadge.h"; sourceTree = "<group>"; };
+		B732C1211D475820004AD901 /* UITabBarItem+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+WZLBadge.m"; sourceTree = "<group>"; };
+		B732C1231D475820004AD901 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
+		B732C1241D475820004AD901 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
+		B732C1261D475820004AD901 /* CAAnimation+WAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CAAnimation+WAnimation.h"; sourceTree = "<group>"; };
+		B732C1271D475820004AD901 /* CAAnimation+WAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CAAnimation+WAnimation.m"; sourceTree = "<group>"; };
+		B732C1291D475820004AD901 /* WZLBadgeProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLBadgeProtocol.h; sourceTree = "<group>"; };
+		B732C12B1D475820004AD901 /* UIView+WZLBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WZLBadge.h"; sourceTree = "<group>"; };
+		B732C12C1D475820004AD901 /* UIView+WZLBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WZLBadge.m"; sourceTree = "<group>"; };
+		B732C12D1D475820004AD901 /* WZLBadgeImport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WZLBadgeImport.h; sourceTree = "<group>"; };
 		B74496531D1BBD290012C9AA /* RegisterFirstViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterFirstViewController.h; sourceTree = "<group>"; };
 		B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterFirstViewController.m; sourceTree = "<group>"; };
 		B748AEFD1D274D1B002DC0F7 /* SendNewsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendNewsViewController.h; sourceTree = "<group>"; };
@@ -653,6 +676,65 @@
 				B70AE0311D23712700DB3C8C /* AddressLocalViewController.xib */,
 			);
 			name = AddresBook;
+			sourceTree = "<group>";
+		};
+		B732C11C1D475820004AD901 /* WZLBadge */ = {
+			isa = PBXGroup;
+			children = (
+				B732C11D1D475820004AD901 /* BarItem */,
+				B732C1221D475820004AD901 /* Category */,
+				B732C1251D475820004AD901 /* CategorySupport */,
+				B732C1281D475820004AD901 /* Protocol */,
+				B732C12A1D475820004AD901 /* View */,
+				B732C12D1D475820004AD901 /* WZLBadgeImport.h */,
+			);
+			path = WZLBadge;
+			sourceTree = "<group>";
+		};
+		B732C11D1D475820004AD901 /* BarItem */ = {
+			isa = PBXGroup;
+			children = (
+				B732C11E1D475820004AD901 /* UIBarButtonItem+WZLBadge.h */,
+				B732C11F1D475820004AD901 /* UIBarButtonItem+WZLBadge.m */,
+				B732C1201D475820004AD901 /* UITabBarItem+WZLBadge.h */,
+				B732C1211D475820004AD901 /* UITabBarItem+WZLBadge.m */,
+			);
+			path = BarItem;
+			sourceTree = "<group>";
+		};
+		B732C1221D475820004AD901 /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				B732C1231D475820004AD901 /* UIView+Frame.h */,
+				B732C1241D475820004AD901 /* UIView+Frame.m */,
+			);
+			path = Category;
+			sourceTree = "<group>";
+		};
+		B732C1251D475820004AD901 /* CategorySupport */ = {
+			isa = PBXGroup;
+			children = (
+				B732C1261D475820004AD901 /* CAAnimation+WAnimation.h */,
+				B732C1271D475820004AD901 /* CAAnimation+WAnimation.m */,
+			);
+			path = CategorySupport;
+			sourceTree = "<group>";
+		};
+		B732C1281D475820004AD901 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				B732C1291D475820004AD901 /* WZLBadgeProtocol.h */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		B732C12A1D475820004AD901 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B732C12B1D475820004AD901 /* UIView+WZLBadge.h */,
+				B732C12C1D475820004AD901 /* UIView+WZLBadge.m */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B748AF001D274DB1002DC0F7 /* ImagePicker */ = {
@@ -1047,6 +1129,8 @@
 				B72D222D1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.h */,
 				B72D222E1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.m */,
 				B72D222F1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.xib */,
+				B732C1191D4712AF004AD901 /* GroupNameViewController.h */,
+				B732C11A1D4712AF004AD901 /* GroupNameViewController.m */,
 			);
 			name = ContactsPage;
 			sourceTree = "<group>";
@@ -1080,6 +1164,8 @@
 				B7DBCD251D20C61300BF3489 /* PersonalViewController.m */,
 				B7DBCD271D20FD5C00BF3489 /* AnnouncementViewController.h */,
 				B7DBCD281D20FD5C00BF3489 /* AnnouncementViewController.m */,
+				B72662FF1D48550700BE3E6A /* AnnouncementDetailViewController.h */,
+				B72663001D48550700BE3E6A /* AnnouncementDetailViewController.m */,
 				B7DBCD2A1D21023400BF3489 /* AboutUsViewController.h */,
 				B7DBCD2B1D21023400BF3489 /* AboutUsViewController.m */,
 				B7DBCD301D2117CD00BF3489 /* DetailsViewController.h */,
@@ -1136,6 +1222,7 @@
 		B7C4219F1D1D218100A43E8F /* OC */ = {
 			isa = PBXGroup;
 			children = (
+				B732C11C1D475820004AD901 /* WZLBadge */,
 				B74DCFCF1D347ADC00A5AE14 /* JSONKit.m */,
 				B74DCFD01D347ADC00A5AE14 /* JSONKit.h */,
 				B748AF3F1D274E5B002DC0F7 /* UploadDataToServer.h */,
@@ -1777,6 +1864,7 @@
 				B748AFD41D275FC7002DC0F7 /* WechatShortVideoController.m in Sources */,
 				B7D426AF1D1A1CE30089A263 /* DataProvider.m in Sources */,
 				B71F9D031D220FEB00994D6E /* DataSettingViewController.m in Sources */,
+				B732C11B1D4712AF004AD901 /* GroupNameViewController.m in Sources */,
 				B7D427461D1A918B0089A263 /* NewFriendsViewController.m in Sources */,
 				B748AF271D274DB1002DC0F7 /* JKAssetsGroupCell.m in Sources */,
 				B7A03CC71D18E14C00A48C39 /* ContactsViewController.m in Sources */,
@@ -1804,6 +1892,7 @@
 				B7A03CD81D18E87A00A48C39 /* LoginViewController.m in Sources */,
 				B7DBCD231D20C26300BF3489 /* SecurityUtil.m in Sources */,
 				B748AF2A1D274DB1002DC0F7 /* JKAssetsViewCell.m in Sources */,
+				B732C1311D475820004AD901 /* CAAnimation+WAnimation.m in Sources */,
 				B748AFC41D275FC7002DC0F7 /* SCRecordSessionSegment.m in Sources */,
 				B76046CB1D3328C600C51D3C /* InputAddressViewController.m in Sources */,
 				B795ED9D1D34DA3500E9E6CB /* GroupMoreCell.m in Sources */,
@@ -1816,6 +1905,7 @@
 				B7DA65241D2A59930030040D /* BigImageShowViewController.m in Sources */,
 				B7DBCD211D20C26300BF3489 /* GTMBase64.m in Sources */,
 				B7A03C731D18DBA300A48C39 /* ViewController.m in Sources */,
+				B72663011D48550700BE3E6A /* AnnouncementDetailViewController.m in Sources */,
 				B748AFBB1D275FC7002DC0F7 /* SCMediaTypeConfiguration.m in Sources */,
 				B71F9D061D221D3900994D6E /* RemarksViewController.m in Sources */,
 				B748AFC11D275FC7002DC0F7 /* SCRecorderTools.m in Sources */,
@@ -1829,6 +1919,7 @@
 				B748AFBA1D275FC7002DC0F7 /* SCIOPixelBuffers.m in Sources */,
 				B748AFB71D275FC7002DC0F7 /* SCFilterAnimation.m in Sources */,
 				B7DBCD2C1D21023400BF3489 /* AboutUsViewController.m in Sources */,
+				B732C12F1D475820004AD901 /* UITabBarItem+WZLBadge.m in Sources */,
 				B748AF2F1D274DB1002DC0F7 /* JKUtil.m in Sources */,
 				B7D427281D1A29EE0089A263 /* DFUserTimeLineViewController.m in Sources */,
 				B70AE0381D23717600DB3C8C /* Model.m in Sources */,
@@ -1864,6 +1955,7 @@
 				B7D427331D1A29EE0089A263 /* DFTextImageLineCell.m in Sources */,
 				B748AFC91D275FC7002DC0F7 /* SCWeakSelectorTarget.m in Sources */,
 				B7D427171D1A29EE0089A263 /* DFFaceManager.m in Sources */,
+				B732C1321D475820004AD901 /* UIView+WZLBadge.m in Sources */,
 				B748AF281D274DB1002DC0F7 /* JKAssetsGroupsView.m in Sources */,
 				B748AEFF1D274D1B002DC0F7 /* SendNewsViewController.m in Sources */,
 				B7DA65411D2A603C0030040D /* split.m in Sources */,
@@ -1876,6 +1968,7 @@
 				B7B234871D1D0F2800A102D9 /* RegisterSecondViewController.m in Sources */,
 				B7D427341D1A29EE0089A263 /* DFVideoLineCell.m in Sources */,
 				B748AF361D274DD0002DC0F7 /* VPImageCropperViewController.m in Sources */,
+				B732C1301D475820004AD901 /* UIView+Frame.m in Sources */,
 				B748AFC31D275FC7002DC0F7 /* SCRecordSession.m in Sources */,
 				B748AFB21D275FC7002DC0F7 /* SCAssetExportSession.m in Sources */,
 				B7D4272A1D1A29EE0089A263 /* DFTextImageUserLineItem.m in Sources */,
@@ -1897,6 +1990,7 @@
 				B748AF5C1D275F7D002DC0F7 /* MoviePlayer.m in Sources */,
 				B748AFC21D275FC7002DC0F7 /* SCRecorderToolsView.m in Sources */,
 				B748AF5B1D275F7D002DC0F7 /* DIYButton.m in Sources */,
+				B732C12E1D475820004AD901 /* UIBarButtonItem+WZLBadge.m in Sources */,
 				B748AF301D274DB1002DC0F7 /* PhotoAlbumManager.m in Sources */,
 				B748AF5F1D275F7D002DC0F7 /* MyActivityIndicatorView.m in Sources */,
 				B748AFB81D275FC7002DC0F7 /* SCFilterSelectorView.m in Sources */,

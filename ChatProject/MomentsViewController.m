@@ -63,7 +63,6 @@
 }
 
 -(void)getDongtaiPageByFriendsCallBack:(id)dict{
-    NSLog(@"%@",dict);
     [self deleteAllItem];
     [self addItemFunc:dict];
     [self endRefresh];

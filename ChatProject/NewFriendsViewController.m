@@ -12,6 +12,7 @@
 #import "UIImageView+WebCache.h"
 #import "DetailsViewController.h"
 #import "PersonalViewController.h"
+#import <RongIMKit/RongIMKit.h>
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -119,6 +120,7 @@
 
 -(void)stateBtnEvent:(UIButton *)sender{
     DataProvider *dataProvider = [[DataProvider alloc] init];
+    NSLog(@"%@",userDataArray);
     [dataProvider setDelegateObject:self setBackFunctionName:@"stateBtnCallBack:"];
     [dataProvider agreeFriendAndSaveFriend:[NSString stringWithFormat:@"%ld",(long)sender.tag]];
 }
@@ -128,6 +130,11 @@
         [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendFunc" object:nil];
         [self.navigationController popToRootViewControllerAnimated:true];
+        
+        RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"添加好友成功"];
+        txtMessage.extra = @"jieshou";
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:@"" content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
+        
         [Toolkit showSuccessWithStatus:@"操作成功"];
     }else{
         [Toolkit showErrorWithStatus:dict[@"error"]];

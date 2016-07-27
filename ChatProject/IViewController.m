@@ -15,11 +15,16 @@
 #import "UIImageView+WebCache.h"
 #import "ErWeiMaViewController.h"
 #import <RongIMKit/RongIMKit.h>
+#import "AboutUsViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
 @interface IViewController (){
+    // view
     UITableView *mTableView;
+    
+    // data
+    int clickIFlag;
 }
 
 @end
@@ -51,6 +56,23 @@
     [mTableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
+-(void)getData{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getDataCallBack:"];
+    [dataProvider aboutUs];
+}
+
+-(void)getDataCallBack:(id)dict{
+    [SVProgressHUD dismiss];
+    if ([dict[@"code"] intValue] == 200) {
+        if (clickIFlag == 1) {
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:dict[@"data"][@"ImageUrl"]]];
+        }else if (clickIFlag == 2){
+            [Toolkit makeCall:dict[@"data"][@"TelePhone"]];
+        }
+    }
+}
+
 #pragma mark - UITableViewDataSource
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
     return 1;
@@ -75,6 +97,7 @@
     for (UIView *itemView in cell.contentView.subviews) {
         [itemView removeFromSuperview];
     }
+    cell.backgroundColor = [UIColor whiteColor];
     if (indexPath.row == 0) {
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         // photoIv
@@ -216,16 +239,24 @@
         PersonalViewController *personalVC = [[PersonalViewController alloc] init];
         personalVC.hidesBottomBarWhenPushed = true;
         [self.navigationController pushViewController:personalVC animated:true];
+    }else if (indexPath.row == 2){
+        clickIFlag = 1;
+        [self getData];
     }else if (indexPath.row == 3){
         AnnouncementViewController *announcementVC = [[AnnouncementViewController alloc] init];
         announcementVC.hidesBottomBarWhenPushed = true;
         [self.navigationController pushViewController:announcementVC animated:true];
+    }else if (indexPath.row == 5){
+        AboutUsViewController *aboutUsVC = [[AboutUsViewController alloc] init];
+        aboutUsVC.hidesBottomBarWhenPushed = true;
+        [self.navigationController pushViewController:aboutUsVC animated:true];
     }else if (indexPath.row == 6){
         FeedbackViewController *feedbackVC = [[FeedbackViewController alloc] init];
         feedbackVC.hidesBottomBarWhenPushed = true;
         [self.navigationController pushViewController:feedbackVC animated:true];
     }else if (indexPath.row == 7){
-        [Toolkit makeCall:@"12345678910"];
+        clickIFlag = 2;
+        [self getData];
     }else if (indexPath.row == 8){
         ErWeiMaViewController * erweima = [[ErWeiMaViewController alloc] init];
         erweima.hidesBottomBarWhenPushed = true;

@@ -143,11 +143,6 @@
     if ([dict[@"code"] intValue] == 200) {
         [[RCIM sharedRCIM] setGroupInfoDataSource:self];
         groupArray = dict[@"data"];
-        //NSMutableArray *groupArrayTemp = [[NSMutableArray alloc] initWithArray:dict[@"data"]];
-//        if (friendArray == nil || ![groupArrayTemp isEqualToArray:friendArray]) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewData" object:nil];
-//            groupArray = groupArrayTemp;
-//        }
     }
 }
 
@@ -216,15 +211,31 @@
 
 -(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
     if (message.conversationType == ConversationType_PRIVATE) { // 单聊
-        BOOL isContain = false;
-        for (NSDictionary *itemDict in friendArray) {
-            if ([[NSString stringWithFormat:@"%@",itemDict[@"Key"]] isEqual:[NSString stringWithFormat:@"%@",message.senderUserId]]) {
-                isContain = true;
-                break;
-            }
-        }
-        if (!isContain) {
+        NSString *extra = ((RCTextMessage *)message.content).extra;
+        if ([extra isEqual:@"jiahaoyou"]) {
+            [Toolkit showInfoWithStatus:@"有人请求添加您为好友"];
+            
+            [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:message.targetId];
+            [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:message.targetId];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
+        }else if ([extra isEqual:@"jieshou"]){
+            RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:message.senderUserId];
+            [Toolkit showInfoWithStatus:[NSString stringWithFormat:@"%@已接受您的好友申请",userInfo.name]];
+            
+            [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:message.targetId];
+            [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:message.targetId];
+            
             [self getFriendFunc];
+//            BOOL isContain = false;
+//            for (NSDictionary *itemDict in friendArray) {
+//                if ([[NSString stringWithFormat:@"%@",itemDict[@"Key"]] isEqual:[NSString stringWithFormat:@"%@",message.senderUserId]]) {
+//                    isContain = true;
+//                    break;
+//                }
+//            }
+//            if (!isContain) {
+//                [self getFriendFunc];
+//            }
         }
     }else{ // 群聊
         NSLog(@"%@",groupArray);

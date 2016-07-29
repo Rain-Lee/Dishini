@@ -16,6 +16,7 @@
 #import "ErWeiMaViewController.h"
 #import <RongIMKit/RongIMKit.h>
 #import "AboutUsViewController.h"
+#import "ShopViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -66,7 +67,10 @@
     [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
         if (clickIFlag == 1) {
-            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:dict[@"data"][@"ImageUrl"]]];
+            ShopViewController *shopVC = [[ShopViewController alloc] init];
+            shopVC.hidesBottomBarWhenPushed = true;
+            shopVC.shopUrl = dict[@"data"][@"ImageUrl"];
+            [self.navigationController pushViewController:shopVC animated:true];
         }else if (clickIFlag == 2){
             [Toolkit makeCall:dict[@"data"][@"TelePhone"]];
         }

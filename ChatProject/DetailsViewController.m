@@ -135,7 +135,7 @@
     if ([dict[@"code"] intValue] == 200) {
         RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"申请添加好友"];
         txtMessage.extra = @"jiahaoyou";
-        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:_userId content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
+        [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:[userInfoDict[@"Id"] stringValue] content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
         [[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:_userId];
         [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_PRIVATE targetId:_userId];
         [self.navigationController popViewControllerAnimated:true];

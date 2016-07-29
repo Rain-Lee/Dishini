@@ -74,7 +74,7 @@
     // placeholderLbl
     placeholderLbl = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, 200, 15)];
     placeholderLbl.text = @"请输入问题或建议";
-    placeholderLbl.textColor = [UIColor grayColor];
+    placeholderLbl.textColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1.00];
     placeholderLbl.font = [UIFont systemFontOfSize:15];
     [contentTv addSubview:placeholderLbl];
 }

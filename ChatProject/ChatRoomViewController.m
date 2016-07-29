@@ -131,7 +131,8 @@
         rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
         rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
         [rightBtn setImage:[UIImage imageNamed:@"moreNoword"] forState:UIControlStateNormal];
-        [rightBtn addTarget:self action:@selector(clickRightBtnEvent) forControlEvents:UIControlEventTouchUpInside];
+        rightBtn.tag = 1;
+        [rightBtn addTarget:self action:@selector(clickRightBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:rightBtn];
         
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -141,6 +142,15 @@
         });
     }else{
         [self setDisplayUserNameInCell:false];
+        // rightBtn
+        UIButton *rightBtn = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 75 - 14, StatusBar_HEIGHT, 75, NavigationBar_HEIGHT)];
+        rightBtn.titleLabel.textColor = [UIColor whiteColor];
+        rightBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+        rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+        [rightBtn setImage:[UIImage imageNamed:@"ren_03"] forState:UIControlStateNormal];
+        rightBtn.tag = 2;
+        [rightBtn addTarget:self action:@selector(clickRightBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
+        [topView addSubview:rightBtn];
     }
     
     self.enableUnreadMessageIcon = true;
@@ -179,12 +189,19 @@
     [self.navigationController popViewControllerAnimated:true];
 }
 
--(void)clickRightBtnEvent{
-    if (isInGroup) {
-        GroupMoreViewController *groupMoreVC = [[GroupMoreViewController alloc] init];
-        groupMoreVC.groupId = self.targetId;
-        groupMoreVC.groupName = self.title;
-        [self.navigationController pushViewController:groupMoreVC animated:true];
+-(void)clickRightBtnEvent:(UIButton *)sender{
+    if (sender.tag == 1) {
+        if (isInGroup) {
+            GroupMoreViewController *groupMoreVC = [[GroupMoreViewController alloc] init];
+            groupMoreVC.groupId = self.targetId;
+            groupMoreVC.groupName = self.title;
+            [self.navigationController pushViewController:groupMoreVC animated:true];
+        }
+    }else{
+        DetailsViewController *detailsVC = [[DetailsViewController alloc] init];
+        detailsVC.userId = self.targetId;
+        detailsVC.iFlag = @"1";
+        [self.navigationController pushViewController:detailsVC animated:true];
     }
 }
 

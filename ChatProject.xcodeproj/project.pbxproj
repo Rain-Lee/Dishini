@@ -110,6 +110,7 @@
 		B76046CB1D3328C600C51D3C /* InputAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B76046CA1D3328C600C51D3C /* InputAddressViewController.m */; };
 		B77C5D261D1D2D9D00246820 /* RegisterThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */; };
 		B77C5D291D1D349400246820 /* LoginQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77C5D281D1D349400246820 /* LoginQuestionViewController.m */; };
+		B78DB5311D498330004259C0 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DB5301D498330004259C0 /* ShopViewController.m */; };
 		B795ED991D34D6F100E9E6CB /* GroupMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B795ED981D34D6F100E9E6CB /* GroupMoreViewController.m */; };
 		B795ED9D1D34DA3500E9E6CB /* GroupMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B795ED9B1D34DA3500E9E6CB /* GroupMoreCell.m */; };
 		B795ED9E1D34DA3500E9E6CB /* GroupMoreCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B795ED9C1D34DA3500E9E6CB /* GroupMoreCell.xib */; };
@@ -426,6 +427,8 @@
 		B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterThirdViewController.m; sourceTree = "<group>"; };
 		B77C5D271D1D349400246820 /* LoginQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginQuestionViewController.h; sourceTree = "<group>"; };
 		B77C5D281D1D349400246820 /* LoginQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginQuestionViewController.m; sourceTree = "<group>"; };
+		B78DB52F1D498330004259C0 /* ShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopViewController.h; sourceTree = "<group>"; };
+		B78DB5301D498330004259C0 /* ShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopViewController.m; sourceTree = "<group>"; };
 		B795ED971D34D6F100E9E6CB /* GroupMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMoreViewController.h; sourceTree = "<group>"; };
 		B795ED981D34D6F100E9E6CB /* GroupMoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupMoreViewController.m; sourceTree = "<group>"; };
 		B795ED9A1D34DA3500E9E6CB /* GroupMoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMoreCell.h; sourceTree = "<group>"; };
@@ -1186,6 +1189,8 @@
 				B7DA65461D2A64F50030040D /* MyAddressViewController.m */,
 				B76046C91D3328C600C51D3C /* InputAddressViewController.h */,
 				B76046CA1D3328C600C51D3C /* InputAddressViewController.m */,
+				B78DB52F1D498330004259C0 /* ShopViewController.h */,
+				B78DB5301D498330004259C0 /* ShopViewController.m */,
 			);
 			name = IPage;
 			sourceTree = "<group>";
@@ -1953,6 +1958,7 @@
 				B748AF2B1D274DB1002DC0F7 /* JKImagePickerController.m in Sources */,
 				B7D427331D1A29EE0089A263 /* DFTextImageLineCell.m in Sources */,
 				B748AFC91D275FC7002DC0F7 /* SCWeakSelectorTarget.m in Sources */,
+				B78DB5311D498330004259C0 /* ShopViewController.m in Sources */,
 				B7D427171D1A29EE0089A263 /* DFFaceManager.m in Sources */,
 				B732C1321D475820004AD901 /* UIView+WZLBadge.m in Sources */,
 				B748AF281D274DB1002DC0F7 /* JKAssetsGroupsView.m in Sources */,

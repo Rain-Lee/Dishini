@@ -10,9 +10,9 @@ target 'ChatProject' do
   pod 'SVProgressHUD', '2.0.3'
   
   # 融云聊天
-  pod 'RongCloudIMKit', '2.6.2'
+  pod 'RongCloudIMKit'
   
-  #Mob
+  # Mob
   pod 'MOBFoundation_IDFA', '2.0.1' #Mob产品公共库
   pod 'SMSSDK', '2.0.4' #SMSSDK必须
   
@@ -24,6 +24,10 @@ target 'ChatProject' do
   
   # 地图
   pod 'AMap2DMap', '4.0.0'
+  
+  # 刷新
+  pod 'MJRefresh'
+  
 
   target 'ChatProjectTests' do
     inherit! :search_paths

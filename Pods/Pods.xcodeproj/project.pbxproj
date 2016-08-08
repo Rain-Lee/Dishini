@@ -592,7 +592,7 @@
 		0822EEA7B79240F853D7155F8FA62A06 /* MMPopupItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MMPopupItem.h; path = Classes/MMPopupItem.h; sourceTree = "<group>"; };
 		094A665B8A57E37DB7B35A009974FDA8 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		0A7D8867F9F388B5E32CA9F50F6643CB /* DFSandboxHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DFSandboxHelper.h; path = DFCommon/DFCommon/Lib/Util/DFSandboxHelper.h; sourceTree = "<group>"; };
-		0B026581D6B2C0A4DDB0D05A905B4666 /* libopencore-amrnb.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/libopencore-amrnb.a"; sourceTree = "<group>"; };
+		0AFD4DA5F6E511F5FABFCAB70A7A66F3 /* Emoji.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Emoji.plist; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/Emoji.plist; sourceTree = "<group>"; };
 		0BBF9E85159EE5F2FA0B35252B1BEAC6 /* NSDictionary+JSON.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+JSON.m"; path = "DFCommon/DFCommon/Category/NSDictionary+JSON.m"; sourceTree = "<group>"; };
 		0BDE7E2E45A9AA64D4232BE3FB0488A3 /* SDImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDImageCache.h; path = SDWebImage/SDImageCache.h; sourceTree = "<group>"; };
 		0C2D9F14DD666CAAC2B14F045462EE31 /* MLTextAttachment.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MLTextAttachment.m; path = Classes/Expression/MLTextAttachment.m; sourceTree = "<group>"; };
@@ -623,7 +623,6 @@
 		1A067E5233870526FB4806ED2423E023 /* MJPhotoBrowser.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJPhotoBrowser.m; path = MJPhotoBrowser/MJPhotoBrowser/MJPhotoBrowser.m; sourceTree = "<group>"; };
 		1A1D40E9DB2918AC6563F1A1B5939481 /* MJRefreshAutoStateFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshAutoStateFooter.h; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoStateFooter.h; sourceTree = "<group>"; };
 		1AF8A9FD57372E48CDE53D00FF195E8E /* UIImage+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+AFNetworking.h"; path = "UIKit+AFNetworking/UIImage+AFNetworking.h"; sourceTree = "<group>"; };
-		1B66056DDB45B01B0F570C9A47D4A4D5 /* RCConfig.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = RCConfig.plist; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/RCConfig.plist; sourceTree = "<group>"; };
 		1BC996A8BFD42C8AC84A83438D25F159 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AFNetworking.m"; path = "UIKit+AFNetworking/UIButton+AFNetworking.m"; sourceTree = "<group>"; };
 		1C74969C3934A1AF01D6878FF6BBF317 /* MP3Converter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MP3Converter.m; path = DFCommon/DFCommon/Lib/lame/MP3Converter.m; sourceTree = "<group>"; };
 		1CE46D3479CE09F1B104271F5B2CBF35 /* MASConstraint.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MASConstraint.m; path = Masonry/MASConstraint.m; sourceTree = "<group>"; };
@@ -662,10 +661,12 @@
 		3320D84673182502934475805CBB1C2B /* DFBaseResponse.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DFBaseResponse.h; path = DFCommon/DFCommon/Data/DFBaseResponse.h; sourceTree = "<group>"; };
 		335D06BD0DD6D38EED1BA34CD8ED6E67 /* DFTableViewODRefreshControl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DFTableViewODRefreshControl.m; path = DFCommon/DFCommon/RefreshControl/DFTableViewODRefreshControl.m; sourceTree = "<group>"; };
 		337A3F02F481E7BFC95820D2EA71BFDD /* success@3x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "success@3x.png"; path = "DFCommon/DFCommon/Resource/success@3x.png"; sourceTree = "<group>"; };
+		33F5A9BAA61A20081D95958CA038F357 /* libopencore-amrnb.a */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = archive.ar; name = "libopencore-amrnb.a"; path = "Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/libopencore-amrnb.a"; sourceTree = "<group>"; };
 		34341CB4AFF86843933DFB59F41E0608 /* pinyin.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = pinyin.m; path = DFCommon/DFCommon/Lib/Util/pinyin.m; sourceTree = "<group>"; };
 		353C20E9C5939900E2B5C6606B5428E9 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
 		358CC456DA5D5FF106B404155EA24573 /* MLLabel+Override.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "MLLabel+Override.h"; path = "Classes/Helper/MLLabel+Override.h"; sourceTree = "<group>"; };
 		35D41B17C50DC3DAD15885624C729082 /* YLGIFImage.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = YLGIFImage.xcconfig; sourceTree = "<group>"; };
+		360296E4477527F73D01B32C258A7937 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/en.lproj; sourceTree = "<group>"; };
 		367E22FEFE161B92A5AABD7F535D764E /* MJRefreshAutoNormalFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshAutoNormalFooter.h; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoNormalFooter.h; sourceTree = "<group>"; };
 		37364DD133AE8F46A314A9EA2E80A8ED /* PullToRefreshView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PullToRefreshView.h; path = DFCommon/DFCommon/Lib/PullToView/PullToRefreshView.h; sourceTree = "<group>"; };
 		374AA653416F2EB7244DAD36CC60280F /* TZImagePickerController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = TZImagePickerController.bundle; path = TZImagePickerController/TZImagePickerController/TZImagePickerController.bundle; sourceTree = "<group>"; };
@@ -700,7 +701,6 @@
 		4DBA616C864C87979D4F9638EDE81E7E /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImagePrefetcher.h; path = SDWebImage/SDWebImagePrefetcher.h; sourceTree = "<group>"; };
 		4DCBF724FD8DD1768258CA14D29ECB6B /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		4EA2656DA664CF507D914F98F3B6547E /* JSBadgeView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = JSBadgeView.h; path = DFCommon/DFCommon/Lib/JSBadgeView/JSBadgeView.h; sourceTree = "<group>"; };
-		4F3565DF8FE81940E0942BBA3C0E2E85 /* RongIMKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongIMKit.framework; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/RongIMKit.framework; sourceTree = "<group>"; };
 		4FC233BF67A011768AA1DAE30167E51B /* DFDatabaseHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DFDatabaseHelper.m; path = DFCommon/DFCommon/Storage/DFDatabaseHelper.m; sourceTree = "<group>"; };
 		505AE50BA911C6D98E1619C3254065DB /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		529AF126B57F15D9660087F7FCCE4DFA /* Pods-ChatProject-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ChatProject-resources.sh"; sourceTree = "<group>"; };
@@ -708,7 +708,6 @@
 		547FE093023888E985AD471B76E3798D /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		56B22C36F55CA1BFD0C4CC7674884F02 /* UIScrollView+MJExtension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIScrollView+MJExtension.m"; path = "MJRefresh/UIScrollView+MJExtension.m"; sourceTree = "<group>"; };
 		571F020C1459CEACC174675E0D5B0419 /* libPods-ChatProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5787875453D08BE115C2CDE882D6A2E6 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/en.lproj; sourceTree = "<group>"; };
 		58A88874FFAEC2D3B0395D6DE19221A6 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		5923BE6BDCD8CD1F41CBE87B2C0F64DF /* Pods-ChatProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ChatProject.debug.xcconfig"; sourceTree = "<group>"; };
 		59900935A45E5AC794C0B36877683F67 /* libPods-ChatProjectTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ChatProjectTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -755,6 +754,7 @@
 		6D5FE5600741053857D980DB4E58BD2B /* NSAttributedString+MLExpression.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSAttributedString+MLExpression.h"; path = "Classes/Expression/NSAttributedString+MLExpression.h"; sourceTree = "<group>"; };
 		6D6223AE2B19940B8EBD4015ED0DE7C3 /* DFBaseTableViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DFBaseTableViewController.h; path = DFCommon/DFCommon/Controller/DFBaseTableViewController.h; sourceTree = "<group>"; };
 		6E147699D1651D5EA32651F15D5B3E34 /* MJRefreshBackFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJRefreshBackFooter.h; path = MJRefresh/Base/MJRefreshBackFooter.h; sourceTree = "<group>"; };
+		6E54E51E95F6D4613283AACD9B0FB561 /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hans.lproj"; path = "Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/zh-Hans.lproj"; sourceTree = "<group>"; };
 		6E6CE26D83A88293587D14FEBACF999A /* UILabel+Corner.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UILabel+Corner.m"; path = "DFCommon/DFCommon/Category/UILabel/UILabel+Corner.m"; sourceTree = "<group>"; };
 		6F162D7BFA4874A694FD10FAA36453CF /* DFVideoDecoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DFVideoDecoder.m; path = DFCommon/DFCommon/Lib/DFVideo/DFVideoDecoder.m; sourceTree = "<group>"; };
 		6F3147FCD8C7BBCF5ACD044A36FBCA95 /* LXActionSheet.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LXActionSheet.h; path = DFCommon/DFCommon/Lib/LXActionSheet/LXActionSheet.h; sourceTree = "<group>"; };
@@ -807,7 +807,6 @@
 		8FCF805FD78D7B641A5CC99586367D2E /* SDWebImageDecoder.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageDecoder.h; path = SDWebImage/SDWebImageDecoder.h; sourceTree = "<group>"; };
 		904B0F0E67CDEDA44B54D61890CAA8B9 /* SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.xcconfig; sourceTree = "<group>"; };
 		906C1F4BB2C711BBB31804181291D577 /* UITabBar+Badge.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UITabBar+Badge.h"; path = "DFCommon/DFCommon/Category/UITabBar+Badge.h"; sourceTree = "<group>"; };
-		90DEB78325793227BFDD8B4CC9BEBCFF /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hans.lproj"; path = "Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/zh-Hans.lproj"; sourceTree = "<group>"; };
 		90F82FA3F6EB91749F774DB133E1CCBA /* FMDatabasePool.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMDatabasePool.m; path = src/fmdb/FMDatabasePool.m; sourceTree = "<group>"; };
 		927472F5E3CE3F226A9C9F0B2F117FAF /* MJRefreshBackFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshBackFooter.m; path = MJRefresh/Base/MJRefreshBackFooter.m; sourceTree = "<group>"; };
 		932B153689C8301F831A4FC598CD4A05 /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
@@ -829,6 +828,7 @@
 		9E5419B3AF849565FF8C34DD266CF05B /* Pods-ChatProjectTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ChatProjectTests-resources.sh"; sourceTree = "<group>"; };
 		9F3A67ADBE73D2EC45F2681A1C5003A6 /* MJRefreshComponent.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshComponent.m; path = MJRefresh/Base/MJRefreshComponent.m; sourceTree = "<group>"; };
 		9FC83F0DD1268EEF720DF6BAB09D8EF6 /* libMMPopupView.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMMPopupView.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0034D6B970A4459AA6A971F28132EA8 /* RongIMLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongIMLib.framework; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/RongIMLib.framework; sourceTree = "<group>"; };
 		A044B5B4C6C2F3D9E60D47A39A9D0B5B /* Masonry-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Masonry-dummy.m"; sourceTree = "<group>"; };
 		A116986881B7A5761D8BA22C31993274 /* DFNetwork.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = DFNetwork.h; path = DFCommon/DFCommon/Macros/DFNetwork.h; sourceTree = "<group>"; };
 		A247A10E8F85014DF6FF0BA3D2161DC2 /* DFBaseTableViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DFBaseTableViewController.m; path = DFCommon/DFCommon/Controller/DFBaseTableViewController.m; sourceTree = "<group>"; };
@@ -864,6 +864,7 @@
 		B1489A9B3D35DD6BD8E22AE3D8F55C4D /* YLImageView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = YLImageView.m; path = YLGIFImage/YLImageView.m; sourceTree = "<group>"; };
 		B1526E10D45618FE51E2E3EE14438041 /* UIButton+Corner.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+Corner.m"; path = "DFCommon/DFCommon/Category/UIButton/UIButton+Corner.m"; sourceTree = "<group>"; };
 		B178B7012850DE8881AA800903116450 /* MJRefreshBackNormalFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshBackNormalFooter.m; path = MJRefresh/Custom/Footer/Back/MJRefreshBackNormalFooter.m; sourceTree = "<group>"; };
+		B18E5330D0C88F1AFD06C2BB5E550BF2 /* RongCloud.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = RongCloud.bundle; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/RongCloud.bundle; sourceTree = "<group>"; };
 		B1C506D2E61825C976018BBD10E47209 /* MJPhotoProgressView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MJPhotoProgressView.h; path = MJPhotoBrowser/MJPhotoBrowser/MJPhotoProgressView.h; sourceTree = "<group>"; };
 		B28304AECB331FE2622A088C4E47FAF3 /* MJRefresh.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = MJRefresh.bundle; path = MJRefresh/MJRefresh.bundle; sourceTree = "<group>"; };
 		B34252E9838E4317A9039291D33BE6CF /* MJRefresh-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MJRefresh-dummy.m"; sourceTree = "<group>"; };
@@ -871,9 +872,9 @@
 		B54035A67D9F32ECA32AC6FA5721FE7C /* libSVProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSVProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		B69D6FCE201E2876CFA1BEC0FAB10E35 /* AFURLConnectionOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLConnectionOperation.h; path = AFNetworking/AFURLConnectionOperation.h; sourceTree = "<group>"; };
 		B6E2ABDD72B96D3E8C549A511A95D96E /* MJRefreshAutoNormalFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MJRefreshAutoNormalFooter.m; path = MJRefresh/Custom/Footer/Auto/MJRefreshAutoNormalFooter.m; sourceTree = "<group>"; };
+		B6FE0771BA0564E6C765A0816B67B2B8 /* RCConfig.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = RCConfig.plist; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/RCConfig.plist; sourceTree = "<group>"; };
 		B76DF55B3C629D6432554829D12A1918 /* MMPopupWindow.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MMPopupWindow.h; path = Classes/MMPopupWindow.h; sourceTree = "<group>"; };
 		B7A6A952010F56AD5C546FF135F38DA3 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+WebCache.h"; path = "SDWebImage/UIImageView+WebCache.h"; sourceTree = "<group>"; };
-		B7D764E2802D2477F88A66F117B0B8DC /* RongCloud.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = RongCloud.bundle; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/RongCloud.bundle; sourceTree = "<group>"; };
 		B8271F27AD50E47C4BED799E5971A515 /* DFBaseTabBarController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = DFBaseTabBarController.m; path = DFCommon/DFCommon/Controller/DFBaseTabBarController.m; sourceTree = "<group>"; };
 		B8E07174BC6B7A9AACA8B6BE23DF95B7 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFHTTPRequestOperation.h; path = AFNetworking/AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		B91715748B5B0BD11070D5A322301978 /* FMResultSet.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FMResultSet.m; path = src/fmdb/FMResultSet.m; sourceTree = "<group>"; };
@@ -902,7 +903,6 @@
 		C4CA4973B1C932C8401EC642196E3A9C /* TZAssetCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TZAssetCell.h; path = TZImagePickerController/TZImagePickerController/TZAssetCell.h; sourceTree = "<group>"; };
 		C51371EC6D571459A396726705A0C82E /* SDWebImageManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SDWebImageManager.h; path = SDWebImage/SDWebImageManager.h; sourceTree = "<group>"; };
 		C5334644AFE0C5E32BDB0C6589C2B313 /* TZAssetCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TZAssetCell.m; path = TZImagePickerController/TZImagePickerController/TZAssetCell.m; sourceTree = "<group>"; };
-		C5B024BC3B6AF47ECFF1175409AF1653 /* RongIMLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongIMLib.framework; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/RongIMLib.framework; sourceTree = "<group>"; };
 		C70469D0F9A9D2BAC6E4AFCA1C2E4306 /* libODRefreshControl.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libODRefreshControl.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7C049B257081E8F879E78BECCBF253A /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+AFNetworking.h"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
 		C81ADB08CF176453181E84146DDEC654 /* AFHTTPRequestOperationManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPRequestOperationManager.m; path = AFNetworking/AFHTTPRequestOperationManager.m; sourceTree = "<group>"; };
@@ -974,6 +974,7 @@
 		F3BC3A22A5EAB3915DAD8441EF7F6680 /* Pods-ChatProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ChatProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F3C55ED3D028129C6276AAB92BEB2F90 /* UIBarButtonItem+Lite.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIBarButtonItem+Lite.h"; path = "DFCommon/DFCommon/Category/UIBarButtonItem/UIBarButtonItem+Lite.h"; sourceTree = "<group>"; };
 		F43C0062A645AD6D43DEF018BF6354B2 /* TZVideoPlayerController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TZVideoPlayerController.m; path = TZImagePickerController/TZImagePickerController/TZVideoPlayerController.m; sourceTree = "<group>"; };
+		F4BCEE96348913C136DEBBB7EE35C0F5 /* RongIMKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RongIMKit.framework; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_3_stable/RongIMKit.framework; sourceTree = "<group>"; };
 		F52D88993F8D41C74ADC82E8B0B392D6 /* libMBProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMBProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		F594DFB26CAFE7CA4209510D7970650C /* MJPhotoBrowser.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MJPhotoBrowser.xcconfig; sourceTree = "<group>"; };
 		F6B8E525A3C63F80EEB835C8D21D181F /* MLLabel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MLLabel.xcconfig; sourceTree = "<group>"; };
@@ -999,7 +1000,6 @@
 		FEEEFE0D51D9C1F2D98E51117D3C8824 /* UILabel+Corner.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UILabel+Corner.h"; path = "DFCommon/DFCommon/Category/UILabel/UILabel+Corner.h"; sourceTree = "<group>"; };
 		FF7244E855D8166BFB0D5C747B9A74E9 /* MASLayoutConstraint.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MASLayoutConstraint.h; path = Masonry/MASLayoutConstraint.h; sourceTree = "<group>"; };
 		FF8D81AC6DB69F151452D780479AB509 /* ODRefreshControl.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ODRefreshControl.m; path = ODRefreshControl/ODRefreshControl.m; sourceTree = "<group>"; };
-		FFDF9A33700CCE339260AFBB55ABFBF9 /* Emoji.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = Emoji.plist; path = Rong_Cloud_iOS_IMKit_SDK_v2_6_2_dev/Emoji.plist; sourceTree = "<group>"; };
 		FFF4B441D5D3CAC06740166EA9705A06 /* Masonry-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Masonry-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1236,16 +1236,6 @@
 			path = "../Target Support Files/TZImagePickerController";
 			sourceTree = "<group>";
 		};
-		216167C9C51B43470E1D1B085769F99A /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				0B026581D6B2C0A4DDB0D05A905B4666 /* libopencore-amrnb.a */,
-				4F3565DF8FE81940E0942BBA3C0E2E85 /* RongIMKit.framework */,
-				C5B024BC3B6AF47ECFF1175409AF1653 /* RongIMLib.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		25BC47A6D0E3DC35C9A2C35D882F22DD /* AMap2DMap */ = {
 			isa = PBXGroup;
 			children = (
@@ -1390,6 +1380,28 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/MJRefresh";
+			sourceTree = "<group>";
+		};
+		585C4DD77BBC53D2A8C25B6611489B5B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				33F5A9BAA61A20081D95958CA038F357 /* libopencore-amrnb.a */,
+				F4BCEE96348913C136DEBBB7EE35C0F5 /* RongIMKit.framework */,
+				A0034D6B970A4459AA6A971F28132EA8 /* RongIMLib.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5B645D1767E4A14C9A5599DF69A234F6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0AFD4DA5F6E511F5FABFCAB70A7A66F3 /* Emoji.plist */,
+				360296E4477527F73D01B32C258A7937 /* en.lproj */,
+				B6FE0771BA0564E6C765A0816B67B2B8 /* RCConfig.plist */,
+				B18E5330D0C88F1AFD06C2BB5E550BF2 /* RongCloud.bundle */,
+				6E54E51E95F6D4613283AACD9B0FB561 /* zh-Hans.lproj */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		5DC06BDD317FDA1D6D4BBA395E0E4DD2 /* Frameworks */ = {
@@ -1537,18 +1549,6 @@
 			path = MJRefresh;
 			sourceTree = "<group>";
 		};
-		6CB3D8B97D36FACDE1141B3BDBFBE717 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				FFDF9A33700CCE339260AFBB55ABFBF9 /* Emoji.plist */,
-				5787875453D08BE115C2CDE882D6A2E6 /* en.lproj */,
-				1B66056DDB45B01B0F570C9A47D4A4D5 /* RCConfig.plist */,
-				B7D764E2802D2477F88A66F117B0B8DC /* RongCloud.bundle */,
-				90DEB78325793227BFDD8B4CC9BEBCFF /* zh-Hans.lproj */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		6D17A7814F1D932180470AD63B388DDB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1679,8 +1679,8 @@
 		9BFBC9F333E6EF8937699F9374B676FC /* RongCloudIMKit */ = {
 			isa = PBXGroup;
 			children = (
-				216167C9C51B43470E1D1B085769F99A /* Frameworks */,
-				6CB3D8B97D36FACDE1141B3BDBFBE717 /* Resources */,
+				585C4DD77BBC53D2A8C25B6611489B5B /* Frameworks */,
+				5B645D1767E4A14C9A5599DF69A234F6 /* Resources */,
 			);
 			path = RongCloudIMKit;
 			sourceTree = "<group>";
@@ -3199,16 +3199,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		136B7303D6E134C9B6EAB4A575EFC2ED /* Debug */ = {
+		0D880F27F45B6DBD6487785D96DC3286 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F3BC3A22A5EAB3915DAD8441EF7F6680 /* Pods-ChatProjectUITests.debug.xcconfig */;
+			baseConfigurationReference = 5923BE6BDCD8CD1F41CBE87B2C0F64DF /* Pods-ChatProject.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
@@ -3221,18 +3221,18 @@
 			};
 			name = Debug;
 		};
-		1A33C0713BD3E19B7485A6A044B1F2E1 /* Debug */ = {
+		12B7C04E1C135F610714259DF77BE133 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F4AAD24F6733B633741B3140D53C98C /* Pods-ChatProjectTests.debug.xcconfig */;
+			baseConfigurationReference = A9F8B64249548218DEEFC998F04D943A /* Pods-ChatProject.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -3241,7 +3241,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
-			name = Debug;
+			name = Release;
 		};
 		26053D1BB4B5139ED9F5E9283A2EC886 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3331,28 +3331,6 @@
 			};
 			name = Release;
 		};
-		340C4A61EC9C2FC98F035F235C8181C6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C8E454F616EA14C78837EFCAA2A4EF3 /* Pods-ChatProjectTests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 		35BDC43F0A9619D76B72E340121BF381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F994F4205EBB3FD47DD7438CB50812DA /* MJRefresh.xcconfig */;
@@ -3397,7 +3375,29 @@
 			};
 			name = Release;
 		};
-		3FA451D268613890FA8A5A03801E11D5 /* Release */ = {
+		4434EDC4FCA1015FFA33F372719BD584 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F4AAD24F6733B633741B3140D53C98C /* Pods-ChatProjectTests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		47BEF9D903506B003EA5C2B249729489 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -3415,25 +3415,29 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_RELEASE=1",
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				ONLY_ACTIVE_ARCH = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = Debug;
 		};
 		52664528800D797102C532AC86C41EB4 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -3500,70 +3504,6 @@
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
-		};
-		5E62115DE8C09934BF8D2FE5D15FED1E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = NO;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"POD_CONFIGURATION_DEBUG=1",
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				ONLY_ACTIVE_ARCH = YES;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-			};
-			name = Debug;
-		};
-		6164E60CC9255020DCFCB42B806BA9EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9F8B64249548218DEEFC998F04D943A /* Pods-ChatProject.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
 		};
 		623992C14636B8DF03CBE50FAFC91AD0 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3697,6 +3637,28 @@
 			};
 			name = Release;
 		};
+		79CB4BB0CA1099AEA9E3EA0A4FE156F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5C8E454F616EA14C78837EFCAA2A4EF3 /* Pods-ChatProjectTests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		9996A496ABBF93E2FBD2A505DC774359 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F6B8E525A3C63F80EEB835C8D21D181F /* MLLabel.xcconfig */;
@@ -3785,6 +3747,44 @@
 			};
 			name = Debug;
 		};
+		AAF678CED40D3499169D10F63CA0719E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		BCC44C440A15C80285F1447F2121FCA4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 932B153689C8301F831A4FC598CD4A05 /* AFNetworking.xcconfig */;
@@ -3806,6 +3806,28 @@
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
+		};
+		BF31E8B5B2AE482C015A6546513A6BF2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F3BC3A22A5EAB3915DAD8441EF7F6680 /* Pods-ChatProjectUITests.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
 		};
 		C8CB7B72781D2D9D329AF4168C8F6BCC /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -3846,28 +3868,6 @@
 				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		CCFDA9408AAF241F5A07C9E6743C3617 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CE82AA87C3086966837B21CFFD19DA88 /* Pods-ChatProjectUITests.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -3983,28 +3983,6 @@
 			};
 			name = Debug;
 		};
-		F06DC4F4319EACB7B530F12BEB5DA018 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5923BE6BDCD8CD1F41CBE87B2C0F64DF /* Pods-ChatProject.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
 		FD9591DC5D65B9379FF9D6D509735234 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 42CFD54108E26A8010C368F6BF293A64 /* FMDB.xcconfig */;
@@ -4027,14 +4005,36 @@
 			};
 			name = Debug;
 		};
+		FED0914C690EA211F08A6EC55E3D7B3C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = CE82AA87C3086966837B21CFFD19DA88 /* Pods-ChatProjectUITests.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
 		11221261160E92FA3B050BF225589560 /* Build configuration list for PBXNativeTarget "Pods-ChatProject" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F06DC4F4319EACB7B530F12BEB5DA018 /* Debug */,
-				6164E60CC9255020DCFCB42B806BA9EA /* Release */,
+				0D880F27F45B6DBD6487785D96DC3286 /* Debug */,
+				12B7C04E1C135F610714259DF77BE133 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -4060,8 +4060,8 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5E62115DE8C09934BF8D2FE5D15FED1E /* Debug */,
-				3FA451D268613890FA8A5A03801E11D5 /* Release */,
+				47BEF9D903506B003EA5C2B249729489 /* Debug */,
+				AAF678CED40D3499169D10F63CA0719E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -4078,8 +4078,8 @@
 		512CF17C8BFBA2AC9D7B30D0086880A7 /* Build configuration list for PBXNativeTarget "Pods-ChatProjectTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1A33C0713BD3E19B7485A6A044B1F2E1 /* Debug */,
-				340C4A61EC9C2FC98F035F235C8181C6 /* Release */,
+				4434EDC4FCA1015FFA33F372719BD584 /* Debug */,
+				79CB4BB0CA1099AEA9E3EA0A4FE156F7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -4186,8 +4186,8 @@
 		FCB98A58274E09301C6DD00005F4F40E /* Build configuration list for PBXNativeTarget "Pods-ChatProjectUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				136B7303D6E134C9B6EAB4A575EFC2ED /* Debug */,
-				CCFDA9408AAF241F5A07C9E6743C3617 /* Release */,
+				BF31E8B5B2AE482C015A6546513A6BF2 /* Debug */,
+				FED0914C690EA211F08A6EC55E3D7B3C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -49,7 +49,7 @@ PODS:
     - Masonry
   - MOBFoundation_IDFA (2.0.1)
   - ODRefreshControl (1.2)
-  - RongCloudIMKit (2.6.2)
+  - RongCloudIMKit (2.6.3)
   - SDWebImage (3.7.6):
     - SDWebImage/Core (= 3.7.6)
   - SDWebImage/Core (3.7.6)
@@ -60,10 +60,10 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
-  - AMap2DMap
+  - AMap2DMap (= 4.0.0)
   - DFCommon (= 1.3.9)
   - MOBFoundation_IDFA (= 2.0.1)
-  - RongCloudIMKit (= 2.6.2)
+  - RongCloudIMKit
   - SMSSDK (= 2.0.4)
   - SVProgressHUD (= 2.0.3)
 
@@ -81,13 +81,13 @@ SPEC CHECKSUMS:
   MMPopupView: fe1dd010824029dfb632fdf1a531db5dd5386020
   MOBFoundation_IDFA: 23c44027c5f4bfb185cb14274d05e1cf63467f06
   ODRefreshControl: 907e6149d72dde488d5917ccfabee5bd8d711a20
-  RongCloudIMKit: cbad580cebcd355ec3b5ee4a6062c66f9dfba67a
+  RongCloudIMKit: bf16a77298dcc52d6e7c8a41ac7ecc394e552abc
   SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   SMSSDK: 642b6a8c55fd382be44487cd5e0b0710681895f9
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   TZImagePickerController: 046f172ad54add0ce358dfae932d9183b7fafd03
   YLGIFImage: c0ae132fe80e5282b2762a97d14e23ba71a748ae
 
-PODFILE CHECKSUM: 9c23cc0c5d7b432a230f35b98be247ac0dd26be6
+PODFILE CHECKSUM: 34527b5ee2a52f04b6fc828cbdb9ebc4a468802a
 
 COCOAPODS: 1.0.1

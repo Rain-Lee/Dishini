@@ -14,6 +14,7 @@
 #import "SVProgressHUD.h"
 #import "MJRefresh.h"
 #import <RongIMKit/RongIMKit.h>
+#import "UIImageView+WebCache.h"
 //#import "UMSocial.h"
 //#import "UMSocialSnsService.h"
 
@@ -99,6 +100,9 @@
                 if ([tempPhone isEqual:[machAddressArray[j] valueForKey:@"Phone"]]) {
                     model.recordID = [[machAddressArray[j] valueForKey:@"IsFriend"] intValue];
                     model.friendID = [machAddressArray[j] valueForKey:@"Id"];
+                    NSString *imageUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,[machAddressArray[j] valueForKey:@"PhotoPath"]];
+                    model.photo = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]];
+                    //[model.photo sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Kimg_path,[machAddressArray[j] valueForKey:@"PhotoPath"]]]];
                     break;
                 }
             }

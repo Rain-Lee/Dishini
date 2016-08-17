@@ -134,23 +134,25 @@
 }
 
 -(void)tapCoverViewEvent{
-    [Toolkit actionSheetViewSecond:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:[NSArray arrayWithObjects:@"拍照", @"从手机相册选择", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
-        if (buttonIndex == 1) {
-            // 拍照
-            UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
-            mImagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
-            mImagePick.delegate = self;
-            mImagePick.allowsEditing = YES;
-            [self presentViewController:mImagePick animated:YES completion:nil];
-        }else if (buttonIndex == 2){
-            // 从相册中选取
-            UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
-            mImagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            mImagePick.delegate = self;
-            mImagePick.allowsEditing = YES;
-            [self presentViewController:mImagePick animated:YES completion:nil];
-        }
-    }];
+    if ([[Toolkit getStringValueByKey:@"Id"] isEqual:_userId]){
+        [Toolkit actionSheetViewSecond:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:[NSArray arrayWithObjects:@"拍照", @"从手机相册选择", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
+            if (buttonIndex == 1) {
+                // 拍照
+                UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+                mImagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+                mImagePick.delegate = self;
+                mImagePick.allowsEditing = YES;
+                [self presentViewController:mImagePick animated:YES completion:nil];
+            }else if (buttonIndex == 2){
+                // 从相册中选取
+                UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+                mImagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                mImagePick.delegate = self;
+                mImagePick.allowsEditing = YES;
+                [self presentViewController:mImagePick animated:YES completion:nil];
+            }
+        }];
+    }
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{

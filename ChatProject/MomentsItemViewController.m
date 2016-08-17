@@ -182,7 +182,7 @@
     [dataProvider setDelegateObject:self setBackFunctionName:@"newsZanCallBack:"];
     
     if (currentIsLike) { // 取消赞
-        
+        [dataProvider newsZanCancel:[NSString stringWithFormat:@"%lld",itemId] andUserId:[Toolkit getStringValueByKey:@"Id"] andIFlag:@"2"];
     }else{ // 点赞
         [dataProvider newsZan:[NSString stringWithFormat:@"%lld",itemId] andUserId:[Toolkit getStringValueByKey:@"Id"] andIFlag:@"2"];
     }

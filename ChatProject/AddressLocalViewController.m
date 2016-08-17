@@ -654,15 +654,14 @@
         MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
         
         controller.recipients = [NSArray arrayWithObject:phoneTxt];
-        //controller.body = @"http://www.pgyer.com/ybow";
+        controller.body = @"我现在在使用IPIC，快来跟我一起体验吧，这是下载地址：http://www.pgyer.com/LDxQ";
         controller.messageComposeDelegate = self;
         
         [self presentViewController:controller animated:YES completion:nil];
         
         [[[[controller viewControllers] lastObject] navigationItem] setTitle:@"测试短信"];//修改短信界面标题
     }else{
-        
-        [self alertWithTitle:@"提示信息" msg:@"设备没有短信功能"];
+        [self alertWithTitle:@"提示信息" msg:@"该设备没有短信功能"];
     }
     
     //[SVProgressHUD dismiss];

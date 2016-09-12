@@ -54,16 +54,20 @@
 }
 
 -(void)saveCallBack:(id)dict{// 18810375184
-    @try {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            DataProvider *dataProvider2 = [[DataProvider alloc] init];
-            [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
-            [dataProvider2 editUserInfo:dict[@"data"] andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"中国" andDescription:@""];
-        });
-    } @catch (NSException *exception) {
-        [SVProgressHUD dismiss];
-    } @finally {
-        
+    if ([dict[@"code"] intValue] == 200) {
+        @try {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                DataProvider *dataProvider2 = [[DataProvider alloc] init];
+                [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
+                [dataProvider2 editUserInfo:dict[@"data"] andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"中国" andDescription:@""];
+            });
+        } @catch (NSException *exception) {
+            [SVProgressHUD dismiss];
+        } @finally {
+            
+        }
+    }else{
+        [SVProgressHUD showErrorWithStatus:dict[@"data"]];
     }
 }
 
@@ -76,7 +80,7 @@
             [dataProvider3 login:_phone andPassword:passwordTxt.text];
         });
     }else{
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showErrorWithStatus:dict[@"error"]];
     }
 }
 

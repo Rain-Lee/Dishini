@@ -16,5 +16,6 @@
  * 1：注册   2：通过短息验证码登陆
  */
 @property (nonatomic, strong) NSString *iFlagType;
+@property (nonatomic, strong) NSString *verificationCode;
 
 @end

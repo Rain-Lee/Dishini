@@ -33,6 +33,26 @@
     return timeSp.longLongValue * 1000;
 }
 
++(NSString *)sendMsgValication:(NSString *)phone{
+    NSString *randomNum = [Toolkit randomNum:6];
+    NSString *sendMsg = [NSString stringWithFormat:@"【IPIC】尊敬的用户您好，感谢您注册IPIC账号，本次注册的验证码为：%@，请妥善保管",randomNum];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://118.145.18.170:8080/sms.aspx"]];
+    request.HTTPMethod = @"POST";
+    NSString *strTemp = [NSString stringWithFormat:@"action=send&userid=2375&account=twslkj&password=a123123&mobile=%@&content=%@&sendTime=&extno=",phone,sendMsg];
+    request.HTTPBody = [strTemp dataUsingEncoding:NSUTF8StringEncoding];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+        NSString* newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"%@",newStr);
+    }];
+    return randomNum;
+}
+
++(NSString *)randomNum:(int)numLength{
+    int num = (arc4random() % (int)pow(10, numLength));
+    NSString *randomNumber = [NSString stringWithFormat:@"%.6d", num];
+    return randomNumber;
+}
+
 +(BOOL)isExitAccount{
     return [[Toolkit getStringValueByKey:@"Id"] isEqual:@""] ? false : true;
 }

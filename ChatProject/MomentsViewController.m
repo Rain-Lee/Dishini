@@ -31,8 +31,6 @@
     
     [self setTopView:1 andTitle:@"朋友圈"];
     
-    [self initData];
-    
     [self setHeader];
     
     // 通知
@@ -41,7 +39,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initData) name:@"initData" object:nil];
 }
 
--(void) setHeader
+-(void)viewDidAppear:(BOOL)animated{
+    [self initData];
+}
+
+-(void)setHeader
 {
     
     NSString *avatarUrl = [Toolkit getStringValueByKey:@"PhotoPath"];

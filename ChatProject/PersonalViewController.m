@@ -376,7 +376,7 @@
 }
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    UIImage *image = info[UIImagePickerControllerOriginalImage];
+    UIImage *image = info[UIImagePickerControllerEditedImage];
     UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(800, 800)];
     NSData *imageData = UIImagePNGRepresentation(smallImage);
     headImage = smallImage;

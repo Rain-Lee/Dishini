@@ -67,19 +67,29 @@
 }
 
 -(void)nextEvent{
-    [Toolkit showWithStatus:@"加载中..."];
-    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:phoneTxt.text zone:@"86" customIdentifier:nil result:^(NSError *error) {
-        [SVProgressHUD dismiss];
-        if (!error) {
-            RegisterSecondViewController *registerSecondVC = [[RegisterSecondViewController alloc] init];
-            registerSecondVC.phone = phoneTxt.text;
-            registerSecondVC.iFlagType = self.iFlagType;
-            [self.navigationController pushViewController:registerSecondVC animated:true];
-        }else{
-            phoneTxt.text = @"";
-            [Toolkit alertView:self andTitle:@"提示" andMsg:error.userInfo[@"getVerificationCode"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
-        }
-    }];
+    // 发送验证码
+    NSString *randomNum = [Toolkit sendMsgValication:phoneTxt.text];
+    
+    RegisterSecondViewController *registerSecondVC = [[RegisterSecondViewController alloc] init];
+    registerSecondVC.phone = phoneTxt.text;
+    registerSecondVC.iFlagType = self.iFlagType;
+    registerSecondVC.verificationCode = randomNum;
+    [self.navigationController pushViewController:registerSecondVC animated:true];
+    
+    
+    
+//    [SMSSDK getVerificationCodeByMethod:SMSGetCodeMethodSMS phoneNumber:phoneTxt.text zone:@"86" customIdentifier:nil result:^(NSError *error) {
+//        [SVProgressHUD dismiss];
+//        if (!error) {
+//            RegisterSecondViewController *registerSecondVC = [[RegisterSecondViewController alloc] init];
+//            registerSecondVC.phone = phoneTxt.text;
+//            registerSecondVC.iFlagType = self.iFlagType;
+//            [self.navigationController pushViewController:registerSecondVC animated:true];
+//        }else{
+//            phoneTxt.text = @"";
+//            [Toolkit alertView:self andTitle:@"提示" andMsg:error.userInfo[@"getVerificationCode"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+//        }
+//    }];
 }
 
 -(void)textFieldChangeEvent:(UITextField *)textField{

@@ -20,6 +20,10 @@
 
 +(NSTimeInterval)getTimeIntervalFromString:(NSString *)dateString;
 
++(NSString *)sendMsgValication:(NSString *)phone;
+
++(NSString *)randomNum:(int)numLength;
+
 +(BOOL)isExitAccount;
 
 +(void)showWithStatus:(NSString *)msg;

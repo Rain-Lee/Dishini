@@ -16,7 +16,7 @@
             startingLineNumber = "50"
             endingLineNumber = "50"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -462,7 +462,7 @@
             startingLineNumber = "39"
             endingLineNumber = "39"
             landmarkName = "-initView"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -542,7 +542,7 @@
             startingLineNumber = "23"
             endingLineNumber = "23"
             landmarkName = "-login:andPassword:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -622,7 +622,7 @@
             startingLineNumber = "58"
             endingLineNumber = "58"
             landmarkName = "-loginWithoutPassword:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -638,7 +638,7 @@
             startingLineNumber = "266"
             endingLineNumber = "266"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -654,7 +654,7 @@
             startingLineNumber = "252"
             endingLineNumber = "252"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -670,7 +670,7 @@
             startingLineNumber = "433"
             endingLineNumber = "433"
             landmarkName = "-pickerView:titleForRow:forComponent:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -686,7 +686,7 @@
             startingLineNumber = "450"
             endingLineNumber = "450"
             landmarkName = "-pickerView:didSelectRow:inComponent:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -702,7 +702,7 @@
             startingLineNumber = "457"
             endingLineNumber = "457"
             landmarkName = "-getSign:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -750,7 +750,7 @@
             startingLineNumber = "91"
             endingLineNumber = "91"
             landmarkName = "-changePwd:andOldPwd:andPassword:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -814,7 +814,7 @@
             startingLineNumber = "70"
             endingLineNumber = "70"
             landmarkName = "-registerUser:andPassword:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -830,7 +830,7 @@
             startingLineNumber = "62"
             endingLineNumber = "62"
             landmarkName = "+showWithStatus:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -846,7 +846,7 @@
             startingLineNumber = "68"
             endingLineNumber = "68"
             landmarkName = "-registerUser:andPassword:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -862,7 +862,7 @@
             startingLineNumber = "172"
             endingLineNumber = "172"
             landmarkName = "-getCountyByCity:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -878,7 +878,7 @@
             startingLineNumber = "155"
             endingLineNumber = "155"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -910,7 +910,7 @@
             startingLineNumber = "57"
             endingLineNumber = "57"
             landmarkName = "+isExitAccount"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1070,7 +1070,7 @@
             startingLineNumber = "95"
             endingLineNumber = "95"
             landmarkName = "+getStringValueByKey:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1086,7 +1086,7 @@
             startingLineNumber = "267"
             endingLineNumber = "267"
             landmarkName = "+judgeIsNull:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1224,7 +1224,7 @@
                   moduleName = "ChatProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rain/Documents/Projects/WorkProject/ChatProject/Pods/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZPhotoPickerController.m"
-                  timestampString = "498376697.125052"
+                  timestampString = "499318566.384074"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "416"
@@ -1239,7 +1239,7 @@
                   moduleName = "ChatProject"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rain/Documents/Projects/WorkProject/ChatProject/Pods/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZPhotoPickerController.m"
-                  timestampString = "498376697.125215"
+                  timestampString = "499318566.384449"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "417"
@@ -1326,7 +1326,7 @@
             startingLineNumber = "154"
             endingLineNumber = "154"
             landmarkName = "-getCityByProvince:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1406,7 +1406,7 @@
             startingLineNumber = "264"
             endingLineNumber = "264"
             landmarkName = "-getDongtaiPageByFriends:andStartRowIndex:andMaximumRows:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1454,7 +1454,7 @@
             startingLineNumber = "250"
             endingLineNumber = "250"
             landmarkName = "-getDongtaiPageByFriends:andStartRowIndex:andMaximumRows:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1470,7 +1470,7 @@
             startingLineNumber = "272"
             endingLineNumber = "272"
             landmarkName = "-SaveDongtai:andContent:andPathlist:andVideoImage:andVideopath:andVideoDuration:andSmallImage:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1502,7 +1502,7 @@
             startingLineNumber = "203"
             endingLineNumber = "203"
             landmarkName = "-upLoadPhoto:andImgData:andImgName:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1646,7 +1646,7 @@
             startingLineNumber = "211"
             endingLineNumber = "211"
             landmarkName = "-UploadImgWithImgdata:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1662,7 +1662,7 @@
             startingLineNumber = "224"
             endingLineNumber = "224"
             landmarkName = "-UploadImgWithImgdata:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1966,7 +1966,7 @@
             startingLineNumber = "337"
             endingLineNumber = "337"
             landmarkName = "-upLoadVideo:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2060,7 +2060,7 @@
             startingLineNumber = "365"
             endingLineNumber = "365"
             landmarkName = "-getDongtaiByNewsId:andNewsId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2076,7 +2076,7 @@
             startingLineNumber = "379"
             endingLineNumber = "379"
             landmarkName = "-getDongtaiByNewsId:andNewsId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2108,7 +2108,7 @@
             startingLineNumber = "367"
             endingLineNumber = "367"
             landmarkName = "-getDongtaiByNewsId:andNewsId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2364,7 +2364,7 @@
             startingLineNumber = "431"
             endingLineNumber = "431"
             landmarkName = "-messageComment:andUserId:andComment:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2380,7 +2380,7 @@
             startingLineNumber = "453"
             endingLineNumber = "453"
             landmarkName = "-commentComment:andUserId:andComment:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2396,7 +2396,7 @@
             startingLineNumber = "467"
             endingLineNumber = "467"
             landmarkName = "-commentComment:andUserId:andComment:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2412,7 +2412,7 @@
             startingLineNumber = "186"
             endingLineNumber = "186"
             landmarkName = "-tableView:cellForRowAtIndexPath:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2444,7 +2444,7 @@
             startingLineNumber = "371"
             endingLineNumber = "371"
             landmarkName = "-UpdateSexCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2460,7 +2460,7 @@
             startingLineNumber = "368"
             endingLineNumber = "368"
             landmarkName = "-UpdateSexCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2492,7 +2492,7 @@
             startingLineNumber = "111"
             endingLineNumber = "111"
             landmarkName = "-editUserInfo:andNickName:andSex:andHomeAreaId:andDescription:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2556,7 +2556,7 @@
             startingLineNumber = "405"
             endingLineNumber = "405"
             landmarkName = "-uploadPhotoCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2940,7 +2940,7 @@
             startingLineNumber = "452"
             endingLineNumber = "452"
             landmarkName = "-commentComment:andUserId:andComment:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3068,7 +3068,7 @@
             startingLineNumber = "515"
             endingLineNumber = "515"
             landmarkName = "-getFriendByAreaCodeAndSearch:andMaximumRows:andNicName:andAreaCode:andAge:andSexuality:andUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3100,7 +3100,7 @@
             startingLineNumber = "544"
             endingLineNumber = "544"
             landmarkName = "-contactsMatch:andContacts:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3116,7 +3116,7 @@
             startingLineNumber = "545"
             endingLineNumber = "545"
             landmarkName = "-contactsMatch:andContacts:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3148,7 +3148,7 @@
             startingLineNumber = "585"
             endingLineNumber = "585"
             landmarkName = "-getUserInfoByUserId:andFriendId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3164,7 +3164,7 @@
             startingLineNumber = "584"
             endingLineNumber = "584"
             landmarkName = "-getUserInfoByUserId:andFriendId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3180,7 +3180,7 @@
             startingLineNumber = "556"
             endingLineNumber = "556"
             landmarkName = "-contactsMatch:andContacts:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3292,7 +3292,7 @@
             startingLineNumber = "605"
             endingLineNumber = "605"
             landmarkName = "-searchFriendByPhone:andPhone:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3324,7 +3324,7 @@
             startingLineNumber = "625"
             endingLineNumber = "625"
             landmarkName = "-addFriend:andFriendId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3340,7 +3340,7 @@
             startingLineNumber = "611"
             endingLineNumber = "611"
             landmarkName = "-searchFriendByPhone:andPhone:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3404,7 +3404,7 @@
             startingLineNumber = "493"
             endingLineNumber = "493"
             landmarkName = "-selectApplyList:andMaximumRows:andUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3420,7 +3420,7 @@
             startingLineNumber = "506"
             endingLineNumber = "506"
             landmarkName = "-selectApplyList:andMaximumRows:andUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3436,7 +3436,7 @@
             startingLineNumber = "507"
             endingLineNumber = "507"
             landmarkName = "-selectApplyList:andMaximumRows:andUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3468,7 +3468,7 @@
             startingLineNumber = "645"
             endingLineNumber = "645"
             landmarkName = "-agreeFriendAndSaveFriend:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3628,7 +3628,7 @@
             startingLineNumber = "159"
             endingLineNumber = "159"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3644,7 +3644,7 @@
             startingLineNumber = "162"
             endingLineNumber = "162"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3788,7 +3788,7 @@
             startingLineNumber = "185"
             endingLineNumber = "185"
             landmarkName = "-getGroupInfoWithGroupId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -3836,7 +3836,7 @@
             startingLineNumber = "187"
             endingLineNumber = "187"
             landmarkName = "-getGroupInfoWithGroupId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3932,7 +3932,7 @@
             startingLineNumber = "597"
             endingLineNumber = "597"
             landmarkName = "-getUserInfoByUserId:andFriendId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3948,7 +3948,7 @@
             startingLineNumber = "168"
             endingLineNumber = "168"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4012,7 +4012,7 @@
             startingLineNumber = "1081"
             endingLineNumber = "1081"
             landmarkName = "-getUserInfoByUserIDChat:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4204,7 +4204,7 @@
             startingLineNumber = "718"
             endingLineNumber = "718"
             landmarkName = "-editGroup:andName:andUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4348,7 +4348,7 @@
             startingLineNumber = "135"
             endingLineNumber = "135"
             landmarkName = "-editUserInfo:andNickName:andSex:andHomeAreaId:andDescription:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4364,7 +4364,7 @@
             startingLineNumber = "1078"
             endingLineNumber = "1078"
             landmarkName = "-getUserInfoByUserIDChat:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4380,7 +4380,7 @@
             startingLineNumber = "1068"
             endingLineNumber = "1068"
             landmarkName = "-getUserInfoByUserIDChat:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4396,7 +4396,7 @@
             startingLineNumber = "1065"
             endingLineNumber = "1065"
             landmarkName = "-getUserInfoByUserIDChat:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4412,7 +4412,7 @@
             startingLineNumber = "171"
             endingLineNumber = "171"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4492,7 +4492,7 @@
             startingLineNumber = "266"
             endingLineNumber = "266"
             landmarkName = "+judgeIsNull:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4556,7 +4556,7 @@
             startingLineNumber = "760"
             endingLineNumber = "760"
             landmarkName = "-changeFriendRName:andFriendId:andRname:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4572,7 +4572,7 @@
             startingLineNumber = "774"
             endingLineNumber = "774"
             landmarkName = "-changeFriendRName:andFriendId:andRname:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4620,7 +4620,7 @@
             startingLineNumber = "761"
             endingLineNumber = "761"
             landmarkName = "-changeFriendRName:andFriendId:andRname:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4636,7 +4636,7 @@
             startingLineNumber = "762"
             endingLineNumber = "762"
             landmarkName = "-changeFriendRName:andFriendId:andRname:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4844,7 +4844,7 @@
             startingLineNumber = "805"
             endingLineNumber = "805"
             landmarkName = "-tiChu:andTeamId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4924,7 +4924,7 @@
             startingLineNumber = "817"
             endingLineNumber = "817"
             landmarkName = "-tiChu:andTeamId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4972,7 +4972,7 @@
             startingLineNumber = "232"
             endingLineNumber = "232"
             landmarkName = "-getFriends:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4988,7 +4988,7 @@
             startingLineNumber = "24"
             endingLineNumber = "24"
             landmarkName = "-login:andPassword:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5260,7 +5260,7 @@
             startingLineNumber = "182"
             endingLineNumber = "182"
             landmarkName = "-getGroupInfoWithGroupId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5500,7 +5500,7 @@
             startingLineNumber = "198"
             endingLineNumber = "198"
             landmarkName = "-getGroupInfoWithGroupId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5516,7 +5516,7 @@
             startingLineNumber = "208"
             endingLineNumber = "208"
             landmarkName = "-onRCIMConnectionStatusChanged:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5532,7 +5532,7 @@
             startingLineNumber = "252"
             endingLineNumber = "252"
             landmarkName = "-onRCIMReceiveMessage:left:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5548,7 +5548,7 @@
             startingLineNumber = "207"
             endingLineNumber = "207"
             landmarkName = "-onRCIMConnectionStatusChanged:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5564,7 +5564,7 @@
             startingLineNumber = "247"
             endingLineNumber = "247"
             landmarkName = "-onRCIMReceiveMessage:left:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5580,7 +5580,7 @@
             startingLineNumber = "209"
             endingLineNumber = "209"
             landmarkName = "-onRCIMConnectionStatusChanged:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5596,7 +5596,7 @@
             startingLineNumber = "138"
             endingLineNumber = "138"
             landmarkName = "-getFriendBackCall:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5612,7 +5612,7 @@
             startingLineNumber = "167"
             endingLineNumber = "167"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6044,7 +6044,7 @@
             startingLineNumber = "741"
             endingLineNumber = "741"
             landmarkName = "-getGroupMember:andUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6076,7 +6076,7 @@
             startingLineNumber = "119"
             endingLineNumber = "119"
             landmarkName = "-getFriendFunc"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6108,7 +6108,7 @@
             startingLineNumber = "130"
             endingLineNumber = "130"
             landmarkName = "-getFriendBackCall:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6124,7 +6124,7 @@
             startingLineNumber = "681"
             endingLineNumber = "681"
             landmarkName = "-selectAllTeamByUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6268,7 +6268,7 @@
             startingLineNumber = "322"
             endingLineNumber = "322"
             landmarkName = "-upLoadVideo:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6284,7 +6284,7 @@
             startingLineNumber = "336"
             endingLineNumber = "336"
             landmarkName = "-upLoadVideo:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6316,7 +6316,7 @@
             startingLineNumber = "323"
             endingLineNumber = "323"
             landmarkName = "-upLoadVideo:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6492,7 +6492,7 @@
             startingLineNumber = "782"
             endingLineNumber = "782"
             landmarkName = "-yaoQing:andTeamId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6588,7 +6588,7 @@
             startingLineNumber = "157"
             endingLineNumber = "157"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6604,7 +6604,7 @@
             startingLineNumber = "154"
             endingLineNumber = "154"
             landmarkName = "-getUserInfoWithUserId:completion:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6620,7 +6620,7 @@
             startingLineNumber = "36"
             endingLineNumber = "36"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6636,7 +6636,7 @@
             startingLineNumber = "37"
             endingLineNumber = "37"
             landmarkName = "-application:didFinishLaunchingWithOptions:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6730,7 +6730,7 @@
             startingLineNumber = "719"
             endingLineNumber = "719"
             landmarkName = "-editGroup:andName:andUserId:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6746,7 +6746,7 @@
             startingLineNumber = "214"
             endingLineNumber = "214"
             landmarkName = "-onRCIMReceiveMessage:left:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6762,7 +6762,7 @@
             startingLineNumber = "212"
             endingLineNumber = "212"
             landmarkName = "-onRCIMReceiveMessage:left:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6858,7 +6858,7 @@
             startingLineNumber = "862"
             endingLineNumber = "862"
             landmarkName = "-selectGongGaoList:andmaximumRows:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6890,7 +6890,7 @@
             startingLineNumber = "878"
             endingLineNumber = "878"
             landmarkName = "-updateSuggestion:andusername:andtitle:andcontent:andpublishtime:anduserphone:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7114,7 +7114,7 @@
             startingLineNumber = "246"
             endingLineNumber = "246"
             landmarkName = "-onRCIMReceiveMessage:left:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7130,7 +7130,7 @@
             startingLineNumber = "215"
             endingLineNumber = "215"
             landmarkName = "-onRCIMReceiveMessage:left:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7146,7 +7146,7 @@
             startingLineNumber = "222"
             endingLineNumber = "222"
             landmarkName = "-onRCIMReceiveMessage:left:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7418,7 +7418,7 @@
             startingLineNumber = "89"
             endingLineNumber = "89"
             landmarkName = "-loginRongCloud"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7466,7 +7466,7 @@
             startingLineNumber = "44"
             endingLineNumber = "44"
             landmarkName = "+sendMsgValication:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -7482,7 +7482,7 @@
             startingLineNumber = "95"
             endingLineNumber = "95"
             landmarkName = "-commentEvent"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

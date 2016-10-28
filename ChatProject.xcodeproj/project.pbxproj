@@ -1238,7 +1238,7 @@
 				B748AF421D275DFB002DC0F7 /* QuPai_SDK */,
 				B748AF331D274DD0002DC0F7 /* UpLoadImage */,
 				B748AF001D274DB1002DC0F7 /* ImagePicker */,
-				B7DBCD181D20C26300BF3489 /* Security */,
+				B7DBCD181D20C26300BF3489 /* SecurityUtil */,
 				B7D427381D1A36C20089A263 /* ChineseSorting */,
 				B7D426B71D1A29EE0089A263 /* DFTimelineView */,
 				B7D426B01D1A1F9C0089A263 /* xml */,
@@ -1521,7 +1521,7 @@
 			path = libqrencode;
 			sourceTree = "<group>";
 		};
-		B7DBCD181D20C26300BF3489 /* Security */ = {
+		B7DBCD181D20C26300BF3489 /* SecurityUtil */ = {
 			isa = PBXGroup;
 			children = (
 				B7DBCD191D20C26300BF3489 /* GTMBase64 */,
@@ -1530,6 +1530,7 @@
 				B7DBCD1F1D20C26300BF3489 /* SecurityUtil.h */,
 				B7DBCD201D20C26300BF3489 /* SecurityUtil.m */,
 			);
+			name = SecurityUtil;
 			path = Security;
 			sourceTree = "<group>";
 		};

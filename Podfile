@@ -10,7 +10,7 @@ target 'ChatProject' do
   pod 'SVProgressHUD', '2.0.3'
   
   # 融云聊天
-  pod 'RongCloudIMKit'
+  pod 'RongCloudIMKit', '2.7.3'
   
   # Mob
   pod 'MOBFoundation_IDFA', '2.0.1' #Mob产品公共库

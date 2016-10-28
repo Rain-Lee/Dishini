@@ -46,7 +46,7 @@
         if ([self.representedAssetIdentifier isEqualToString:[[TZImageManager manager] getAssetIdentifier:model.asset]]) {
             self.imageView.image = photo;
         } else {
-            NSLog(@"this cell is showing other asset");
+            // NSLog(@"this cell is showing other asset");
             [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
         }
         if (!isDegraded) {
@@ -55,17 +55,35 @@
     }];
     if (imageRequestID && self.imageRequestID && imageRequestID != self.imageRequestID) {
         [[PHImageManager defaultManager] cancelImageRequest:self.imageRequestID];
-        NSLog(@"cancelImageRequest %d",self.imageRequestID);
+        // NSLog(@"cancelImageRequest %d",self.imageRequestID);
     }
     self.imageRequestID = imageRequestID;
     self.selectPhotoButton.selected = model.isSelected;
-    self.selectImageView.image = self.selectPhotoButton.isSelected ? [UIImage imageNamedFromMyBundle:@"photo_sel_photoPickerVc.png"] : [UIImage imageNamedFromMyBundle:@"photo_def_photoPickerVc.png"];
+    self.selectImageView.image = self.selectPhotoButton.isSelected ? [UIImage imageNamedFromMyBundle:self.photoSelImageName] : [UIImage imageNamedFromMyBundle:self.photoDefImageName];
     self.type = TZAssetCellTypePhoto;
     if (model.type == TZAssetModelMediaTypeLivePhoto)      self.type = TZAssetCellTypeLivePhoto;
     else if (model.type == TZAssetModelMediaTypeAudio)     self.type = TZAssetCellTypeAudio;
     else if (model.type == TZAssetModelMediaTypeVideo) {
         self.type = TZAssetCellTypeVideo;
         self.timeLength.text = model.timeLength;
+    }
+    
+    // 让宽度/高度小于 最小可选照片尺寸 的图片不能选中
+    if (![[TZImageManager manager] isPhotoSelectableWithAsset:model.asset]) {
+        if (_selectImageView.hidden == NO) {
+            self.selectPhotoButton.hidden = YES;
+            _selectImageView.hidden = YES;
+        }
+    }
+}
+
+- (void)setMaxImagesCount:(NSInteger)maxImagesCount {
+    _maxImagesCount = maxImagesCount;
+    if (!self.selectPhotoButton.hidden) {
+        self.selectPhotoButton.hidden = maxImagesCount == 1;
+    }
+    if (!self.selectImageView.hidden) {
+        self.selectImageView.hidden = maxImagesCount == 1;
     }
 }
 
@@ -86,7 +104,7 @@
     if (self.didSelectPhotoBlock) {
         self.didSelectPhotoBlock(sender.isSelected);
     }
-    self.selectImageView.image = sender.isSelected ? [UIImage imageNamedFromMyBundle:@"photo_sel_photoPickerVc.png"] : [UIImage imageNamedFromMyBundle:@"photo_def_photoPickerVc.png"];
+    self.selectImageView.image = sender.isSelected ? [UIImage imageNamedFromMyBundle:self.photoSelImageName] : [UIImage imageNamedFromMyBundle:self.photoDefImageName];
     if (sender.isSelected) {
         [UIView showOscillatoryAnimationWithLayer:_selectImageView.layer type:TZOscillatoryAnimationToBigger];
     }
@@ -96,11 +114,11 @@
 
 - (UIButton *)selectPhotoButton {
     if (_selectImageView == nil) {
-        UIButton *selectImageView = [[UIButton alloc] init];
-        selectImageView.frame = CGRectMake(self.tz_width - 44, 0, 44, 44);
-        [selectImageView addTarget:self action:@selector(selectPhotoButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [self.contentView addSubview:selectImageView];
-        _selectPhotoButton = selectImageView;
+        UIButton *selectPhotoButton = [[UIButton alloc] init];
+        selectPhotoButton.frame = CGRectMake(self.tz_width - 44, 0, 44, 44);
+        [selectPhotoButton addTarget:self action:@selector(selectPhotoButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [self.contentView addSubview:selectPhotoButton];
+        _selectPhotoButton = selectPhotoButton;
     }
     return _selectPhotoButton;
 }
@@ -115,6 +133,7 @@
         _imageView = imageView;
         
         [self.contentView bringSubviewToFront:_selectImageView];
+        [self.contentView bringSubviewToFront:_bottomView];
     }
     return _imageView;
 }
@@ -212,7 +231,7 @@
 #pragma mark - Lazy load
 
 - (UIImageView *)posterImageView {
-    if (_arrowImageView == nil) {
+    if (_posterImageView == nil) {
         UIImageView *posterImageView = [[UIImageView alloc] init];
         posterImageView.contentMode = UIViewContentModeScaleAspectFill;
         posterImageView.clipsToBounds = YES;

@@ -1183,6 +1183,38 @@
             endingLineNumber = "222"
             landmarkName = "-okButtonClick"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TZPhotoPreviewController select:]"
+                  moduleName = "ChatProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rain/Documents/Projects/WorkProject/ChatProject/Pods/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZPhotoPreviewController.m"
+                  timestampString = "499333573.865875"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "223"
+                  endingLineNumber = "223"
+                  offsetFromSymbolStart = "2708">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[TZPhotoPreviewController select:]"
+                  moduleName = "ChatProject"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rain/Documents/Projects/WorkProject/ChatProject/Pods/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZPhotoPreviewController.m"
+                  timestampString = "499333573.866024"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "223"
+                  endingLineNumber = "223"
+                  offsetFromSymbolStart = "2764">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1215,38 +1247,6 @@
             endingLineNumber = "416"
             landmarkName = "-pushPhotoPrevireViewController:"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "-[TZPhotoPickerController pushPhotoPrevireViewController:]"
-                  moduleName = "ChatProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rain/Documents/Projects/WorkProject/ChatProject/Pods/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZPhotoPickerController.m"
-                  timestampString = "499328127.348376"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "416"
-                  endingLineNumber = "416"
-                  offsetFromSymbolStart = "228">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "__58-[TZPhotoPickerController pushPhotoPrevireViewController:]_block_invoke.375"
-                  moduleName = "ChatProject"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rain/Documents/Projects/WorkProject/ChatProject/Pods/TZImagePickerController/TZImagePickerController/TZImagePickerController/TZPhotoPickerController.m"
-                  timestampString = "499328127.348539"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "417"
-                  endingLineNumber = "417"
-                  offsetFromSymbolStart = "24">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

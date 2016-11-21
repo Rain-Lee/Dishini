@@ -1629,6 +1629,7 @@
 				TargetAttributes = {
 					B7A03C671D18DBA200A48C39 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7X578356T4;
 					};
 					B7A03C801D18DBA300A48C39 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -2164,6 +2165,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7X578356T4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2188,6 +2190,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = 7X578356T4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

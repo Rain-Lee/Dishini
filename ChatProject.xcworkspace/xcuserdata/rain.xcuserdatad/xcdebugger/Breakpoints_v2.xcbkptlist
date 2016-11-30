@@ -1278,7 +1278,7 @@
             startingLineNumber = "277"
             endingLineNumber = "277"
             landmarkName = "-qupaiSDKCancel:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5900,7 +5900,7 @@
             startingLineNumber = "39"
             endingLineNumber = "39"
             landmarkName = "-viewDidLoad"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5916,7 +5916,7 @@
             startingLineNumber = "113"
             endingLineNumber = "113"
             landmarkName = "-initView"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6204,7 +6204,7 @@
             startingLineNumber = "78"
             endingLineNumber = "78"
             landmarkName = "-setSign"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6220,7 +6220,7 @@
             startingLineNumber = "303"
             endingLineNumber = "303"
             landmarkName = "-sendVideoCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6268,7 +6268,7 @@
             startingLineNumber = "285"
             endingLineNumber = "285"
             landmarkName = "-qupaiSDK:compeleteVideoPath:thumbnailPath:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6300,7 +6300,7 @@
             startingLineNumber = "293"
             endingLineNumber = "293"
             landmarkName = "-sendVideoCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6316,7 +6316,7 @@
             startingLineNumber = "343"
             endingLineNumber = "343"
             landmarkName = "-presentImagePreviewController:"
-            landmarkType = "5">
+            landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -6364,7 +6364,7 @@
             startingLineNumber = "333"
             endingLineNumber = "333"
             landmarkName = "-presentImagePreviewController:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6380,7 +6380,7 @@
             startingLineNumber = "43"
             endingLineNumber = "43"
             landmarkName = "-viewDidLoad"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6492,7 +6492,7 @@
             startingLineNumber = "35"
             endingLineNumber = "35"
             landmarkName = "-viewDidLoad"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6508,7 +6508,7 @@
             startingLineNumber = "163"
             endingLineNumber = "163"
             landmarkName = "-getGroupCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6524,7 +6524,7 @@
             startingLineNumber = "172"
             endingLineNumber = "172"
             landmarkName = "-getGroupCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6540,7 +6540,7 @@
             startingLineNumber = "164"
             endingLineNumber = "164"
             landmarkName = "-getGroupCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6874,7 +6874,7 @@
             startingLineNumber = "39"
             endingLineNumber = "39"
             landmarkName = "-aboutUsCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6890,7 +6890,7 @@
             startingLineNumber = "34"
             endingLineNumber = "34"
             landmarkName = "-initData"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6906,7 +6906,7 @@
             startingLineNumber = "165"
             endingLineNumber = "165"
             landmarkName = "-getGroupCallBack:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -6970,7 +6970,7 @@
             startingLineNumber = "370"
             endingLineNumber = "370"
             landmarkName = "-image:didFinishSavingWithError:contextInfo:"
-            landmarkType = "5">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -44,6 +44,7 @@
 
 -(void)initView{
     UITextView *contentTv = [[UITextView alloc] initWithFrame:CGRectMake(10, Header_Height + 20, SCREEN_WIDTH - 20, SCREEN_HEIGHT - Header_Height - 20)];
+    [contentTv setEditable:false];
     contentTv.font = [UIFont systemFontOfSize:15];
     contentTv.textColor = [UIColor darkGrayColor];
     contentTv.text = aboutUsStr;

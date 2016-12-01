@@ -681,6 +681,37 @@
 			name = AddresBook;
 			sourceTree = "<group>";
 		};
+		B71673901DEEB1C600CE2ECA /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				B74496531D1BBD290012C9AA /* RegisterFirstViewController.h */,
+				B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */,
+				B7B234851D1D0F2800A102D9 /* RegisterSecondViewController.h */,
+				B7B234861D1D0F2800A102D9 /* RegisterSecondViewController.m */,
+				B77C5D241D1D2D9D00246820 /* RegisterThirdViewController.h */,
+				B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */,
+			);
+			name = Register;
+			sourceTree = "<group>";
+		};
+		B71673911DEEB1DC00CE2ECA /* LoginQuestion */ = {
+			isa = PBXGroup;
+			children = (
+				B77C5D271D1D349400246820 /* LoginQuestionViewController.h */,
+				B77C5D281D1D349400246820 /* LoginQuestionViewController.m */,
+			);
+			name = LoginQuestion;
+			sourceTree = "<group>";
+		};
+		B71673921DEEB1EE00CE2ECA /* ChangePwd */ = {
+			isa = PBXGroup;
+			children = (
+				B7DBCD2D1D210A8300BF3489 /* ChangePwdViewController.h */,
+				B7DBCD2E1D210A8300BF3489 /* ChangePwdViewController.m */,
+			);
+			name = ChangePwd;
+			sourceTree = "<group>";
+		};
 		B732C11C1D475820004AD901 /* WZLBadge */ = {
 			isa = PBXGroup;
 			children = (
@@ -995,8 +1026,8 @@
 		B7A03C6A1D18DBA300A48C39 /* ChatProject */ = {
 			isa = PBXGroup;
 			children = (
-				B7D426AC1D1A1CA00089A263 /* DataProvider */,
 				B7A03CBC1D18DFB100A48C39 /* Common */,
+				B7D426AC1D1A1CA00089A263 /* DataProvider */,
 				B7A03CB61D18DE1D00A48C39 /* ClassLibrary */,
 				B7A03C9E1D18DD3100A48C39 /* UILayer */,
 				B7A03C6E1D18DBA300A48C39 /* AppDelegate.h */,
@@ -1072,18 +1103,11 @@
 		B7A03CB11D18DD7F00A48C39 /* LoginPage */ = {
 			isa = PBXGroup;
 			children = (
+				B71673921DEEB1EE00CE2ECA /* ChangePwd */,
+				B71673911DEEB1DC00CE2ECA /* LoginQuestion */,
+				B71673901DEEB1C600CE2ECA /* Register */,
 				B7A03CD61D18E87A00A48C39 /* LoginViewController.h */,
 				B7A03CD71D18E87A00A48C39 /* LoginViewController.m */,
-				B74496531D1BBD290012C9AA /* RegisterFirstViewController.h */,
-				B74496541D1BBD290012C9AA /* RegisterFirstViewController.m */,
-				B7B234851D1D0F2800A102D9 /* RegisterSecondViewController.h */,
-				B7B234861D1D0F2800A102D9 /* RegisterSecondViewController.m */,
-				B77C5D241D1D2D9D00246820 /* RegisterThirdViewController.h */,
-				B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */,
-				B77C5D271D1D349400246820 /* LoginQuestionViewController.h */,
-				B77C5D281D1D349400246820 /* LoginQuestionViewController.m */,
-				B7DBCD2D1D210A8300BF3489 /* ChangePwdViewController.h */,
-				B7DBCD2E1D210A8300BF3489 /* ChangePwdViewController.m */,
 			);
 			name = LoginPage;
 			sourceTree = "<group>";
@@ -1629,7 +1653,7 @@
 				TargetAttributes = {
 					B7A03C671D18DBA200A48C39 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 7X578356T4;
+						DevelopmentTeam = G7VFWJH5DJ;
 					};
 					B7A03C801D18DBA300A48C39 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -2165,6 +2189,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7X578356T4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2175,8 +2200,9 @@
 				INFOPLIST_FILE = ChatProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.chatproject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.dishini;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ChatProject/ChatProject-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -2190,6 +2216,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = 7X578356T4;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -2200,8 +2227,9 @@
 				INFOPLIST_FILE = ChatProject/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.chatproject;
+				PRODUCT_BUNDLE_IDENTIFIER = com.zykj.dishini;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ChatProject/ChatProject-Bridging-Header.h";
 			};
 			name = Release;

@@ -30,7 +30,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginRongCloud) name:@"loginRongCloud" object:nil];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstStart"]){
+    if (true){
         NSString *accountStr = [Toolkit getStringValueByKey:@"Account"];
         NSString *passwordStr = [Toolkit getStringValueByKey:@"Password"];
         if (accountStr != nil && ![accountStr isEqual:@""] && passwordStr != nil && ![passwordStr isEqual:@""]) {
@@ -65,7 +65,7 @@
 
 - (void)initConfiguration{
     // 融云即时通讯
-    [[RCIM sharedRCIM] initWithAppKey:@"vnroth0krxvao"];
+    [[RCIM sharedRCIM] initWithAppKey:@"ik1qhw09if3yp"];
     // 设置用户信息提供者，需要提供正确的用户信息，否则SDK无法显示用户头像、用户名和本地通知
     //获取好友信息
     [self getFriendFunc];
@@ -74,8 +74,8 @@
     [[RCIM sharedRCIM] setReceiveMessageDelegate:self];//监听接收消息的代理设置
     
     // Mob短信
-    [SMSSDK registerApp:@"145d0e804a274"
-             withSecret:@"64d4800bb58c2ccb51eed5bfa7948781"];
+    [SMSSDK registerApp:@"197a9520f9f6b"
+             withSecret:@"7b50170f9d3c80ca30aa7cec469ab55f"];
     [SMSSDK enableAppContactFriends:false];
     
     //注册趣拍

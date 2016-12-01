@@ -92,38 +92,22 @@
 }
 
 -(void)commentEvent{
-    if ([vericationTxt.text isEqual:_verificationCode]) {
-        if ([self.iFlagType isEqual:@"1"]) {
-            RegisterThirdViewController *registerThirdVC = [[RegisterThirdViewController alloc] init];
-            registerThirdVC.phone = self.phone;
-            [self.navigationController pushViewController:registerThirdVC animated:true];
+    [SMSSDK commitVerificationCode:vericationTxt.text phoneNumber:_phone zone:@"86" result:^(NSError *error) {
+        if (!error) {
+            if ([self.iFlagType isEqual:@"1"]) {
+                RegisterThirdViewController *registerThirdVC = [[RegisterThirdViewController alloc] init];
+                registerThirdVC.phone = self.phone;
+                [self.navigationController pushViewController:registerThirdVC animated:true];
+            }else{
+                // 通过短信验证码登陆
+                DataProvider *dataProvider = [[DataProvider alloc] init];
+                [dataProvider setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
+                [dataProvider loginWithoutPassword:[Toolkit getStringValueByKey:@"Id"]];
+            }
         }else{
-            // 通过短信验证码登陆
-            DataProvider *dataProvider = [[DataProvider alloc] init];
-            [dataProvider setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
-            [dataProvider loginWithoutPassword:_phone];
+            [Toolkit alertView:self andTitle:@"提示" andMsg:error.userInfo[@"commitVerificationCode"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         }
-    }else{
-        [Toolkit alertView:self andTitle:@"温馨提示" andMsg:@"您输入的验证码错误" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
-    }
-    
-    
-//    [SMSSDK commitVerificationCode:vericationTxt.text phoneNumber:_phone zone:@"86" result:^(NSError *error) {
-//        if (!error) {
-//            if ([self.iFlagType isEqual:@"1"]) {
-//                RegisterThirdViewController *registerThirdVC = [[RegisterThirdViewController alloc] init];
-//                registerThirdVC.phone = self.phone;
-//                [self.navigationController pushViewController:registerThirdVC animated:true];
-//            }else{
-//                // 通过短信验证码登陆
-//                DataProvider *dataProvider = [[DataProvider alloc] init];
-//                [dataProvider setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
-//                [dataProvider loginWithoutPassword:[Toolkit getStringValueByKey:@"Id"]];
-//            }
-//        }else{
-//            [Toolkit alertView:self andTitle:@"提示" andMsg:error.userInfo[@"commitVerificationCode"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
-//        }
-//    }];
+    }];
 }
 
 -(void)loginCallBack:(id)dict{

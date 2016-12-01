@@ -116,7 +116,7 @@
         [cell.contentView addSubview:nameLbl];
         // detailLbl
         UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nameLbl.frame), CGRectGetMaxY(nameLbl.frame) + 8, 200, 21)];
-        detailLbl.text = [NSString stringWithFormat:@"IPIC:%@",[Toolkit getStringValueByKey:@"Phone"]];
+        detailLbl.text = [NSString stringWithFormat:@"迪士尼账号:%@",[Toolkit getStringValueByKey:@"Phone"]];
         detailLbl.font = [UIFont systemFontOfSize:15];
         [cell.contentView addSubview:detailLbl];
         // erweimaIv

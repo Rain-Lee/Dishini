@@ -78,7 +78,7 @@
     [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
         // 刷新会话列表页面
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
         
         //显示聊天会话界面
         ChatRoomViewController *chat = [[ChatRoomViewController alloc] init];
@@ -277,7 +277,7 @@
     if (indexPath.section == 0){
         if (indexPath.row == 1) {
             GroupChatViewController *groupChatVC = [[GroupChatViewController alloc] init];
-            groupChatVC.iFlag = @"2";
+            groupChatVC.iFlag = @"1";
             [self.navigationController pushViewController:groupChatVC animated:true];
         }
     }else{

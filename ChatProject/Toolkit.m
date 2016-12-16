@@ -20,17 +20,29 @@
     return [dateFormatter stringFromDate:[NSDate date]];
 }
 
-+(NSDate*)getDateFromString:(NSString*)dateString{
++(NSDate*)getDateFromString:(NSString *)dateString{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     
     return [dateFormatter dateFromString:dateString];
 }
 
++(NSString *)getStringFromDate:(NSDate *)date{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    
+    return [dateFormatter stringFromDate:date];
+}
+
 +(NSTimeInterval)getTimeIntervalFromString:(NSString *)dateString{
     NSDate *timeDate = [Toolkit getDateFromString:dateString];
     NSString *timeSp = [NSString stringWithFormat:@"%ld", (long)[timeDate timeIntervalSince1970]];
     return timeSp.longLongValue * 1000;
+}
+
++(NSString *)getTimeFromTimeInterval:(long long)time{
+    NSDate *timeDate = [[NSDate alloc] initWithTimeIntervalSince1970:time / 1000];
+    return [Toolkit getStringFromDate:timeDate];
 }
 
 +(NSString *)sendMsgValication:(NSString *)phone{
@@ -78,6 +90,10 @@
     [SVProgressHUD setMinimumDismissTimeInterval:2];
     [SVProgressHUD showErrorWithStatus:msg];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+}
+
++(void)dismiss{
+    [SVProgressHUD dismiss];
 }
 
 +(void)setUserDefaultValue:(id)value andKey:(NSString *)key{
@@ -257,7 +273,7 @@
 //    NSString *userID = [userInfoWithFile objectForKey:@"id"];//获取userID
 
     NSUserDefaults *mUserDefault = [NSUserDefaults standardUserDefaults];
-    NSString *userID = [mUserDefault valueForKey:@"id"];//获取userID
+    NSString *userID = [mUserDefault valueForKey:@"Id"];//获取userID
     return  userID;
 
 }

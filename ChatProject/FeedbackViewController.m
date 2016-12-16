@@ -48,8 +48,8 @@
 }
 
 -(void)FeedbackCallBack:(id)dict{
-    [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
+        [Toolkit showSuccessWithStatus:@"提示成功"];
         [self.navigationController popViewControllerAnimated:true];
     }else{
         [Toolkit showErrorWithStatus:@"提交失败"];

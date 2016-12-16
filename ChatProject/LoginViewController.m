@@ -198,8 +198,8 @@
             [SVProgressHUD dismiss];
             // 连接成功
             [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:[Toolkit getUserDefaultValue:@"Id"] name:[Toolkit getUserDefaultValue:@"NickName"] portrait:[Toolkit getUserDefaultValue:@"PhotoPath"]];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendFunc" object:nil];
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendFunc" object:nil];
+//            [[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
             [[RCIM sharedRCIM] refreshUserInfoCache:[RCIM sharedRCIM].currentUserInfo withUserId:[Toolkit getUserDefaultValue:@"Id"]];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewData" object:nil];
             dispatch_async(dispatch_get_main_queue(), ^{

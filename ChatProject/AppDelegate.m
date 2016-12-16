@@ -30,20 +30,17 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loginRongCloud) name:@"loginRongCloud" object:nil];
     
-    if (true){
-        NSString *accountStr = [Toolkit getStringValueByKey:@"Account"];
-        NSString *passwordStr = [Toolkit getStringValueByKey:@"Password"];
-        if (accountStr != nil && ![accountStr isEqual:@""] && passwordStr != nil && ![passwordStr isEqual:@""]) {
-            [self loginRongCloud];
-        }else{
-            LoginViewController *loginVC = [[LoginViewController alloc] init];
-            UINavigationController *navLoginVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
-            navLoginVC.navigationBar.hidden = true;
-            self.window.rootViewController = navLoginVC;
-        }
+    [self registerPush:application];
+    
+    NSString *accountStr = [Toolkit getStringValueByKey:@"Account"];
+    NSString *passwordStr = [Toolkit getStringValueByKey:@"Password"];
+    if (accountStr != nil && ![accountStr isEqual:@""] && passwordStr != nil && ![passwordStr isEqual:@""]) {
+        [self loginRongCloud];
     }else{
-        FirstScrollController *firstScrollController = [[FirstScrollController alloc] init];
-        self.window.rootViewController = firstScrollController;
+        LoginViewController *loginVC = [[LoginViewController alloc] init];
+        UINavigationController *navLoginVC = [[UINavigationController alloc] initWithRootViewController:loginVC];
+        navLoginVC.navigationBar.hidden = true;
+        self.window.rootViewController = navLoginVC;
     }
     
     [self.window makeKeyAndVisible];
@@ -57,8 +54,8 @@
     // 修改UINavigationBar title颜色
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFriendFunc) name:@"getFriendFunc" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getGroupFunc) name:@"getGroupFunc" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getFriendFunc) name:@"getFriendFunc" object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getGroupFunc) name:@"getGroupFunc" object:nil];
     
     return YES;
 }
@@ -66,12 +63,17 @@
 - (void)initConfiguration{
     // 融云即时通讯
     [[RCIM sharedRCIM] initWithAppKey:@"ik1qhw09if3yp"];
-    // 设置用户信息提供者，需要提供正确的用户信息，否则SDK无法显示用户头像、用户名和本地通知
+    
+    [RCIM sharedRCIM].userInfoDataSource = self;
+    [RCIM sharedRCIM].groupInfoDataSource = self;
+    
     //获取好友信息
-    [self getFriendFunc];
+    //[self getFriendFunc];
     //获取战队信息
-    [self getGroupFunc];
-    [[RCIM sharedRCIM] setReceiveMessageDelegate:self];//监听接收消息的代理设置
+//    [self getGroupFunc];
+    
+    [[RCIM sharedRCIM] setReceiveMessageDelegate:self]; // 监听接收消息的代理设置
+    [[RCIM sharedRCIM] setConnectionStatusDelegate:self];
     
     // Mob短信
     [SMSSDK registerApp:@"197a9520f9f6b"
@@ -79,11 +81,29 @@
     [SMSSDK enableAppContactFriends:false];
     
     //注册趣拍
-    [[QupaiSDK shared] registerAppWithKey:@"209c2ed064f8e5b" secret:@"af0b6db7e8ad47328dc8949871575b05" space:@"comzykjchatproject" success:^(NSString *accessToken) {
+    [[QupaiSDK shared] registerAppWithKey:@"20e09a8cfbf4ac9" secret:@"00a25e70bb1e420cb3f488c6b5e1d47a" space:@"comzykjdishiniproject" success:^(NSString *accessToken) {
         [[NSUserDefaults standardUserDefaults] setObject:accessToken forKey:@"accessToken"];
     } failure:^(NSError *error) {
         
     }];
+}
+
+-(void)registerPush:(UIApplication *)application{
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]){
+        // 注册推送, 用于iOS8以及iOS8之后的系统
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings
+                                                settingsForTypes:(UIUserNotificationTypeBadge |
+                                                                  UIUserNotificationTypeSound |
+                                                                  UIUserNotificationTypeAlert)
+                                                categories:nil];
+        [application registerUserNotificationSettings:settings];
+    }else{
+        //注册推送，用于iOS8之前的系统
+        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge |
+        UIRemoteNotificationTypeAlert |
+        UIRemoteNotificationTypeSound;
+        [application registerForRemoteNotificationTypes:myTypes];
+    }
 }
 
 - (void)loginRongCloud{
@@ -114,88 +134,124 @@
     }];
 }
 
--(void)getFriendFunc{
-    DataProvider *dataProvider = [[DataProvider alloc] init];
-    [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendBackCall:"];
-    [dataProvider getFriendForKeyValue:[Toolkit getStringValueByKey:@"Id"]];
+//-(void)getFriendFunc{
+//    DataProvider *dataProvider = [[DataProvider alloc] init];
+//    [dataProvider setDelegateObject:self setBackFunctionName:@"getFriendBackCall:"];
+//    [dataProvider getFriendForKeyValue:[Toolkit getStringValueByKey:@"Id"]];
+//}
+//
+//-(void)getGroupFunc{
+//    DataProvider *dataProvider2 = [[DataProvider alloc] init];
+//    [dataProvider2 setDelegateObject:self setBackFunctionName:@"getGroupCallBack:"];
+//    [dataProvider2 selectAllTeamByUserId:[Toolkit getStringValueByKey:@"Id"]];
+//}
+//
+//-(void)getFriendBackCall:(id)dict{
+//    if ([dict[@"code"] intValue] == 200) {
+//        [RCIM sharedRCIM].userInfoDataSource = self;
+//        friendArray = dict[@"data"];
+//    }
+//}
+//
+//-(void)getGroupCallBack:(id)dict{
+//    if ([dict[@"code"] intValue] == 200) {
+//        [[RCIM sharedRCIM] setGroupInfoDataSource:self];
+//        groupArray = dict[@"data"];
+//    }
+//}
+
+-(void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
+    RCUserInfo *userInfo = [[RCIM sharedRCIM] getUserInfoCache:userId];
+    if (userInfo == nil) {
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"getUserInfoCallBack:"];
+        [dataProvider getUserInfoByUserId:[Toolkit getUserID] andFriendId:userId];
+    }else{
+        return completion(userInfo);
+    }
 }
 
--(void)getGroupFunc{
-    DataProvider *dataProvider2 = [[DataProvider alloc] init];
-    [dataProvider2 setDelegateObject:self setBackFunctionName:@"getGroupCallBack:"];
-    [dataProvider2 selectAllTeamByUserId:[Toolkit getStringValueByKey:@"Id"]];
-}
-
--(void)getFriendBackCall:(id)dict{
+-(void)getUserInfoCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
-        [RCIM sharedRCIM].userInfoDataSource = self;
-        [RCIM sharedRCIM].connectionStatusDelegate = self;
-        friendArray = dict[@"data"];
-//        NSMutableArray *friendArrayTemp = [[NSMutableArray alloc] initWithArray:dict[@"data"]];
-//        if (friendArray == nil || ![friendArrayTemp isEqualToArray:friendArray]) {
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshViewData" object:nil];
-//            friendArray = friendArrayTemp;
-//        }
+        RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+        userInfo.userId = [Toolkit judgeIsNull:dict[@"data"][@"Id"]];
+        userInfo.name = [[Toolkit judgeIsNull:dict[@"data"][@"RemarkName"]] isEqual:@""] ? [Toolkit judgeIsNull:dict[@"data"][@"NicName"]] : [Toolkit judgeIsNull:dict[@"data"][@"RemarkName"]];
+        userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"data"][@"PhotoPath"]];
+        [[RCIM sharedRCIM] refreshUserInfoCache:userInfo withUserId:userInfo.userId];
+    }
+}
+
+- (void)getGroupInfoWithGroupId:(NSString *)groupId completion:(void (^)(RCGroup *groupInfo))completion{
+    RCGroup *group = [[RCIM sharedRCIM] getGroupInfoCache:groupId];
+    if (group == nil) {
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"getGroupCallBack:"];
+        [dataProvider getGroupInfoById:groupId];
+    }else{
+        return completion(group);
     }
 }
 
 -(void)getGroupCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
-        [[RCIM sharedRCIM] setGroupInfoDataSource:self];
-        groupArray = dict[@"data"];
+        RCGroup *group = [[RCGroup alloc] init];
+        group.groupId = [Toolkit judgeIsNull:dict[@"data"][@"Id"]];
+        group.groupName = [Toolkit judgeIsNull:dict[@"data"][@"Name"]];
+        group.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"data"][@"ImagePath"]];
+        [[RCIM sharedRCIM] refreshGroupInfoCache:group withGroupId:group.groupId];
     }
 }
 
--(void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
-    //简单的示例，根据userId获取对应的用户信息并返回
-    //建议您在本地做一个缓存，只有缓存没有该用户信息的情况下，才去您的服务器获取，以提高用户体验
-    RCUserInfo *userInfo = [[RCUserInfo alloc] init];
-    RCUserInfo *myUserInfo = [RCIM sharedRCIM].currentUserInfo;
-    userInfo.userId = userId;
-    if ([userId isEqual:myUserInfo.userId]) {
-        userInfo = myUserInfo;
-    }else{
-        BOOL isFrendState = NO;
-        for (int i = 0; i < friendArray .count; i++) {
-            if([userId isEqual:[NSString stringWithFormat:@"%@",[friendArray[i] valueForKey:@"Key"]]]){
-                isFrendState = YES;
-                userInfo.name = [[friendArray[i] valueForKey:@"Value"][@"RemarkName"] isEqual:@""] ? [friendArray[i] valueForKey:@"Value"][@"NicName"] : [friendArray[i] valueForKey:@"Value"][@"RemarkName"];
-                userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,[friendArray[i] valueForKey:@"Value"][@"PhotoPath"]];
-                break;
-            }
-        }
-        if (!isFrendState) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                DataProvider *dataProvider = [[DataProvider alloc] init];
-                NSDictionary *dict = [dataProvider getUserInfoByUserIDChat:userId];
-                userInfo.name = [Toolkit judgeIsNull:[dict[@"data"] valueForKey:@"NicName"]];
-                userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,[Toolkit judgeIsNull:[dict[@"data"] valueForKey:@"PhotoPath"]]];
-            });
-        }
-        return completion(userInfo);
-    }
-}
+//-(void)getUserInfoWithUserId:(NSString *)userId completion:(void (^)(RCUserInfo *))completion{
+//    //简单的示例，根据userId获取对应的用户信息并返回
+//    //建议您在本地做一个缓存，只有缓存没有该用户信息的情况下，才去您的服务器获取，以提高用户体验
+//    RCUserInfo *userInfo = [[RCUserInfo alloc] init];
+//    RCUserInfo *myUserInfo = [RCIM sharedRCIM].currentUserInfo;
+//    userInfo.userId = userId;
+//    if ([userId isEqual:myUserInfo.userId]) {
+//        userInfo = myUserInfo;
+//    }else{
+//        BOOL isFrendState = NO;
+//        for (int i = 0; i < friendArray .count; i++) {
+//            if([userId isEqual:[NSString stringWithFormat:@"%@",[friendArray[i] valueForKey:@"Key"]]]){
+//                isFrendState = YES;
+//                userInfo.name = [[friendArray[i] valueForKey:@"Value"][@"RemarkName"] isEqual:@""] ? [friendArray[i] valueForKey:@"Value"][@"NicName"] : [friendArray[i] valueForKey:@"Value"][@"RemarkName"];
+//                userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,[friendArray[i] valueForKey:@"Value"][@"PhotoPath"]];
+//                break;
+//            }
+//        }
+//        if (!isFrendState) {
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                DataProvider *dataProvider = [[DataProvider alloc] init];
+//                NSDictionary *dict = [dataProvider getUserInfoByUserIDChat:userId];
+//                userInfo.name = [Toolkit judgeIsNull:[dict[@"data"] valueForKey:@"NicName"]];
+//                userInfo.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,[Toolkit judgeIsNull:[dict[@"data"] valueForKey:@"PhotoPath"]]];
+//            });
+//        }
+//        return completion(userInfo);
+//    }
+//}
 
-- (void)getGroupInfoWithGroupId:(NSString *)groupId
-                     completion:(void (^)(RCGroup *groupInfo))completion{
-    
-    RCGroup *group = [[RCGroup alloc]init];
-    group.groupId = groupId;
-    BOOL isExitGroup = false;
-    for (NSDictionary *itemDict in groupArray) {
-        if ([[itemDict[@"Id"] stringValue] isEqual:groupId]) {
-            isExitGroup = true;
-            group.groupName =[itemDict valueForKey:@"Name"];
-            group.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,[itemDict valueForKey:@"ImagePath"]];
-            break;
-        }
-    }
-    if (!isExitGroup) {
-        group.groupName =@"未命名";
-    }
-    
-    return completion(group);
-}
+//- (void)getGroupInfoWithGroupId:(NSString *)groupId
+//                     completion:(void (^)(RCGroup *groupInfo))completion{
+//    
+//    RCGroup *group = [[RCGroup alloc]init];
+//    group.groupId = groupId;
+//    BOOL isExitGroup = false;
+//    for (NSDictionary *itemDict in groupArray) {
+//        if ([[itemDict[@"Id"] stringValue] isEqual:groupId]) {
+//            isExitGroup = true;
+//            group.groupName =[itemDict valueForKey:@"Name"];
+//            group.portraitUri = [NSString stringWithFormat:@"%@%@",Kimg_path,[itemDict valueForKey:@"ImagePath"]];
+//            break;
+//        }
+//    }
+//    if (!isExitGroup) {
+//        group.groupName =@"未命名";
+//    }
+//    
+//    return completion(group);
+//}
 
 
 -(void)onRCIMConnectionStatusChanged:(RCConnectionStatus)status{
@@ -227,7 +283,7 @@
                 
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
                 
-                [self getFriendFunc];
+//                [self getFriendFunc];
                 //            BOOL isContain = false;
                 //            for (NSDictionary *itemDict in friendArray) {
                 //                if ([[NSString stringWithFormat:@"%@",itemDict[@"Key"]] isEqual:[NSString stringWithFormat:@"%@",message.senderUserId]]) {
@@ -255,10 +311,14 @@
             }
         }
         if (!isContain) {
-            [self getGroupFunc];
+            //[self getGroupFunc];
         }
     }
     
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification {
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"setDefaultSelectTabBarItem" object:nil userInfo:@{@"index":@"0"}];
 }
 
 -(UIInterfaceOrientationMask) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window{

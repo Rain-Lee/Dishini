@@ -18,7 +18,11 @@
 
 +(NSDate*)getDateFromString:(NSString*)dateString;
 
++(NSString *)getStringFromDate:(NSDate *)date;
+
 +(NSTimeInterval)getTimeIntervalFromString:(NSString *)dateString;
+
++(NSString *)getTimeFromTimeInterval:(long long)time;
 
 +(NSString *)sendMsgValication:(NSString *)phone;
 
@@ -35,6 +39,8 @@
 +(void)showErrorWithStatus:(NSString *)msg;
 
 +(void)setUserDefaultValue:(id)value andKey:(NSString *)key;
+
++(void)dismiss;
 
 +(id)getUserDefaultValue:(NSString *)key;
 

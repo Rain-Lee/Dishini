@@ -22,6 +22,8 @@
     [super viewDidLoad];
     
     [self initTabBarItem];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDefaultSelectTabBarItem:) name:@"setDefaultSelectTabBarItem" object:nil];
 }
 
 - (void)initTabBarItem{
@@ -71,6 +73,11 @@
     
     //将view添加到tabbar
     self.viewControllers = [NSArray arrayWithObjects:chatListVCNav, contactsVCNav, momentsVCNav, iVCNav, nil];
+}
+
+-(void)setDefaultSelectTabBarItem:(id)sender{
+    int index = [[sender userInfo][@"index"] intValue];
+    self.selectedIndex = index;
 }
 
 @end

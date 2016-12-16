@@ -339,4 +339,19 @@
  */
 -(void)aboutUs;
 
+// 根据群组Id获取群组信息
+-(void)getGroupInfoById:(NSString *)groupId;
+
+// 保存群组公告
+-(void)saveGroupInfo:(NSString *)groupId andContent:(NSString *)content;
+
+// 获取用户所在的所有群组公告
+-(void)getAllGonggaoByUserId:(NSString *)userId;
+
+// 编辑群组消息 开启免打扰 0;关闭 1：开启
+-(void)editIsClose:(NSString *)userId andTeamid:(NSString *)teamid andisclose:(NSString *)isclose;
+
+// 投诉群组
+-(void)reportUser:(NSString *)userId andTeamid:(NSString *)teamid andContent:(NSString *)content;
+
 @end

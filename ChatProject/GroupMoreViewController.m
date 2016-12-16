@@ -15,6 +15,10 @@
 #import "SelectMemberViewController.h"
 #import <RongIMKit/RongIMKit.h>
 #import "GroupNameViewController.h"
+#import "ChatRecordSearchViewController.h"
+#import "ChatRoomViewController.h"
+#import "GroupGonggaoViewController.h"
+#import "TousuViewController.h"
 
 #define cellIdentifier  @"GroupMoreCell"
 #define cellIdentifierTwo  @"cellIdentifierTwo"
@@ -29,6 +33,7 @@
     NSMutableArray *groupMemberData;
     BOOL isManager;
     NSMutableArray *idList;
+    BOOL currentState;
 }
 
 @end
@@ -48,13 +53,13 @@
     [self.view endEditing:YES];
 }
 
--(void)editGroupCallBack:(id)dict{
-    [SVProgressHUD dismiss];
-    if ([dict[@"code"] intValue] == 200) {
-        [Toolkit showSuccessWithStatus:@"修改群名称成功"];
-        [self.navigationController popViewControllerAnimated:true];
-    }
-}
+//-(void)editGroupCallBack:(id)dict{
+//    [SVProgressHUD dismiss];
+//    if ([dict[@"code"] intValue] == 200) {
+//        [Toolkit showSuccessWithStatus:@"修改群名称成功"];
+//        [self.navigationController popViewControllerAnimated:true];
+//    }
+//}
 
 -(void)initView{
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -100,6 +105,9 @@
             isManager = false;
         }
         
+        self.groupName = [Toolkit judgeIsNull:dict[@"data1"]];
+        currentState = [[Toolkit judgeIsNull:dict[@"data2"]] isEqual:@"1"] ? true : false;
+        
         [mCollectionView reloadData];
     }
 }
@@ -129,6 +137,7 @@
     [SVProgressHUD dismiss];
     if ([dict[@"code"] intValue] == 200) {
         [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshDataNotification" object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"initChatListData" object:nil];
         [[RCIMClient sharedRCIMClient] removeConversation:ConversationType_GROUP targetId:_groupId];
         [self.navigationController popToViewController:[self.navigationController.viewControllers objectAtIndex:self.navigationController.viewControllers.count - 3] animated:true];
     }else{
@@ -136,13 +145,39 @@
     }
 }
 
+-(void)messageEvent:(UISwitch *)sender{
+    currentState = sender.on;
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"messageStateCallBacl:"];
+    [dataProvider editIsClose:[Toolkit getUserID] andTeamid:_groupId andisclose:[NSString stringWithFormat:@"%@",currentState ? @"1" : @"0"]];
+}
+
+-(void)messageStateCallBacl:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+//        [[RCIM sharedRCIM] setDisableMessageNotificaiton:currentState];
+        [[RCIMClient sharedRCIMClient] setConversationNotificationStatus:ConversationType_GROUP targetId:_groupId isBlocked:currentState success:nil error:nil];
+    }else{
+        [Toolkit showErrorWithStatus:dict[@"error"]];
+    }
+}
+
 #pragma mark UICollectionViewDelegate
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 6;
+    return 12;
 }
 
 -(NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    if (section == 1 || section == 2 || section == 3 || section == 4 || section == 5) {
+    if (section == 1 || section == 2 || section == 4 || section == 6 || section == 8 || section == 10) {
+        return 1;
+    }else if (section == 3){
+        return 2;
+    }else if (section == 5){
+        return 3;
+    }else if (section == 7){
+        return 2;
+    }else if (section == 9){
+        return 1;
+    }else if (section == 11){
         return 1;
     }else{
         return groupMemberData.count + (isManager ? 2 : 1);
@@ -190,29 +225,104 @@
             lineView.backgroundColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1.00];
             [cell.contentView addSubview:lineView];
             // titleLbl
-            UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 1, SCREEN_WIDTH - 15, cell.frame.size.height - 0.5)];
+            UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 1, SCREEN_WIDTH - 15, cell.frame.size.height - 1)];
             titleLbl.text = [NSString stringWithFormat:@"全部群成员(%lu)",(unsigned long)groupMemberData.count];
             titleLbl.font = [UIFont systemFontOfSize:15];
             [cell.contentView addSubview:titleLbl];
         }else if (indexPath.section == 2){
             cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
         }else if (indexPath.section == 3){
+            if (indexPath.row == 0) {
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, cell.frame.size.height)];
+                titleLbl.text = [NSString stringWithFormat:@"群名称"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+                // nameLbl
+                UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 15 - 250, 0, 250, cell.frame.size.height)];
+                nameLbl.font = [UIFont systemFontOfSize:15];
+                nameLbl.textAlignment = NSTextAlignmentRight;
+                nameLbl.text = _groupName;
+                [cell.contentView addSubview:nameLbl];
+            }else{
+                // lineView
+                UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 1)];
+                lineView.backgroundColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1.00];
+                [cell.contentView addSubview:lineView];
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 1, SCREEN_WIDTH - 15, cell.frame.size.height - 1)];
+                titleLbl.text = [NSString stringWithFormat:@"群公告"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+            }
+        }else if (indexPath.section == 4){
+            cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
+        }else if (indexPath.section == 5){
+            if (indexPath.row == 0) {
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, cell.frame.size.height)];
+                titleLbl.text = [NSString stringWithFormat:@"消息免打扰"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+                // messageSwitch
+                UISwitch *messageSwitch = [[UISwitch alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 15 - 50, (cell.frame.size.height - 25) / 2, 50, 25)];
+                messageSwitch.on = currentState;
+                [messageSwitch addTarget:self action:@selector(messageEvent:) forControlEvents:UIControlEventValueChanged];
+                [cell.contentView addSubview:messageSwitch];
+            }else if (indexPath.row == 1){
+                // lineView
+                UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 1)];
+                lineView.backgroundColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1.00];
+                [cell.contentView addSubview:lineView];
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 1, SCREEN_WIDTH - 15, cell.frame.size.height - 1)];
+                titleLbl.text = [NSString stringWithFormat:@"查找聊天记录"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+            }else{
+                // lineView
+                UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 1)];
+                lineView.backgroundColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1.00];
+                [cell.contentView addSubview:lineView];
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 1, SCREEN_WIDTH - 15, cell.frame.size.height - 1)];
+                titleLbl.text = [NSString stringWithFormat:@"投诉"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+            }
+        }else if (indexPath.section == 6){
+            cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
+        }else if (indexPath.section == 7){
+            if (indexPath.row == 0) {
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, cell.frame.size.height)];
+                titleLbl.text = [NSString stringWithFormat:@"查余额"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+            }else{
+                // lineView
+                UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 1)];
+                lineView.backgroundColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1.00];
+                [cell.contentView addSubview:lineView];
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 1, SCREEN_WIDTH - 15, cell.frame.size.height - 1)];
+                titleLbl.text = [NSString stringWithFormat:@"差走势"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+            }
+        }else if (indexPath.section == 8){
+            cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
+        }else if (indexPath.section == 9){
             // titleLbl
             UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, cell.frame.size.height)];
-            titleLbl.text = [NSString stringWithFormat:@"群名称"];
+            titleLbl.text = [NSString stringWithFormat:@"清空聊天记录"];
             titleLbl.font = [UIFont systemFontOfSize:15];
             [cell.contentView addSubview:titleLbl];
-            // nameLbl
-            UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 15 - 250, 0, 250, cell.frame.size.height)];
-            nameLbl.font = [UIFont systemFontOfSize:15];
-            nameLbl.textAlignment = NSTextAlignmentRight;
-            nameLbl.text = _groupName;
-            [cell.contentView addSubview:nameLbl];
-        }else if (indexPath.section == 4){
+        }else if (indexPath.section == 10){
             cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
         }else{
             UIButton *_quitBtn = [[UIButton alloc]init];
-            _quitBtn.frame = CGRectMake(15, 15, cell.frame.size.width - 30, cell.frame.size.height);
+            _quitBtn.frame = CGRectMake(15, 15, cell.frame.size.width - 30, 44);
             _quitBtn.backgroundColor = [UIColor colorWithRed:0.94 green:0.00 blue:0.03 alpha:1.00];
             [_quitBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             _quitBtn.layer.masksToBounds = true;
@@ -236,8 +346,10 @@
 -(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0) {
         return CGSizeMake((SCREEN_WIDTH - 5 * 10) / 4, (SCREEN_WIDTH - 5 * 10) / 4 + 20);
-    }else if (indexPath.section == 1 || indexPath.section == 3 || indexPath.section == 5){
+    }else if (indexPath.section == 1 || indexPath.section == 3 || indexPath.section == 5 || indexPath.section == 7 || indexPath.section == 9){
         return CGSizeMake(SCREEN_WIDTH, 50);
+    }else if (indexPath.section == 11){
+        return CGSizeMake(SCREEN_WIDTH, 90);
     }else{
         return CGSizeMake(SCREEN_WIDTH, 12);
     }
@@ -251,44 +363,6 @@
         return UIEdgeInsetsMake(0, 0, 0, 0);
     }
 }
-
-
-
-//设置头尾的size
-
-//-(CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section{
-//    return CGSizeMake(self.view.frame.size.width, 45);
-//}
-//
-////设置头尾部内容
-//-(UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
-//{
-//    UICollectionReusableView *reusableView = nil;
-//    
-//    {
-//        if (kind == UICollectionElementKindSectionFooter){
-//            //定制尾部视图的内容
-//            footerV = (MyFooterView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:footerCellIdentifier forIndexPath:indexPath];
-//            if (isManager) {
-//                [footerV.quitBtn setTitle:@"退出并删除" forState:UIControlStateNormal];
-//                footerV.quitBtn.tag = 1;
-//                [footerV.quitBtn addTarget:self action:@selector(quitBtn:) forControlEvents:UIControlEventTouchUpInside];
-//            }else{
-//                [footerV.quitBtn setTitle:@"退出" forState:UIControlStateNormal];
-//                footerV.quitBtn.tag = 2;
-//                [footerV.quitBtn addTarget:self action:@selector(quitBtn:) forControlEvents:UIControlEventTouchUpInside];
-//            }
-//            reusableView = footerV;
-//        }
-//    }
-//    
-//    //    if (kind == UICollectionElementKindSectionFooter){
-//    //        MyFooterView *footerV = (MyFooterView *)[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:@"FooterView" forIndexPath:indexPath];
-//    //        footerV.titleLab.text = @"尾部视图";
-//    //        reusableView = footerV;
-//    //    }
-//    return reusableView;
-//}
 
 -(void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section == 0){
@@ -327,12 +401,52 @@
             [self.navigationController pushViewController:detailsVC animated:true];
         }
     }else if (indexPath.section == 3){
-        if (isManager) {
-            GroupNameViewController *groupNameVC = [[GroupNameViewController alloc] init];
-            groupNameVC.delegate = self;
-            groupNameVC.nameStr = _groupName;
-            groupNameVC.groupId = _groupId;
-            [self.navigationController pushViewController:groupNameVC animated:true];
+        if (indexPath.row == 0){
+            if (isManager) {
+                GroupNameViewController *groupNameVC = [[GroupNameViewController alloc] init];
+                groupNameVC.delegate = self;
+                groupNameVC.nameStr = _groupName;
+                groupNameVC.groupId = _groupId;
+                [self.navigationController pushViewController:groupNameVC animated:true];
+            }
+        }else{
+            GroupGonggaoViewController *groupGonggaoVC = [[GroupGonggaoViewController alloc] init];
+            groupGonggaoVC.groupId = _groupId;
+            groupGonggaoVC.isManager = isManager ? @"1" : @"0";
+            [self.navigationController pushViewController:groupGonggaoVC animated:true];
+        }
+    }else if (indexPath.section == 5){
+        if (indexPath.row == 1) {
+            ChatRecordSearchViewController *chatRecordSearchVC = [[ChatRecordSearchViewController alloc] init];
+            chatRecordSearchVC.groupId = _groupId;
+            [self.navigationController pushViewController:chatRecordSearchVC animated:true];
+        }else if (indexPath.row == 2){
+            TousuViewController *tousuVC = [[TousuViewController alloc] init];
+            tousuVC.groupId = _groupId;
+            [self.navigationController pushViewController:tousuVC animated:true];
+        }
+    }else if(indexPath.section == 7){
+        if (indexPath.row == 0) {
+            ChatRoomViewController *chat = [[ChatRoomViewController alloc]init];
+            chat.iFlag = @"4";
+            chat.conversationType = ConversationType_GROUP;
+            chat.targetId = _groupId;
+            chat.title = _groupName;
+            [self.navigationController pushViewController:chat animated:YES];
+        }else{
+            ChatRoomViewController *chat = [[ChatRoomViewController alloc]init];
+            chat.iFlag = @"3";
+            chat.conversationType = ConversationType_GROUP;
+            chat.targetId = _groupId;
+            chat.title = _groupName;
+            [self.navigationController pushViewController:chat animated:YES];
+        }
+    }else if (indexPath.section == 9){
+        if ([[RCIMClient sharedRCIMClient] clearMessages:ConversationType_GROUP targetId:_groupId]){
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadConversationMessageCollectionViewData" object:nil];
+            [Toolkit showSuccessWithStatus:@"清空成功"];
+        }else{
+            [Toolkit showErrorWithStatus:@"清空失败"];
         }
     }
 }

@@ -16,6 +16,7 @@
 #import "GroupMoreViewController.h"
 #import "UIImageView+WebCache.h"
 #import "PersonalViewController.h"
+#import "LMJScrollTextView.h"
 
 @interface ChatRoomViewController ()<RCLocationPickerViewControllerDelegate>{
     UIViewController *recordController;
@@ -23,6 +24,9 @@
     UIImage *selectImage;
     BOOL isInGroup;
     NSString *errorInfo;
+    LMJScrollTextView * scrollTextView;
+    UIView *carouselView;
+    UIView *lineView2;
 }
 
 @end
@@ -34,19 +38,67 @@
     
     [self initView];
     
-    self.conversationMessageCollectionView.frame = CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height);
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initChatRoomData) name:@"initChatRoomData" object:nil];
+    //self.conversationMessageCollectionView.frame = CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height);
+    [self initChatRoomData];
     
     if ([_iFlag isEqual:@"2"]) {
         // 推荐好友
         RCImageMessage *imageMsg = [RCImageMessage messageWithImage:[self setSign].image];
         imageMsg.extra = [NSString stringWithFormat:@"654321;%@",[Toolkit getStringValueByKey:@"tjUserId"]];
         [self sendMessage:imageMsg pushContent:@""];
+    }else if ([_iFlag isEqual:@"3"]){
+        RCInformationNotificationMessage *warningMsg = [RCInformationNotificationMessage notificationWithMessage:@"查走势" extra:nil];
+        BOOL saveToDB = true;  //是否保存到数据库中
+        RCMessage *savedMsg ;
+        if (saveToDB) {
+            savedMsg = [[RCIMClient sharedRCIMClient] insertOutgoingMessage:self.conversationType targetId:self.targetId sentStatus:SentStatus_SENT content:warningMsg];
+        } else {
+            savedMsg =[[RCMessage alloc] initWithType:self.conversationType targetId:self.targetId direction:MessageDirection_SEND messageId:-1 content:warningMsg];//注意messageId要设置为－1
+        }
+        [self appendAndDisplayMessage:savedMsg];
+    }else if ([_iFlag isEqual:@"4"]){
+        RCInformationNotificationMessage *warningMsg = [RCInformationNotificationMessage notificationWithMessage:@"查余额" extra:nil];
+        BOOL saveToDB = true;  //是否保存到数据库中
+        RCMessage *savedMsg ;
+        if (saveToDB) {
+            savedMsg = [[RCIMClient sharedRCIMClient] insertOutgoingMessage:self.conversationType targetId:self.targetId sentStatus:SentStatus_SENT content:warningMsg];
+        } else {
+            savedMsg =[[RCMessage alloc] initWithType:self.conversationType targetId:self.targetId direction:MessageDirection_SEND messageId:-1 content:warningMsg];//注意messageId要设置为－1
+        }
+        [self appendAndDisplayMessage:savedMsg];
     }
     
-//    RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"消息内容"];
-//    RCMessage *message = [[RCMessage alloc] init];
-//    message.content = txtMessage;
-//    [RCIMClient sharedRCIMClient]
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadConversationMessageCollectionViewData) name:@"reloadConversationMessageCollectionViewData" object:nil];
+}
+
+-(void)initChatRoomData{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getDataCallBack:"];
+    [dataProvider getGroupInfoById:self.targetId];
+}
+
+-(void)getDataCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        if ([[Toolkit judgeIsNull:dict[@"data"][@"TeamAnnouncement"]] isEqual:@""]) {
+            carouselView.hidden = true;
+            lineView2.hidden = true;
+            self.conversationMessageCollectionView.frame = CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height - TabBar_HEIGHT);
+        }else{
+            carouselView.hidden = false;
+            lineView2.hidden = false;
+            self.conversationMessageCollectionView.frame = CGRectMake(0, Header_Height + 41, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height - 41 - TabBar_HEIGHT);
+            [scrollTextView startScrollWithText:[Toolkit judgeIsNull:dict[@"data"][@"TeamAnnouncement"]] textColor:[UIColor grayColor] font:[UIFont systemFontOfSize:13]];
+        }
+        [self scrollToBottomAnimated:false];
+    }
+}
+
+-(void)reloadConversationMessageCollectionViewData{
+    [self.conversationDataRepository removeAllObjects];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.conversationMessageCollectionView reloadData];
+    });
 }
 
 -(UIImageView *)setSign{
@@ -135,6 +187,33 @@
         [rightBtn addTarget:self action:@selector(clickRightBtnEvent:) forControlEvents:UIControlEventTouchUpInside];
         [topView addSubview:rightBtn];
         
+        // carouselView
+        carouselView = [[UIView alloc] initWithFrame:CGRectMake(0, Header_Height, SCREEN_WIDTH, 40)];
+        carouselView.backgroundColor = [UIColor whiteColor];
+        carouselView.hidden = true;
+        [self.view addSubview:carouselView];
+        // iconIv
+        UIImageView *iconIv = [[UIImageView alloc] initWithFrame:CGRectMake(10, (carouselView.frame.size.height - 17) / 2, 17, 17)];
+        iconIv.image = [UIImage imageNamed:@"tips"];
+        [carouselView addSubview:iconIv];
+        // messageLbl
+        UILabel *messageLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(iconIv.frame) + 5, 0, 56, carouselView.frame.size.height)];
+        messageLbl.font = [UIFont systemFontOfSize:13];
+        messageLbl.textColor = [UIColor grayColor];
+        messageLbl.text = @"最新消息:";
+        [carouselView addSubview:messageLbl];
+        // scrollTextView
+        scrollTextView = [[LMJScrollTextView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(messageLbl.frame) + 5, 0, SCREEN_WIDTH - CGRectGetMaxX(messageLbl.frame) - 5 - 5, 40) textScrollModel:LMJTextScrollContinuous direction:LMJTextScrollMoveLeft];
+        scrollTextView.backgroundColor = [UIColor whiteColor];
+        [scrollTextView setMoveSpeed:0.8];
+        [carouselView addSubview:scrollTextView];
+        
+        // lineView2
+        lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(carouselView.frame), SCREEN_WIDTH, 1)];
+        lineView2.backgroundColor = [UIColor lightGrayColor];
+        lineView2.hidden = true;
+        [self.view addSubview:lineView2];
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             DataProvider *dataProvider = [[DataProvider alloc] init];
             [dataProvider setDelegateObject:self setBackFunctionName:@"getGroupCallBack:"];
@@ -156,7 +235,7 @@
     self.enableUnreadMessageIcon = true;
     
     //自定义面板功能扩展
-    [self.pluginBoardView insertItemWithImage:[UIImage imageNamed:@"sendVideo"]
+    [self.chatSessionInputBarControl.pluginBoardView insertItemWithImage:[UIImage imageNamed:@"sendVideo"]
                                         title:@"小视频"
                                           tag:101];
 }
@@ -295,7 +374,7 @@
         RCImageMessage *imageMsg = [RCImageMessage messageWithImage:mImage];
         imageMsg.extra = [NSString stringWithFormat:@"%@;%@",@"123456",[NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"VideoPath"]]];
         imageMsg.imageUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"ImagePath"]];
-        [self sendImageMessage:imageMsg pushContent:@"nihao"];
+        [self sendMediaMessage:imageMsg pushContent:@"nihao"];
     } @catch (NSException *exception) {
         
     } @finally {

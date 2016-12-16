@@ -184,7 +184,7 @@
         photoIv.layer.masksToBounds = true;
         photoIv.layer.cornerRadius = 6;
         if (headImage == nil) {
-            [photoIv sd_setImageWithURL:[NSURL URLWithString:[Toolkit getStringValueByKey:@"PhotoPath"]] placeholderImage:[UIImage imageNamed:@"default_photo"]];
+            [photoIv sd_setImageWithURL:[NSURL URLWithString:[Toolkit getImageStr:[Toolkit getStringValueByKey:@"PhotoPath"]]] placeholderImage:[UIImage imageNamed:@"default_photo"]];
         }else{
             photoIv.image = headImage;
         }
@@ -205,9 +205,9 @@
         [cell.contentView addSubview:nameShowLbl];
     }else if (indexPath.row == 2){
         // wechatNoLbl
-        UILabel *wechatNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 80, 50)];
+        UILabel *wechatNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 100, 50)];
         wechatNoLbl.textAlignment = NSTextAlignmentLeft;
-        wechatNoLbl.text = @"IPIC";
+        wechatNoLbl.text = @"迪士尼账号";
         [cell.contentView addSubview:wechatNoLbl];
         // wechatNoShowLbl
         UILabel *wechatNoShowLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 20 - 200, 0, 200, 45)];

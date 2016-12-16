@@ -17,6 +17,8 @@
 #import <RongIMKit/RongIMKit.h>
 #import "AboutUsViewController.h"
 #import "ShopViewController.h"
+#import "GroupChatViewController.h"
+#import "OnlineChongzhiViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -83,13 +85,13 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 12;
+    return 15;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 80;
-    }else if (indexPath.row == 1 || indexPath.row == 4 || indexPath.row == 9){
+    }else if (indexPath.row == 1 || indexPath.row == 4 || indexPath.row == 9 || indexPath.row == 12){
         return 20;
     }else{
         return 55;
@@ -98,6 +100,7 @@
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
+    cell.accessoryType = UITableViewCellAccessoryNone;
     for (UIView *itemView in cell.contentView.subviews) {
         [itemView removeFromSuperview];
     }
@@ -133,7 +136,7 @@
         [cell.contentView addSubview:titleIv];
         // titleLbl
         UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleIv.frame) + 15, 0, 200, CGRectGetHeight(cell.frame))];
-        titleLbl.text = @"商城";
+        titleLbl.text = @"在线充值";
         [cell.contentView addSubview:titleLbl];
     }else if (indexPath.row == 3){
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
@@ -187,10 +190,31 @@
         UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleIv.frame) + 15, 0, 200, CGRectGetHeight(cell.frame))];
         titleLbl.text = @"扫一扫";
         [cell.contentView addSubview:titleLbl];
-    }
-    else if (indexPath.row == 9){
+    }else if (indexPath.row == 9){
         cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }else if (indexPath.row == 10){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        // titleIv
+        UIImageView *titleIv = [[UIImageView alloc] initWithFrame:CGRectMake(15, (CGRectGetHeight(cell.frame) - 23) / 2, 23, 23)];
+        titleIv.image = [UIImage imageNamed:@"arrow-head"];
+        [cell.contentView addSubview:titleIv];
+        // titleLbl
+        UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleIv.frame) + 15, 0, 200, CGRectGetHeight(cell.frame))];
+        titleLbl.text = @"查走势";
+        [cell.contentView addSubview:titleLbl];
+    }else if (indexPath.row == 11){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        // titleIv
+        UIImageView *titleIv = [[UIImageView alloc] initWithFrame:CGRectMake(15, (CGRectGetHeight(cell.frame) - 23) / 2, 23, 23)];
+        titleIv.image = [UIImage imageNamed:@"credit-card"];
+        [cell.contentView addSubview:titleIv];
+        // titleLbl
+        UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleIv.frame) + 15, 0, 200, CGRectGetHeight(cell.frame))];
+        titleLbl.text = @"查余额";
+        [cell.contentView addSubview:titleLbl];
+    }else if (indexPath.row == 12){
+        cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
+    }else if (indexPath.row == 13){
         cell.backgroundColor = [UIColor whiteColor];
         // logOutBtn
         UIButton *logOutBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, (CGRectGetHeight(cell.frame) - 21) / 2, SCREEN_WIDTH, 21)];
@@ -198,14 +222,14 @@
         [logOutBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         logOutBtn.userInteractionEnabled = false;
         [cell.contentView addSubview:logOutBtn];
-    }else if (indexPath.row == 11){
+    }else if (indexPath.row == 14){
         cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 8 || indexPath.row == 9 || indexPath.row == 10 ){
+    if (indexPath.row == 0 || indexPath.row == 1 || indexPath.row == 3 || indexPath.row == 4 || indexPath.row == 8 || indexPath.row == 9 || indexPath.row == 11 || indexPath.row == 12 || indexPath.row == 13){
         if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
             [cell setLayoutMargins:UIEdgeInsetsZero];
         }
@@ -217,13 +241,25 @@
         if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
             cell.preservesSuperviewLayoutMargins = false;
         }
-    }else if (indexPath.row == 11){
+    }else if (indexPath.row == 14){
         if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
             [cell setLayoutMargins:UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0)];
         }
         
         if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
             [cell setSeparatorInset:UIEdgeInsetsMake(0, SCREEN_WIDTH, 0, 0)];
+        }
+        
+        if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+            cell.preservesSuperviewLayoutMargins = false;
+        }
+    }else{
+        if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+            [cell setLayoutMargins:UIEdgeInsetsMake(0, 14, 0, 0)];
+        }
+        
+        if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+            [cell setSeparatorInset:UIEdgeInsetsMake(0, 14, 0, 0)];
         }
         
         if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
@@ -244,8 +280,11 @@
         personalVC.hidesBottomBarWhenPushed = true;
         [self.navigationController pushViewController:personalVC animated:true];
     }else if (indexPath.row == 2){
-        clickIFlag = 1;
-        [self getData];
+//        clickIFlag = 1;
+//        [self getData];
+        OnlineChongzhiViewController *onlineChongzhiVC = [[OnlineChongzhiViewController alloc] init];
+        onlineChongzhiVC.hidesBottomBarWhenPushed = true;
+        [self.navigationController pushViewController:onlineChongzhiVC animated:true];
     }else if (indexPath.row == 3){
         AnnouncementViewController *announcementVC = [[AnnouncementViewController alloc] init];
         announcementVC.hidesBottomBarWhenPushed = true;
@@ -265,7 +304,17 @@
         ErWeiMaViewController * erweima = [[ErWeiMaViewController alloc] init];
         erweima.hidesBottomBarWhenPushed = true;
         [self.navigationController pushViewController:erweima animated:true];
-    }else if (indexPath.row == 10) {
+    }else if(indexPath.row == 10){
+        GroupChatViewController *groupChatVC = [[GroupChatViewController alloc] init];
+        groupChatVC.hidesBottomBarWhenPushed = true;
+        groupChatVC.iFlag = @"3";
+        [self.navigationController pushViewController:groupChatVC animated:true];
+    }else if(indexPath.row == 11){
+        GroupChatViewController *groupChatVC = [[GroupChatViewController alloc] init];
+        groupChatVC.hidesBottomBarWhenPushed = true;
+        groupChatVC.iFlag = @"4";
+        [self.navigationController pushViewController:groupChatVC animated:true];
+    }else if (indexPath.row == 13) {
         [Toolkit actionSheetViewFirst:self andTitle:@"退出后不会删除任何历史数据，下次登录依然可以使用本账号。" andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:@"退出登录" handler:^(int buttonIndex, UIAlertAction *alertView) {
             if (buttonIndex == 1) {
                 // 断开融云连接

@@ -12,7 +12,7 @@
 @interface ChatRoomViewController : RCConversationViewController
 
 /**
- * 1：正常    2：推荐好友
+ * 1：正常 2：推荐好友 3:差走势 4：查余额
  */
 @property(nonatomic,strong) NSString *iFlag;
 

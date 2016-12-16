@@ -756,6 +756,44 @@
     }
 }
 
+-(void)getGroupInfoById:(NSString *)groupId{
+    if (groupId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"teamid"
+                                          ]
+                              andResult:@[@"SelectTeam",
+                                          groupId
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
+-(void)saveGroupInfo:(NSString *)groupId andContent:(NSString *)content{
+    if (groupId) {
+        NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+        
+        NSString *json = [self setParam:@[@"function",
+                                          @"teamid",
+                                          @"content"
+                                          ]
+                              andResult:@[@"EditGonggao",
+                                          groupId,
+                                          content
+                                          ]];
+        
+        NSDictionary * prm=@{@"args":json};
+        [self PostRequest:url andpram:prm];
+    }else{
+        [SVProgressHUD dismiss];
+    }
+}
+
 -(void)changeFriendRName:(NSString *)userId andFriendId:(NSString *)friendId andRname:(NSString *)rname{
     if (userId && friendId && rname) {
         NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
@@ -907,6 +945,53 @@
     NSString *json = [self setParam:@[@"function"
                                       ]
                           andResult:@[@"SelectAboutUs"
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
+
+-(void)getAllGonggaoByUserId:(NSString *)userId{
+    NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+    NSString *json = [self setParam:@[@"function",
+                                      @"userid"
+                                      ]
+                          andResult:@[@"GetAllGonggao",
+                                      userId
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
+
+-(void)editIsClose:(NSString *)userId andTeamid:(NSString *)teamid andisclose:(NSString *)isclose{
+    NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
+    NSString *json = [self setParam:@[@"function",
+                                      @"userid",
+                                      @"teamid",
+                                      @"isclose"
+                                      ]
+                          andResult:@[@"EditIsClose",
+                                      userId,
+                                      teamid,
+                                      isclose
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
+
+-(void)reportUser:(NSString *)userId andTeamid:(NSString *)teamid andContent:(NSString *)content{
+    NSString *url = [NSString stringWithFormat:@"%@/LoginAndRegister.asmx/Entry",Url];
+    NSString *json = [self setParam:@[@"function",
+                                      @"userId",
+                                      @"targetId",
+                                      @"content"
+                                      ]
+                          andResult:@[@"ReportUser",
+                                      userId,
+                                      teamid,
+                                      content
                                       ]];
     
     NSDictionary * prm=@{@"args":json};

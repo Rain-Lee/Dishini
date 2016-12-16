@@ -156,6 +156,7 @@
         chat.iFlag = _iFlag;
         chat.conversationType = ConversationType_GROUP;
         chat.targetId = [filterGroupData[indexPath.row][@"Id"] stringValue];
+        NSLog(@"%@",[filterGroupData[indexPath.row][@"Id"] stringValue]);
         chat.title = filterGroupData[indexPath.row][@"Name"];
         [self.navigationController pushViewController:chat animated:YES];
     }

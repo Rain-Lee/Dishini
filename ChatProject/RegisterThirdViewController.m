@@ -14,6 +14,7 @@
 @interface RegisterThirdViewController ()<UITextFieldDelegate>{
     UITextField *passwordTxt;
     UITextField *rePasswordTxt;
+    UITextField *nickNameTxt;
     UIButton *commentBtn;
 }
 
@@ -34,12 +35,11 @@
 }
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
-    [passwordTxt resignFirstResponder];
-    [rePasswordTxt resignFirstResponder];
+    [self.view endEditing:true];
 }
 
 -(void)clickRightButton:(UIButton *)sender{
-    if ([passwordTxt.text isEqual:@""] || [rePasswordTxt.text isEqual:@""]){
+    if ([passwordTxt.text isEqual:@""] || [rePasswordTxt.text isEqual:@""] || [nickNameTxt.text isEqual:@""]){
         [Toolkit alertView:self andTitle:@"提示" andMsg:@"请完善信息" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         return;
     }
@@ -47,19 +47,23 @@
         [Toolkit alertView:self andTitle:@"提示" andMsg:@"两次密码输入不一致" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
         return;
     }
+    
     [Toolkit showWithStatus:@"请稍等..."];
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"saveCallBack:"];
-    [dataProvider registerUser:_phone andPassword:passwordTxt.text];
+    [dataProvider registerUser:_phone andPassword:passwordTxt.text andName:nickNameTxt.text];
 }
 
 -(void)saveCallBack:(id)dict{// 18810375184
     if ([dict[@"code"] intValue] == 200) {
         @try {
             dispatch_async(dispatch_get_main_queue(), ^{
-                DataProvider *dataProvider2 = [[DataProvider alloc] init];
-                [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
-                [dataProvider2 editUserInfo:dict[@"data"] andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"中国" andDescription:@""];
+//                DataProvider *dataProvider2 = [[DataProvider alloc] init];
+//                [dataProvider2 setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
+//                [dataProvider2 editUserInfo:dict[@"data"] andNickName:[Toolkit phoneEncryption:_phone] andSex:@"0" andHomeAreaId:@"中国" andDescription:@""];
+                DataProvider *dataProvider3 = [[DataProvider alloc] init];
+                [dataProvider3 setDelegateObject:self setBackFunctionName:@"loginCallBack:"];
+                [dataProvider3 login:_phone andPassword:passwordTxt.text];
             });
         } @catch (NSException *exception) {
             [SVProgressHUD dismiss];
@@ -90,9 +94,10 @@
 }
 
 -(void)initView{
-    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, Header_Height + 12, SCREEN_WIDTH, 45 * 3 + 15 * 3 + 1.5)];
+    UIView *topView = [[UIView alloc] initWithFrame:CGRectMake(0, Header_Height + 12, SCREEN_WIDTH, (15 + 45 + 0.5) * 4)];
     topView.backgroundColor = [UIColor whiteColor];
     [self.view addSubview:topView];
+    
     // phoneLbl
     UILabel *phoneLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 15 + (45 - 21) / 2, 100, 21)];
     phoneLbl.text = @"手机号";
@@ -139,6 +144,19 @@
     lineView3.backgroundColor = [UIColor lightGrayColor];
     [topView addSubview:lineView3];
     
+    // nickNameLbl
+    UILabel *nickNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, CGRectGetMaxY(lineView3.frame) + 15 + (45 - 21) / 2, 100, 21)];
+    nickNameLbl.text = @"昵称";
+    [topView addSubview:nickNameLbl];
+    // nickNameTxt
+    nickNameTxt = [[UITextField alloc] initWithFrame:CGRectMake(CGRectGetMaxX(phoneLbl.frame), CGRectGetMaxY(lineView3.frame) + 15, SCREEN_WIDTH - CGRectGetMaxX(phoneLbl.frame), 45)];
+    nickNameTxt.delegate = self;
+    nickNameTxt.placeholder = @"请输入昵称";
+    [topView addSubview:nickNameTxt];
+    // lineView4
+    UIView *lineView4 = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(nickNameTxt.frame), SCREEN_WIDTH, 0.5)];
+    lineView4.backgroundColor = [UIColor lightGrayColor];
+    [topView addSubview:lineView4];
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{

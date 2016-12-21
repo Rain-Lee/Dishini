@@ -11,8 +11,12 @@
 #import "ContactsViewController.h"
 #import "MomentsViewController.h"
 #import "IViewController.h"
+#import "WZLBadgeImport.h"
+#import "UIView+Frame.h"
 
-@interface CustomTabBarViewController ()
+@interface CustomTabBarViewController (){
+    ChatListViewController *chatListVC;
+}
 
 @end
 
@@ -24,12 +28,25 @@
     [self initTabBarItem];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setDefaultSelectTabBarItem:) name:@"setDefaultSelectTabBarItem" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNoReadNum) name:@"refreshNoReadNum" object:nil];
+}
+
+-(void)refreshNoReadNum{
+    NSString *noReadNum = [NSString stringWithFormat:@"%d",[[RCIMClient sharedRCIMClient] getTotalUnreadCount]];
+    if (![noReadNum isEqual:@"0"]){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            chatListVC.tabBarItem.badgeValue = noReadNum;
+        });
+    }else{
+        chatListVC.tabBarItem.badgeValue = nil;
+    }
 }
 
 - (void)initTabBarItem{
     // ChatViewController
-    ChatListViewController *chatListVC = [[ChatListViewController alloc] init];
+    chatListVC = [[ChatListViewController alloc] init];
     chatListVC.tabBarItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0);
+    [self refreshNoReadNum];
     chatListVC.tabBarItem.image = [UIImage imageNamed:@"weixin-dianjiqian"];
     chatListVC.tabBarItem.selectedImage = [[UIImage imageNamed:@"weixin-dianjihou"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController *chatListVCNav = [[UINavigationController alloc] initWithRootViewController:chatListVC];

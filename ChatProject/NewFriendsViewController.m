@@ -187,6 +187,9 @@
             searchTxt.delegate = self;
             searchTxt.keyboardType = UIKeyboardTypePhonePad;
             searchTxt.returnKeyType = UIReturnKeySearch;
+            if (_isDefaultSearch) {
+                [searchTxt becomeFirstResponder];
+            }
             searchTxt.placeholder = @"请输入手机号";
             [cell.contentView addSubview:searchTxt];
             // searchIv
@@ -290,6 +293,39 @@
             addressLocalVC.hidesBottomBarWhenPushed = true;
             [self.navigationController pushViewController:addressLocalVC animated:true];
         }
+    }
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0) {
+        return NO;
+    }else{
+        return YES;
+    }
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        [Toolkit showWithStatus:@"正在删除"];
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"DelBackCall:"];
+        [dataProvider deleteFriend:userDataArray[indexPath.row][@"Key"] andFriendId:[Toolkit getUserID]];
+    }
+    else if (editingStyle == UITableViewCellEditingStyleInsert) {
+    }
+}
+
+-(void)DelBackCall:(id)dict{
+    [SVProgressHUD dismiss];
+    if ([dict[@"code"] intValue] == 200) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"mRefreshData" object:nil];
+        [mTableView.header beginRefreshing];
+    }else{
+        [Toolkit showErrorWithStatus:@"删除失败"];
     }
 }
 

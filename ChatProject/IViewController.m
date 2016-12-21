@@ -85,13 +85,13 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 15;
+    return 17;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return 80;
-    }else if (indexPath.row == 1 || indexPath.row == 4 || indexPath.row == 9 || indexPath.row == 12){
+    }else if (indexPath.row == 1 || indexPath.row == 4 || indexPath.row == 9 || indexPath.row == 12 || indexPath.row == 14){
         return 20;
     }else{
         return 55;
@@ -114,14 +114,14 @@
         photoIv.layer.masksToBounds = true;
         photoIv.layer.cornerRadius = 6;
         // nameLbl
-        UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 10, CGRectGetMinY(photoIv.frame) + 5, 200, 21)];
+        UILabel *nameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 10, (cell.frame.size.height - 21) / 2, 200, 21)];
         nameLbl.text = [Toolkit getStringValueByKey:@"NickName"];
         [cell.contentView addSubview:nameLbl];
-        // detailLbl
-        UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nameLbl.frame), CGRectGetMaxY(nameLbl.frame) + 8, 200, 21)];
-        detailLbl.text = [NSString stringWithFormat:@"迪士尼账号:%@",[Toolkit getStringValueByKey:@"Phone"]];
-        detailLbl.font = [UIFont systemFontOfSize:15];
-        [cell.contentView addSubview:detailLbl];
+//        // detailLbl
+//        UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nameLbl.frame), CGRectGetMaxY(nameLbl.frame) + 8, 200, 21)];
+//        detailLbl.text = [NSString stringWithFormat:@"迪士尼账号:%@",[Toolkit getStringValueByKey:@"Phone"]];
+//        detailLbl.font = [UIFont systemFontOfSize:15];
+//        [cell.contentView addSubview:detailLbl];
         // erweimaIv
         UIImageView *erweimaIv = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 28 - 20, (CGRectGetHeight(cell.frame) - 20) / 2, 20, 20)];
         erweimaIv.image = [UIImage imageNamed:@"erweima"];
@@ -215,6 +215,18 @@
     }else if (indexPath.row == 12){
         cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }else if (indexPath.row == 13){
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        // titleIv
+        UIImageView *titleIv = [[UIImageView alloc] initWithFrame:CGRectMake(15, (CGRectGetHeight(cell.frame) - 23) / 2, 23, 23)];
+        titleIv.image = [UIImage imageNamed:@"clear"];
+        [cell.contentView addSubview:titleIv];
+        // titleLbl
+        UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleIv.frame) + 15, 0, 200, CGRectGetHeight(cell.frame))];
+        titleLbl.text = @"清空聊天记录";
+        [cell.contentView addSubview:titleLbl];
+    }else if (indexPath.row == 14){
+        cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
+    }else if (indexPath.row == 15){
         cell.backgroundColor = [UIColor whiteColor];
         // logOutBtn
         UIButton *logOutBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, (CGRectGetHeight(cell.frame) - 21) / 2, SCREEN_WIDTH, 21)];
@@ -222,7 +234,7 @@
         [logOutBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         logOutBtn.userInteractionEnabled = false;
         [cell.contentView addSubview:logOutBtn];
-    }else if (indexPath.row == 14){
+    }else if (indexPath.row == 16){
         cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.0];
     }
     return cell;
@@ -315,6 +327,17 @@
         groupChatVC.iFlag = @"4";
         [self.navigationController pushViewController:groupChatVC animated:true];
     }else if (indexPath.row == 13) {
+        [Toolkit actionSheetViewFirst:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:@"清空所有聊天记录" handler:^(int buttonIndex, UIAlertAction *alertView) {
+            if (buttonIndex == 1) {
+                BOOL result = [[RCIMClient sharedRCIMClient] clearConversations:@[@(ConversationType_PRIVATE),@(ConversationType_GROUP)]];
+                if (result) {
+                    [Toolkit showSuccessWithStatus:@"清空成功"];
+                }else{
+                    [Toolkit showErrorWithStatus:@"清空失败"];
+                }
+            }
+        }];
+    }else if (indexPath.row == 15){
         [Toolkit actionSheetViewFirst:self andTitle:@"退出后不会删除任何历史数据，下次登录依然可以使用本账号。" andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:@"退出登录" handler:^(int buttonIndex, UIAlertAction *alertView) {
             if (buttonIndex == 1) {
                 // 断开融云连接

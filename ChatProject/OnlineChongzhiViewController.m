@@ -7,11 +7,14 @@
 //
 
 #import "OnlineChongzhiViewController.h"
+#import "UIButton+WebCache.h"
 
 @interface OnlineChongzhiViewController (){
-    BOOL isSelectSecond;
+    NSInteger isSelectSecond;
     UIView *menuView;
     UIScrollView *mScrollView;
+    
+    NSDictionary *dataDict;
 }
 
 @end
@@ -24,10 +27,24 @@
     [self setNavtitle:@"在线充值"];
     [self addLeftButton:@"left"];
     
-    isSelectSecond = false;
+    isSelectSecond = 0;
     
-    [self initMenuView];
-    [self initView];
+    [self initData];
+}
+
+-(void)initData{
+    DataProvider *dataProvider = [[DataProvider alloc] init];
+    [dataProvider setDelegateObject:self setBackFunctionName:@"getQrCode:"];
+    [dataProvider getQrCode];
+}
+
+-(void)getQrCode:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        dataDict = [NSDictionary dictionaryWithDictionary:dict[@"data"]];
+        
+        [self initMenuView];
+        [self initView];
+    }
 }
 
 -(void)initMenuView{
@@ -38,9 +55,10 @@
     menuView = [[UIView alloc] initWithFrame:CGRectMake(0, Header_Height, SCREEN_WIDTH, 44 + 0.5)];
     [self.view addSubview:menuView];
     // titleBtn1
-    UIButton *titleBtn1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH - 0.5) / 2, menuView.frame.size.height - 0.5)];
-    [titleBtn1 setTitleColor:isSelectSecond ? [UIColor lightGrayColor] : [UIColor blackColor] forState:UIControlStateNormal];
-    [titleBtn1 setTitle:@"给米老鼠充值" forState:UIControlStateNormal];
+    UIButton *titleBtn1 = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, (SCREEN_WIDTH - 0.5 * 2) / 3, menuView.frame.size.height - 0.5)];
+    [titleBtn1 setTitleColor:isSelectSecond == 0 ? [UIColor darkGrayColor] : [UIColor lightGrayColor] forState:UIControlStateNormal];
+    [titleBtn1 setTitle:dataDict[@"Namea"] forState:UIControlStateNormal];
+    titleBtn1.titleLabel.font = [UIFont systemFontOfSize:16];
     titleBtn1.tag = 0;
     [titleBtn1 addTarget:self action:@selector(clickMenuEvent:) forControlEvents:UIControlEventTouchUpInside];
     [menuView addSubview:titleBtn1];
@@ -51,21 +69,36 @@
     [menuView addSubview:lineView1];
     
     // titleBtn2
-    UIButton *titleBtn2 = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lineView1.frame), 0, (SCREEN_WIDTH - 0.5) / 2, menuView.frame.size.height - 0.5)];
-    [titleBtn2 setTitleColor:isSelectSecond ? [UIColor blackColor] : [UIColor lightGrayColor] forState:UIControlStateNormal];
-    [titleBtn2 setTitle:@"给唐老鸭充值" forState:UIControlStateNormal];
+    UIButton *titleBtn2 = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lineView1.frame), 0, (SCREEN_WIDTH - 0.5 * 2) / 3, menuView.frame.size.height - 0.5)];
+    [titleBtn2 setTitleColor:isSelectSecond == 1 ? [UIColor darkGrayColor] : [UIColor lightGrayColor] forState:UIControlStateNormal];
+    [titleBtn2 setTitle:dataDict[@"Nameb"] forState:UIControlStateNormal];
+    titleBtn2.titleLabel.font = [UIFont systemFontOfSize:16];
     titleBtn2.tag = 1;
     [titleBtn2 addTarget:self action:@selector(clickMenuEvent:) forControlEvents:UIControlEventTouchUpInside];
     [menuView addSubview:titleBtn2];
     
     // lineView2
-    UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 0.5)];
+    UIView *lineView2 = [[UIView alloc] initWithFrame:CGRectMake(CGRectGetMaxX(titleBtn2.frame), 8, 0.5, menuView.frame.size.height - 0.5 - 8 * 2)];
     lineView2.backgroundColor = [UIColor lightGrayColor];
     [menuView addSubview:lineView2];
+    
+    // titleBtn3
+    UIButton *titleBtn3 = [[UIButton alloc] initWithFrame:CGRectMake(CGRectGetMaxX(lineView2.frame), 0, (SCREEN_WIDTH - 0.5 * 2) / 3, menuView.frame.size.height - 0.5)];
+    [titleBtn3 setTitleColor:isSelectSecond == 2 ? [UIColor darkGrayColor] : [UIColor lightGrayColor] forState:UIControlStateNormal];
+    [titleBtn3 setTitle:dataDict[@"Namec"] forState:UIControlStateNormal];
+    titleBtn3.titleLabel.font = [UIFont systemFontOfSize:16];
+    titleBtn3.tag = 2;
+    [titleBtn3 addTarget:self action:@selector(clickMenuEvent:) forControlEvents:UIControlEventTouchUpInside];
+    [menuView addSubview:titleBtn3];
+    
+    // lineView3
+    UIView *lineView3 = [[UIView alloc] initWithFrame:CGRectMake(0, 44, SCREEN_WIDTH, 0.5)];
+    lineView3.backgroundColor = [UIColor lightGrayColor];
+    [menuView addSubview:lineView3];
 }
 
 -(void)clickMenuEvent:(UIButton *)sender{
-    isSelectSecond = sender.tag == 1 ? true : false;
+    isSelectSecond = sender.tag;
     
     [self initMenuView];
     [self initView];
@@ -82,14 +115,22 @@
     // zhifubaoBtn
     UIButton *zhifubaoBtn = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 200) / 2, 10, 200, 200)];
     zhifubaoBtn.adjustsImageWhenHighlighted = false;
-    [zhifubaoBtn setBackgroundImage:[UIImage imageNamed:@"erweima"] forState:UIControlStateNormal];
     UILongPressGestureRecognizer *longGesture1 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(zhifubaoEvent)];
     [zhifubaoBtn addGestureRecognizer:longGesture1];
     [mScrollView addSubview:zhifubaoBtn];
     // titleLbl1
     UILabel *titleLbl1 = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(zhifubaoBtn.frame) + 10, SCREEN_WIDTH, 21)];
     titleLbl1.textAlignment = NSTextAlignmentCenter;
-    titleLbl1.text = isSelectSecond ? @"米老鼠支付宝账号" : @"唐老鸭";
+    if (isSelectSecond == 0) {
+        titleLbl1.text = @"支付宝二维码一";
+        [zhifubaoBtn sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picd"]]]  forState:UIControlStateNormal];
+    }else if (isSelectSecond == 1){
+        titleLbl1.text = @"支付宝二维码二";
+        [zhifubaoBtn sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picf"]]]  forState:UIControlStateNormal];
+    }else{
+        titleLbl1.text = @"支付宝二维码三";
+        [zhifubaoBtn sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Pich"]]]  forState:UIControlStateNormal];
+    }
     [mScrollView addSubview:titleLbl1];
     // titleLbl2
     UILabel *titleLbl2 = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(titleLbl1.frame) + 10, SCREEN_WIDTH, 21)];
@@ -99,7 +140,6 @@
     
     // weixinBtn
     UIButton *weixinBtn = [[UIButton alloc] initWithFrame:CGRectMake((SCREEN_WIDTH - 200) / 2, CGRectGetMaxY(titleLbl2.frame) + 20, 200, 200)];
-    [weixinBtn setBackgroundImage:[UIImage imageNamed:@"erweima"] forState:UIControlStateNormal];
     weixinBtn.adjustsImageWhenHighlighted = false;
     UILongPressGestureRecognizer *longGesture2 = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(weixinEvent)];
     [weixinBtn addGestureRecognizer:longGesture2];
@@ -107,7 +147,16 @@
     // titleLbl3
     UILabel *titleLbl3 = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(weixinBtn.frame) + 10, SCREEN_WIDTH, 21)];
     titleLbl3.textAlignment = NSTextAlignmentCenter;
-    titleLbl3.text = @"米老鼠微信账号";
+    if (isSelectSecond == 0) {
+        titleLbl3.text = @"微信二维码一";
+        [weixinBtn sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picc"]]]  forState:UIControlStateNormal];
+    }else if (isSelectSecond == 1){
+        titleLbl3.text = @"微信二维码二";
+        [weixinBtn sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Pice"]]]  forState:UIControlStateNormal];
+    }else{
+        titleLbl3.text = @"微信二维码三";
+        [weixinBtn sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picg"]]]  forState:UIControlStateNormal];
+    }
     [mScrollView addSubview:titleLbl3];
     // titleLbl4
     UILabel *titleLbl4 = [[UILabel alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(titleLbl3.frame) + 10, SCREEN_WIDTH, 21)];
@@ -117,7 +166,16 @@
 }
 
 -(void)zhifubaoEvent{
-    [self readQRCodeFromImage:[UIImage imageNamed:@"erweima"] myQRCode:^(NSString *qrString, NSError *error) {
+    NSString *imageStr;
+    if (isSelectSecond == 0){
+        imageStr = [NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picd"]];
+    }else if (isSelectSecond == 1){
+        imageStr = [NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picf"]];
+    }else{
+        imageStr = [NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Pich"]];
+    }
+    UIImage *tempImg = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageStr]]];
+    [self readQRCodeFromImage:tempImg myQRCode:^(NSString *qrString, NSError *error) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         NSURL *url = [NSURL URLWithString:qrString];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -127,7 +185,16 @@
 }
 
 -(void)weixinEvent{
-    [self readQRCodeFromImage:[UIImage imageNamed:@"erweima"] myQRCode:^(NSString *qrString, NSError *error) {
+    NSString *imageStr;
+    if (isSelectSecond == 0){
+        imageStr = [NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picc"]];
+    }else if (isSelectSecond == 1){
+        imageStr = [NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Pice"]];
+    }else{
+        imageStr = [NSString stringWithFormat:@"%@%@",Kimg_path,dataDict[@"Picg"]];
+    }
+    UIImage *tempImg = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageStr]]];
+    [self readQRCodeFromImage:tempImg myQRCode:^(NSString *qrString, NSError *error) {
         UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         NSURL *url = [NSURL URLWithString:qrString];
         NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -162,7 +229,7 @@
     }
     else{
         myQRCode(nil,[NSError errorWithDomain:@"未能识别出二维码" code:0 userInfo:nil]);
-        return;
+        [Toolkit showErrorWithStatus:@"未能识别出二维码"];
     }
     
 }

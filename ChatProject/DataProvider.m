@@ -59,7 +59,7 @@
 }
 
 // 注册
--(void)registerUser:(NSString *)phone andPassword:(NSString *)password{
+-(void)registerUser:(NSString *)phone andPassword:(NSString *)password andName:(NSString *)name{
     
     if (phone && password) {
         
@@ -67,10 +67,12 @@
         
         NSString *json = [self setParam:@[@"function",
                                           @"phone",
-                                          @"password"]
+                                          @"password",
+                                          @"name"]
                               andResult:@[@"Register",
                                           phone,
-                                          password
+                                          password,
+                                          name
                                           ]];
         
         NSDictionary * prm=@{@"args":json};
@@ -560,17 +562,21 @@
     }
 }
 
--(void)createGroup:(NSString *)userId andIdList:(NSString *)idList{
+-(void)createGroup:(NSString *)userId andIdList:(NSString *)idList andImagePath:(NSString *)imagePath andTeamName:(NSString *)teamName{
     if (userId && idList) {
         NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
         
         NSString *json = [self setParam:@[@"function",
                                           @"userid",
-                                          @"idlist"
+                                          @"idlist",
+                                          @"imagepath",
+                                          @"teamname"
                                           ]
                               andResult:@[@"BuildTeam",
                                           userId,
-                                          idList
+                                          idList,
+                                          imagePath,
+                                          teamName
                                           ]];
         
         NSDictionary * prm=@{@"args":json};
@@ -714,19 +720,21 @@
     }
 }
 
--(void)editGroup:(NSString *)groupId andName:(NSString *)name andUserId:(NSString *)userId{
+-(void)editGroup:(NSString *)groupId andName:(NSString *)name andUserId:(NSString *)userId andImagePath:(NSString *)imagePath{
     if (groupId && name && userId) {
         NSString *url = [NSString stringWithFormat:@"%@/Friends.asmx/Entry",Url];
         
         NSString *json = [self setParam:@[@"function",
                                           @"teamid",
                                           @"name",
-                                          @"userid"
+                                          @"userid",
+                                          @"imagepath"
                                           ]
                               andResult:@[@"EditTeam",
                                           groupId,
                                           name,
-                                          userId
+                                          userId,
+                                          imagePath
                                           ]];
         
         NSDictionary * prm=@{@"args":json};
@@ -992,6 +1000,17 @@
                                       userId,
                                       teamid,
                                       content
+                                      ]];
+    
+    NSDictionary * prm=@{@"args":json};
+    [self PostRequest:url andpram:prm];
+}
+
+-(void)getQrCode{
+    NSString *url = [NSString stringWithFormat:@"%@/SystemNews.asmx/Entry",Url];
+    NSString *json = [self setParam:@[@"function"
+                                      ]
+                          andResult:@[@"GetPicture"
                                       ]];
     
     NSDictionary * prm=@{@"args":json};

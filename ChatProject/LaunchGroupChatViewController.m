@@ -10,8 +10,8 @@
 #import "MJRefresh.h"
 #import "ChineseString.h"
 #import "GroupChatViewController.h"
-#import "ChatRoomViewController.h"
 #import "UIImageView+WebCache.h"
+#import "CreateGroupViewController.h"
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -28,7 +28,6 @@
     NSMutableArray *selectFriends;
     NSMutableArray *filterGroupData;
     NSString *filterValue;
-    NSString *currentTeamId;
 }
 
 @end
@@ -40,7 +39,7 @@
     
     [self setNavtitle:@"选择联系人"];
     [self addLeftButton:@"left"];
-    [self addRightbuttontitle:@"确定"];
+    [self addRightbuttontitle:@"下一步"];
     
     [self initView];
 }
@@ -51,42 +50,15 @@
 
 -(void)clickRightButton:(UIButton *)sender{
     if (selectFriends.count > 0) {
-        [Toolkit showWithStatus:@"加载中..."];
-        DataProvider *dataProvider = [[DataProvider alloc] init];
-        [dataProvider setDelegateObject:self setBackFunctionName:@"createGroupCallBack:"];
-        [dataProvider createGroup:[Toolkit getStringValueByKey:@"Id"] andIdList:@"0"];
-    }
-}
-
--(void)createGroupCallBack:(id)dict{
-    if ([dict[@"code"] intValue] == 200) {
         NSString *selectFriendStr = [Toolkit getStringValueByKey:@"Id"];
         for (NSString *item in selectFriends) {
             selectFriendStr = [NSString stringWithFormat:@"%@A%@",selectFriendStr,item];
         }
-        currentTeamId = [NSString stringWithFormat:@"%@",dict[@"data"][@"TeamId"]];
-        DataProvider *dataProvider = [[DataProvider alloc] init];
-        [dataProvider setDelegateObject:self setBackFunctionName:@"yaoqingCallBack:"];
-        [dataProvider yaoQing:selectFriendStr andTeamId:currentTeamId];
-    }else{
-        [SVProgressHUD dismiss];
-        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
-    }
-}
-
--(void)yaoqingCallBack:(id)dict{
-    [SVProgressHUD dismiss];
-    if ([dict[@"code"] intValue] == 200) {
-        // 刷新会话列表页面
-        //[[NSNotificationCenter defaultCenter] postNotificationName:@"getGroupFunc" object:nil];
         
-        //显示聊天会话界面
-        ChatRoomViewController *chat = [[ChatRoomViewController alloc] init];
-        chat.iFlag = _iFlag;
-        chat.conversationType = ConversationType_GROUP;
-        chat.targetId = currentTeamId;
-        chat.title = @"未命名";
-        [self.navigationController pushViewController:chat animated:YES];
+        CreateGroupViewController *createGroupVC = [[CreateGroupViewController alloc] init];
+        createGroupVC.iFlag = _iFlag;
+        createGroupVC.selectFriendStr = selectFriendStr;
+        [self.navigationController pushViewController:createGroupVC animated:true];
     }
 }
 

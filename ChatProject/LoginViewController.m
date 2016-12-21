@@ -191,11 +191,11 @@
 -(void)loginCallBackSetting:(id)dataParam{
     NSDictionary *userInfo = [dataParam userInfo];
     if ([userInfo[@"code"] intValue] == 200) {
+        [SVProgressHUD dismiss];
         [self saveParam:userInfo[@"data"]];
         RCConnectionStatus connectStatus = [RCIM sharedRCIM].getConnectionStatus;
         NSLog(@"%ld",(long)connectStatus);
         if (connectStatus == ConnectionStatus_Connected) {
-            [SVProgressHUD dismiss];
             // 连接成功
             [RCIM sharedRCIM].currentUserInfo = [[RCUserInfo alloc] initWithUserId:[Toolkit getUserDefaultValue:@"Id"] name:[Toolkit getUserDefaultValue:@"NickName"] portrait:[Toolkit getUserDefaultValue:@"PhotoPath"]];
 //            [[NSNotificationCenter defaultCenter] postNotificationName:@"getFriendFunc" object:nil];
@@ -211,7 +211,6 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"loginRongCloud" object:nil];;
         }
     }else{
-        [SVProgressHUD dismiss];
         [Toolkit alertView:self andTitle:@"提示" andMsg:userInfo[@"error"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
 }
@@ -224,7 +223,7 @@
     [Toolkit setUserDefaultValue:dataParam[@"NicName"] andKey:@"NickName"];
     [Toolkit setUserDefaultValue:dataParam[@"Phone"] andKey:@"Phone"];
     [Toolkit setUserDefaultValue:[dataParam[@"HomeAddress"] isEqual:@"0"] ? @"" : dataParam[@"HomeAddress"] andKey:@"Address"];
-    NSString *sexId = dataParam[@"Sexuality"];
+    NSString *sexId = [Toolkit judgeIsNull:dataParam[@"Sexuality"]];
     [Toolkit setUserDefaultValue:sexId andKey:@"SexId"];
     if ([sexId isEqual:@"0"]) {
         [Toolkit setUserDefaultValue:@"未填写" andKey:@"Sex"];
@@ -251,6 +250,7 @@
             RegisterFirstViewController *registerFirstVC = [[RegisterFirstViewController alloc] init];
             registerFirstVC.iFlagType = @"1";
             [self.navigationController pushViewController:registerFirstVC animated:true];
+            
         }else if (buttonIndex == 3){ // 修改密码
             ChangePwdViewController *changePwdVC = [[ChangePwdViewController alloc] init];
             [self.navigationController pushViewController:changePwdVC animated:true];
@@ -265,7 +265,7 @@
 }
 
 -(void)textFieldChangeEvent:(UITextField *)textField{
-    if (true) {
+    if ([Toolkit isExitAccount]) {
         if (passwordTxt.text.length > 0) {
             loginBtn.backgroundColor = [UIColor colorWithRed:0.10 green:0.68 blue:0.10 alpha:1.00];
             loginBtn.enabled = true;

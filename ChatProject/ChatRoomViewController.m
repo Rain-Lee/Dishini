@@ -18,7 +18,7 @@
 #import "PersonalViewController.h"
 #import "LMJScrollTextView.h"
 
-@interface ChatRoomViewController ()<RCLocationPickerViewControllerDelegate>{
+@interface ChatRoomViewController ()<RCLocationPickerViewControllerDelegate, RCIMGroupMemberDataSource>{
     UIViewController *recordController;
     PlayVideoView *playVideoView;
     UIImage *selectImage;
@@ -27,6 +27,8 @@
     LMJScrollTextView * scrollTextView;
     UIView *carouselView;
     UIView *lineView2;
+    NSString *currentImage;
+    NSMutableArray *friendArray;
 }
 
 @end
@@ -38,6 +40,9 @@
     
     [self initView];
     
+    [RCIM sharedRCIM].enableMessageMentioned = true;
+    [RCIM sharedRCIM].groupMemberDataSource = self;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(initChatRoomData) name:@"initChatRoomData" object:nil];
     //self.conversationMessageCollectionView.frame = CGRectMake(0, Header_Height, SCREEN_WIDTH, SCREEN_HEIGHT - Header_Height);
     [self initChatRoomData];
@@ -48,9 +53,9 @@
         imageMsg.extra = [NSString stringWithFormat:@"654321;%@",[Toolkit getStringValueByKey:@"tjUserId"]];
         [self sendMessage:imageMsg pushContent:@""];
     }else if ([_iFlag isEqual:@"3"]){
-        RCInformationNotificationMessage *warningMsg = [RCInformationNotificationMessage notificationWithMessage:@"查走势" extra:nil];
+        RCTextMessage *warningMsg = [RCTextMessage messageWithContent:@"查走势"];
         BOOL saveToDB = true;  //是否保存到数据库中
-        RCMessage *savedMsg ;
+        RCMessage *savedMsg;
         if (saveToDB) {
             savedMsg = [[RCIMClient sharedRCIMClient] insertOutgoingMessage:self.conversationType targetId:self.targetId sentStatus:SentStatus_SENT content:warningMsg];
         } else {
@@ -58,7 +63,7 @@
         }
         [self appendAndDisplayMessage:savedMsg];
     }else if ([_iFlag isEqual:@"4"]){
-        RCInformationNotificationMessage *warningMsg = [RCInformationNotificationMessage notificationWithMessage:@"查余额" extra:nil];
+        RCTextMessage *warningMsg = [RCTextMessage messageWithContent:@"查余额"];
         BOOL saveToDB = true;  //是否保存到数据库中
         RCMessage *savedMsg ;
         if (saveToDB) {
@@ -244,10 +249,12 @@
     if ([dict[@"code"] intValue] == 200){
         NSArray *memberArray = [NSArray arrayWithArray:dict[@"data"]];
         NSLog(@"%@",[Toolkit getStringValueByKey:@"Id"]);
+        friendArray = [[NSMutableArray alloc] init];
         for (int i = 0; i < memberArray.count; i++) {
             if ([[NSString stringWithFormat:@"%@",memberArray[i][@"MemnerId"]] isEqual:[Toolkit getStringValueByKey:@"Id"]]) {
                 isInGroup = true;
-                break;
+            }else{
+                [friendArray addObject:[Toolkit judgeIsNull:memberArray[i][@"MemnerId"]]];
             }
         }
         if (!isInGroup) {
@@ -265,7 +272,11 @@
 }
 
 - (void)clickLeftBtnEvent{
-    [self.navigationController popViewControllerAnimated:true];
+    if ([_iFlag isEqual:@"5"]){
+        [self.navigationController popToRootViewControllerAnimated:true];
+    }else{
+        [self.navigationController popViewControllerAnimated:true];
+    }
 }
 
 -(void)clickRightBtnEvent:(UIButton *)sender{
@@ -358,6 +369,8 @@
 
 -(void)qupaiSDK:(QupaiSDK *)sdk compeleteVideoPath:(NSString *)videoPath thumbnailPath:(NSString *)thumbnailPath
 {
+    currentImage = thumbnailPath;
+    
     [recordController dismissViewControllerAnimated:YES completion:nil];
     NSLog(@"%@",videoPath);
     [Toolkit showWithStatus:@"发送中..."];
@@ -368,17 +381,14 @@
 
 -(void)sendVideoCallBack:(id)dict{
     [SVProgressHUD dismiss];
-    @try {
-        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"ImagePath"]];
-        UIImage *mImage = [self addImage:[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]]] toImage:[UIImage imageNamed:@"ltplay"]];
+    if ([dict[@"code"] integerValue] == 200){
+//        NSString *imageUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"ImagePath"]];
+        UIImage *mImage = [self addImage:[UIImage imageWithData:[NSData dataWithContentsOfFile:currentImage]] toImage:[UIImage imageNamed:@"ltplay"]];
         RCImageMessage *imageMsg = [RCImageMessage messageWithImage:mImage];
         imageMsg.extra = [NSString stringWithFormat:@"%@;%@",@"123456",[NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"VideoPath"]]];
-        imageMsg.imageUrl = [NSString stringWithFormat:@"%@%@",Kimg_path,[dict[@"data"] valueForKey:@"ImagePath"]];
         [self sendMediaMessage:imageMsg pushContent:@"nihao"];
-    } @catch (NSException *exception) {
-        
-    } @finally {
-        
+    }else{
+        [Toolkit showErrorWithStatus:dict[@"error"]];
     }
 }
 
@@ -445,7 +455,11 @@
     }else{
         [Toolkit alertView:self andTitle:@"提示" andMsg:@"保存失败~" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
-    
+}
+
+#pragma mark - RCIMGroupMemberDataSource
+- (void)getAllMembersOfGroup:(NSString *)groupId result:(void (^)(NSArray<NSString *> *userIdList))resultBlock{
+    return resultBlock(friendArray);
 }
 
 @end

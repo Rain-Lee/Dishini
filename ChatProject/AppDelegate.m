@@ -266,6 +266,7 @@
 }
 
 -(void)onRCIMReceiveMessage:(RCMessage *)message left:(int)left{
+    
     if (message.conversationType == ConversationType_PRIVATE) { // 单聊
         @try {
             NSString *extra = ((RCTextMessage *)message.content).extra;
@@ -294,6 +295,8 @@
                 //            if (!isContain) {
                 //                [self getFriendFunc];
                 //            }
+            }else{
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshNoReadNum" object:nil];
             }
         } @catch (NSException *exception) {
             
@@ -301,8 +304,8 @@
             
         }
     }else{ // 群聊
-        NSLog(@"%@",groupArray);
-        NSLog(@"%@",message.targetId);
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshNoReadNum" object:nil];
+        
         BOOL isContain = false;
         for (NSDictionary *itemDict in groupArray) {
             if ([[NSString stringWithFormat:@"%@",itemDict[@"Id"]] isEqual:[NSString stringWithFormat:@"%@",message.targetId]]) {

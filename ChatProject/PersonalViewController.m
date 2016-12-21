@@ -377,7 +377,7 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     UIImage *image = info[UIImagePickerControllerEditedImage];
-    UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(800, 800)];
+    UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(500, 500)];
     NSData *imageData = UIImagePNGRepresentation(smallImage);
     headImage = smallImage;
     [self changeHeadImage:imageData];
@@ -402,9 +402,8 @@
 }
 
 -(void)uploadPhotoCallBack:(id)dict{
-    [SVProgressHUD dismiss];
-    NSLog(@"%@",dict);
     if ([dict[@"code"] intValue] == 200) {
+        [SVProgressHUD dismiss];
         [Toolkit setUserDefaultValue:[NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"date"][@"ImageName"]] andKey:@"PhotoPath"];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"setHeader" object:nil];
         [[NSNotificationCenter defaultCenter] postNotificationName:@"updateData" object:nil];

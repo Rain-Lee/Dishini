@@ -10,4 +10,6 @@
 
 @interface NewFriendsViewController : BaseNavigationController<UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic) BOOL isDefaultSearch;
+
 @end

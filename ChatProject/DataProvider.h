@@ -38,8 +38,9 @@
  * 注册
  * @param phone    手机号
  * @param password 密码
+ * @param name     昵称
  */
--(void)registerUser:(NSString *)phone andPassword:(NSString *)password;
+-(void)registerUser:(NSString *)phone andPassword:(NSString *)password andName:(NSString *)name;
 
 /**
  * 修改密码
@@ -210,10 +211,12 @@
 
 /**
  * 创建群组
- * @param userId   用户Id
- * @param idList   邀请所有好友ID集合，用“A”拼接
+ * @param userId    用户Id
+ * @param idList    邀请所有好友ID集合，用“A”拼接
+ * @param imagePath 群组图片
+ * @param teamName  群组名称
  */
--(void)createGroup:(NSString *)userId andIdList:(NSString *)idList;
+-(void)createGroup:(NSString *)userId andIdList:(NSString *)idList andImagePath:(NSString *)imagePath andTeamName:(NSString *)teamName;
 
 /**
  * 根据用户Id获取用户信息
@@ -268,11 +271,12 @@
 
 /**
  * 编辑群组
- * @param groupId 群组Id
- * @param name    名称
- * @param userId  用户Id
+ * @param groupId    群组Id
+ * @param name       名称
+ * @param userId     用户Id
+ * @param imagePath  群头像
  */
--(void)editGroup:(NSString *)groupId andName:(NSString *)name andUserId:(NSString *)userId;
+-(void)editGroup:(NSString *)groupId andName:(NSString *)name andUserId:(NSString *)userId andImagePath:(NSString *)imagePath;
 
 /**
  * 获取群成员
@@ -353,5 +357,8 @@
 
 // 投诉群组
 -(void)reportUser:(NSString *)userId andTeamid:(NSString *)teamid andContent:(NSString *)content;
+
+// 在线充值，获取二维码
+-(void)getQrCode;
 
 @end

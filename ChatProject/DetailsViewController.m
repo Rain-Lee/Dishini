@@ -13,6 +13,7 @@
 #import "RemarksViewController.h"
 #import "UIImageView+WebCache.h"
 #import <RongIMKit/RongIMKit.h>
+#import <RongIMKit/RongIMKit.h>
 
 #define CellIdentifier @"CellIdentifier"
 
@@ -133,6 +134,7 @@
 
 -(void)addFriendCallBack:(id)dict{
     if ([dict[@"code"] intValue] == 200) {
+        [Toolkit dismiss];
         RCTextMessage *txtMessage = [RCTextMessage messageWithContent:@"申请添加好友"];
         txtMessage.extra = @"jiahaoyou";
         [[RCIM sharedRCIM] sendMessage:ConversationType_PRIVATE targetId:[userInfoDict[@"Id"] stringValue] content:txtMessage pushContent:nil pushData:nil success:nil error:nil];
@@ -143,7 +145,6 @@
     else{
         [Toolkit showErrorWithStatus:dict[@"data"]];
     }
-    [SVProgressHUD dismiss];
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
@@ -151,7 +152,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 6;
+    return 7;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -174,7 +175,7 @@
             return 0;
         }
     }else{
-        if (indexPath.row == 2) {
+        if (indexPath.row == 2 || indexPath.row == 6) {
             if (!isFriend) {
                 return 0;
             }else{
@@ -204,7 +205,7 @@
             // nickNameLbl
             NSString *nickNameStr = userInfoDict[@"NicName"];
             CGSize textSize = [nickNameStr sizeWithAttributes:@{ NSFontAttributeName : [UIFont systemFontOfSize:16]}];
-            UILabel *nickNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 10, CGRectGetMinY(photoIv.frame) + 10, textSize.width + 2, 21)];
+            UILabel *nickNameLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 10, (cell.frame.size.height - 21) / 2, textSize.width + 2, 21)];
             nickNameLbl.font = [UIFont systemFontOfSize:16];
             nickNameLbl.text = nickNameStr;
             [cell.contentView addSubview:nickNameLbl];
@@ -217,11 +218,11 @@
                 sexIv.image = [UIImage imageNamed:@"red-girl"];
             }
             [cell.contentView addSubview:sexIv];
-            // wechatNoLbl
-            UILabel *wechatNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nickNameLbl.frame), CGRectGetMaxY(nickNameLbl.frame) + 2, 200, 21)];
-            wechatNoLbl.font = [UIFont systemFontOfSize:16];
-            wechatNoLbl.text = [NSString stringWithFormat:@"IPIC:%@",userInfoDict[@"Phone"]];
-            [cell.contentView addSubview:wechatNoLbl];
+//            // wechatNoLbl
+//            UILabel *wechatNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(nickNameLbl.frame), CGRectGetMaxY(nickNameLbl.frame) + 2, 200, 21)];
+//            wechatNoLbl.font = [UIFont systemFontOfSize:16];
+//            wechatNoLbl.text = [NSString stringWithFormat:@"IPIC:%@",userInfoDict[@"Phone"]];
+//            [cell.contentView addSubview:wechatNoLbl];
         }else{
             // remarkNameLbl
             NSString *remarkStr = userInfoDict[@"RemarkName"];
@@ -242,7 +243,7 @@
             // wechatNoLbl
             UILabel *wechatNoLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMinX(remarkNameLbl.frame), CGRectGetMaxY(remarkNameLbl.frame) + 3, 200, 21)];
             wechatNoLbl.font = [UIFont systemFontOfSize:12];
-            wechatNoLbl.text = [NSString stringWithFormat:@"IPIC:%@",userInfoDict[@"Phone"]];
+            wechatNoLbl.text = [NSString stringWithFormat:@"迪士尼:%@",userInfoDict[@"Phone"]];
             wechatNoLbl.textColor = [UIColor grayColor];
             [cell.contentView addSubview:wechatNoLbl];
             // nickNameLbl
@@ -301,6 +302,14 @@
                 [cell.contentView addSubview:photoIv];
             }
         }
+    }else{
+        if (isFriend) {
+            // addressLbl
+            UILabel *addressLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, 180, CGRectGetHeight(cell.frame))];
+            addressLbl.textAlignment = NSTextAlignmentLeft;
+            addressLbl.text = @"清空聊天记录";
+            [cell.contentView addSubview:addressLbl];
+        }
     }
     return cell;
 }
@@ -338,6 +347,23 @@
         userMomentsVC.nickName = [userInfoDict[@"RemarkName"] isEqual:@""] ? userInfoDict[@"NicName"] : userInfoDict[@"RemarkName"];
         userMomentsVC.userId = userInfoDict[@"Id"];
         [self.navigationController pushViewController:userMomentsVC animated:YES];
+    }else if (indexPath.row == 6){
+        [Toolkit actionSheetViewFirst:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:@"清空聊天记录" handler:^(int buttonIndex, UIAlertAction *alertView) {
+            if (buttonIndex == 1) {
+                @try {
+                    if ([[RCIMClient sharedRCIMClient] clearMessages:ConversationType_PRIVATE targetId:self.userId]){
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadConversationMessageCollectionViewData" object:nil];
+                        [Toolkit showSuccessWithStatus:@"清空成功"];
+                    }else{
+                        [Toolkit showErrorWithStatus:@"清空失败"];
+                    }
+                } @catch (NSException *exception) {
+                    
+                } @finally {
+                    [Toolkit showErrorWithStatus:@"清空失败"];
+                }
+            }
+        }];
     }
 }
 

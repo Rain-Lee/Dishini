@@ -36,7 +36,7 @@
 -(void)clickRightButton:(UIButton *)sender{
     DataProvider *dataProvider = [[DataProvider alloc] init];
     [dataProvider setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
-    [dataProvider editGroup:_groupId andName:nameTxt.text andUserId:[Toolkit getStringValueByKey:@"Id"]];
+    [dataProvider editGroup:_groupId andName:nameTxt.text andUserId:[Toolkit getStringValueByKey:@"Id"] andImagePath:@""];
 }
 
 -(void)editUserInfoCallBack:(id)dict{

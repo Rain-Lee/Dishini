@@ -43,6 +43,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshViewData) name:@"refreshViewData" object:nil];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"refreshNoReadNum" object:nil];
+}
+
 -(void)refreshViewData{
     [self refreshConversationTableViewIfNeeded];
 }
@@ -60,7 +64,7 @@
     UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(0, StatusBar_HEIGHT, SCREEN_WIDTH, NavigationBar_HEIGHT)];
     titleLbl.textAlignment = NSTextAlignmentCenter;
     titleLbl.textColor = [UIColor whiteColor];
-    titleLbl.text = @"会话列表";
+    titleLbl.text = @"迪士尼";
     [topView addSubview:titleLbl];
     
     // carouselView

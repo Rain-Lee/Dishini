@@ -178,7 +178,7 @@
                 NSString *resultStr = [metadataObj stringValue];
                 if (resultStr.length > 5) {
                     NSString *iFlag = [resultStr substringToIndex:5];
-                    if ([iFlag isEqual:@"IPIC:"]) {
+                    if ([iFlag isEqual:@"迪士尼:"]) {
                         [self performSelectorOnMainThread:@selector(stopReading) withObject:nil waitUntilDone:NO];
                         dispatch_async(dispatch_get_main_queue(), ^{
                             NSString *userId = [resultStr substringFromIndex:5];

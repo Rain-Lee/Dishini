@@ -25,12 +25,13 @@
 #define headCellIdentifier  @"HeadCellIdentifier"
 #define footerCellIdentifier  @"FooterCellIdentifier"
 
-@interface GroupMoreViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,SelectMemberDelegate, GroupNameDelegate>{
+@interface GroupMoreViewController ()<UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,SelectMemberDelegate, GroupNameDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate>{
     // view
     UICollectionView *mCollectionView;
     
     // data
     NSMutableArray *groupMemberData;
+    NSString *groupImageString;
     BOOL isManager;
     NSMutableArray *idList;
     BOOL currentState;
@@ -106,6 +107,7 @@
         }
         
         self.groupName = [Toolkit judgeIsNull:dict[@"data1"]];
+        groupImageString = [NSString stringWithFormat:@"%@%@",Kimg_path,[Toolkit judgeIsNull:dict[@"data3"]]];
         currentState = [[Toolkit judgeIsNull:dict[@"data2"]] isEqual:@"1"] ? true : false;
         
         [mCollectionView reloadData];
@@ -170,7 +172,7 @@
     if (section == 1 || section == 2 || section == 4 || section == 6 || section == 8 || section == 10) {
         return 1;
     }else if (section == 3){
-        return 2;
+        return 3;
     }else if (section == 5){
         return 3;
     }else if (section == 7){
@@ -233,6 +235,20 @@
             cell.backgroundColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.96 alpha:1.00];
         }else if (indexPath.section == 3){
             if (indexPath.row == 0) {
+                // titleLbl
+                UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, cell.frame.size.height)];
+                titleLbl.text = [NSString stringWithFormat:@"群头像"];
+                titleLbl.font = [UIFont systemFontOfSize:15];
+                [cell.contentView addSubview:titleLbl];
+                // groupIv
+                UIImageView *groupIv = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 15 - 30, (cell.frame.size.height - 30) / 2, 30, 30)];
+                [groupIv sd_setImageWithURL:[NSURL URLWithString:groupImageString] placeholderImage:[UIImage imageNamed:@"users32"]];
+                [cell.contentView addSubview:groupIv];
+            }else if (indexPath.row == 1) {
+                // lineView
+                UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, 1)];
+                lineView.backgroundColor = [UIColor colorWithRed:0.90 green:0.90 blue:0.90 alpha:1.00];
+                [cell.contentView addSubview:lineView];
                 // titleLbl
                 UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, SCREEN_WIDTH - 15, cell.frame.size.height)];
                 titleLbl.text = [NSString stringWithFormat:@"群名称"];
@@ -403,6 +419,26 @@
     }else if (indexPath.section == 3){
         if (indexPath.row == 0){
             if (isManager) {
+                [Toolkit actionSheetViewSecond:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:[NSArray arrayWithObjects:@"拍照", @"从手机相册选择", nil] handler:^(int buttonIndex, UIAlertAction *alertView) {
+                    if (buttonIndex == 1) {
+                        // 拍照
+                        UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+                        mImagePick.sourceType = UIImagePickerControllerSourceTypeCamera;
+                        mImagePick.delegate = self;
+                        mImagePick.allowsEditing = YES;
+                        [self presentViewController:mImagePick animated:YES completion:nil];
+                    }else if (buttonIndex == 2){
+                        // 从相册中选取
+                        UIImagePickerController *mImagePick = [[UIImagePickerController alloc] init];
+                        mImagePick.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+                        mImagePick.delegate = self;
+                        mImagePick.allowsEditing = YES;
+                        [self presentViewController:mImagePick animated:YES completion:nil];
+                    }
+                }];
+            }
+        }else if (indexPath.row == 1){
+            if (isManager) {
                 GroupNameViewController *groupNameVC = [[GroupNameViewController alloc] init];
                 groupNameVC.delegate = self;
                 groupNameVC.nameStr = _groupName;
@@ -442,12 +478,73 @@
             [self.navigationController pushViewController:chat animated:YES];
         }
     }else if (indexPath.section == 9){
-        if ([[RCIMClient sharedRCIMClient] clearMessages:ConversationType_GROUP targetId:_groupId]){
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadConversationMessageCollectionViewData" object:nil];
-            [Toolkit showSuccessWithStatus:@"清空成功"];
-        }else{
-            [Toolkit showErrorWithStatus:@"清空失败"];
-        }
+        [Toolkit actionSheetViewFirst:self andTitle:nil andMsg:nil andCancelButtonTitle:@"取消" andOtherButtonTitle:@"清空聊天记录" handler:^(int buttonIndex, UIAlertAction *alertView) {
+            if (buttonIndex == 1) {
+                @try {
+                    if ([[RCIMClient sharedRCIMClient] clearMessages:ConversationType_GROUP targetId:_groupId]){
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadConversationMessageCollectionViewData" object:nil];
+                        [Toolkit showSuccessWithStatus:@"清空成功"];
+                    }else{
+                        [Toolkit showErrorWithStatus:@"清空失败"];
+                    }
+                } @catch (NSException *exception) {
+                    
+                } @finally {
+                    [Toolkit showErrorWithStatus:@"清空失败"];
+                }
+            }
+        }];
+    }
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    UIImage *image = info[UIImagePickerControllerEditedImage];
+    UIImage *smallImage = [self scaleFromImage:image andSize:CGSizeMake(500, 500)];
+    NSData *imageData = UIImagePNGRepresentation(smallImage);
+    [self changeHeadImage:imageData];
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(UIImage *)scaleFromImage:(UIImage *)image andSize:(CGSize)size{
+    UIGraphicsBeginImageContext(size);
+    [image drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
+}
+
+-(void)changeHeadImage:(NSData *) data{
+    [Toolkit showWithStatus:@"请稍等..."];
+    NSString *imagebase64= [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
+    DataProvider * dataprovider=[[DataProvider alloc] init];
+    [dataprovider setDelegateObject:self setBackFunctionName:@"uploadPhotoCallBack:"];
+    [dataprovider upLoadPhoto:[Toolkit getStringValueByKey:@"Id"] andImgData:imagebase64 andImgName:@"PhotoName.png"];
+}
+
+-(void)uploadPhotoCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        [SVProgressHUD dismiss];
+        
+        groupImageString = [NSString stringWithFormat:@"%@%@",Kimg_path,dict[@"date"][@"ImageName"]];
+        
+        DataProvider *dataProvider = [[DataProvider alloc] init];
+        [dataProvider setDelegateObject:self setBackFunctionName:@"editUserInfoCallBack:"];
+        [dataProvider editGroup:_groupId andName:@"" andUserId:[Toolkit getStringValueByKey:@"Id"] andImagePath:dict[@"date"][@"ImageName"]];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:dict[@"date"] andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
+    }
+}
+
+-(void)editUserInfoCallBack:(id)dict{
+    if ([dict[@"code"] intValue] == 200) {
+        
+        [mCollectionView reloadItemsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForItem:0 inSection:3]]];
+        
+        RCGroup *group = [[RCIM sharedRCIM] getGroupInfoCache:_groupId];
+        group.portraitUri = groupImageString;
+        [[RCIM sharedRCIM] refreshGroupInfoCache:group withGroupId:_groupId];
+    }else{
+        [Toolkit alertView:self andTitle:@"提示" andMsg:@"修改群组头像失败" andCancelButtonTitle:@"确定" andOtherButtonTitle:nil handler:nil];
     }
 }
 

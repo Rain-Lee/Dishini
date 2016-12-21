@@ -115,6 +115,7 @@
 		B76046CB1D3328C600C51D3C /* InputAddressViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B76046CA1D3328C600C51D3C /* InputAddressViewController.m */; };
 		B77C5D261D1D2D9D00246820 /* RegisterThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */; };
 		B77C5D291D1D349400246820 /* LoginQuestionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77C5D281D1D349400246820 /* LoginQuestionViewController.m */; };
+		B77CA2561E065D7F009CAAA8 /* CreateGroupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B77CA2551E065D7F009CAAA8 /* CreateGroupViewController.m */; };
 		B78DB5311D498330004259C0 /* ShopViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B78DB5301D498330004259C0 /* ShopViewController.m */; };
 		B795ED991D34D6F100E9E6CB /* GroupMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B795ED981D34D6F100E9E6CB /* GroupMoreViewController.m */; };
 		B795ED9D1D34DA3500E9E6CB /* GroupMoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B795ED9B1D34DA3500E9E6CB /* GroupMoreCell.m */; };
@@ -445,6 +446,8 @@
 		B77C5D251D1D2D9D00246820 /* RegisterThirdViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterThirdViewController.m; sourceTree = "<group>"; };
 		B77C5D271D1D349400246820 /* LoginQuestionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginQuestionViewController.h; sourceTree = "<group>"; };
 		B77C5D281D1D349400246820 /* LoginQuestionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginQuestionViewController.m; sourceTree = "<group>"; };
+		B77CA2541E065D7F009CAAA8 /* CreateGroupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreateGroupViewController.h; sourceTree = "<group>"; };
+		B77CA2551E065D7F009CAAA8 /* CreateGroupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreateGroupViewController.m; sourceTree = "<group>"; };
 		B78DB52F1D498330004259C0 /* ShopViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShopViewController.h; sourceTree = "<group>"; };
 		B78DB5301D498330004259C0 /* ShopViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShopViewController.m; sourceTree = "<group>"; };
 		B795ED971D34D6F100E9E6CB /* GroupMoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupMoreViewController.h; sourceTree = "<group>"; };
@@ -1077,6 +1080,7 @@
 		B75D0ABD1DF1424D0046BEB6 /* GroupInfo */ = {
 			isa = PBXGroup;
 			children = (
+				B79813D31E078A7800CCFF72 /* GroupName */,
 				B7E94AFF1DFFA9500046E749 /* Tousu */,
 				B7F9B5B61DF93C9500D6A133 /* GroupGonggao */,
 				B7B3994E1DF509C000AD6A54 /* ChatRecordSearch */,
@@ -1091,6 +1095,33 @@
 				B72D22281D377E0600AFBA4B /* MyFooterView.m */,
 			);
 			name = GroupInfo;
+			sourceTree = "<group>";
+		};
+		B77CA2531E065D31009CAAA8 /* CreateGroup */ = {
+			isa = PBXGroup;
+			children = (
+				B77CA2541E065D7F009CAAA8 /* CreateGroupViewController.h */,
+				B77CA2551E065D7F009CAAA8 /* CreateGroupViewController.m */,
+			);
+			name = CreateGroup;
+			sourceTree = "<group>";
+		};
+		B79813D31E078A7800CCFF72 /* GroupName */ = {
+			isa = PBXGroup;
+			children = (
+				B732C1191D4712AF004AD901 /* GroupNameViewController.h */,
+				B732C11A1D4712AF004AD901 /* GroupNameViewController.m */,
+			);
+			name = GroupName;
+			sourceTree = "<group>";
+		};
+		B79813D41E07C65700CCFF72 /* DetailsInfo */ = {
+			isa = PBXGroup;
+			children = (
+				B7DBCD301D2117CD00BF3489 /* DetailsViewController.h */,
+				B7DBCD311D2117CD00BF3489 /* DetailsViewController.m */,
+			);
+			name = DetailsInfo;
 			sourceTree = "<group>";
 		};
 		B7A03C5F1D18DBA200A48C39 = {
@@ -1238,8 +1269,6 @@
 				B72D222D1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.h */,
 				B72D222E1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.m */,
 				B72D222F1D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.xib */,
-				B732C1191D4712AF004AD901 /* GroupNameViewController.h */,
-				B732C11A1D4712AF004AD901 /* GroupNameViewController.m */,
 			);
 			name = ContactsPage;
 			sourceTree = "<group>";
@@ -1266,6 +1295,7 @@
 		B7A03CB51D18DDB700A48C39 /* IPage */ = {
 			isa = PBXGroup;
 			children = (
+				B79813D41E07C65700CCFF72 /* DetailsInfo */,
 				B7E94B041DFFCF4C0046E749 /* Feedback */,
 				B7E94B031DFFCE230046E749 /* Announcement */,
 				B7D3394F1DF8000D0039EA96 /* OnlineChongzhi */,
@@ -1275,8 +1305,6 @@
 				B7A03CCC1D18E16500A48C39 /* IViewController.m */,
 				B7DBCD2A1D21023400BF3489 /* AboutUsViewController.h */,
 				B7DBCD2B1D21023400BF3489 /* AboutUsViewController.m */,
-				B7DBCD301D2117CD00BF3489 /* DetailsViewController.h */,
-				B7DBCD311D2117CD00BF3489 /* DetailsViewController.m */,
 				B71F9D011D220FEA00994D6E /* DataSettingViewController.h */,
 				B71F9D021D220FEA00994D6E /* DataSettingViewController.m */,
 				B71F9D041D221D3800994D6E /* RemarksViewController.h */,
@@ -1372,6 +1400,7 @@
 		B7D3394B1DF7DC170039EA96 /* LaunchGroupChat */ = {
 			isa = PBXGroup;
 			children = (
+				B77CA2531E065D31009CAAA8 /* CreateGroup */,
 				B70AE0391D23A0B500DB3C8C /* LaunchGroupChatViewController.h */,
 				B70AE03A1D23A0B500DB3C8C /* LaunchGroupChatViewController.m */,
 			);
@@ -2142,6 +2171,7 @@
 				B72D22301D37975500AFBA4B /* SelectFriendOrGroupTableViewCell.m in Sources */,
 				B748AFB11D275FC7002DC0F7 /* README.md in Sources */,
 				B7D4272C1D1A29EE0089A263 /* DFTextImageUserLineCell.m in Sources */,
+				B77CA2561E065D7F009CAAA8 /* CreateGroupViewController.m in Sources */,
 				B7D4272E1D1A29EE0089A263 /* CommentInputView.m in Sources */,
 				B70AE0341D23712700DB3C8C /* AddressLocalViewController.m in Sources */,
 				B74496551D1BBD290012C9AA /* RegisterFirstViewController.m in Sources */,

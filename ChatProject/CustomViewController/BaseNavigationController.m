@@ -61,12 +61,12 @@
     
     _lblTitle.numberOfLines = 0;
     _lblTitle.center = CGPointMake(_topView.center.x, _lblTitle.center.y);
-    [self.view addSubview:_lblTitle];
+    [_topView addSubview:_lblTitle];
     
     _imgLeft = [[UIImageView alloc] initWithFrame:CGRectMake(0, _orginY, 40, NavigationBar_HEIGHT)];
     _imgLeft.backgroundColor = [UIColor clearColor];
     _imgLeft.center = CGPointMake(_imgLeft.center.x, _lblTitle.center.y);
-    [self.view addSubview:_imgLeft];
+    [_topView addSubview:_imgLeft];
     
     _lblLeft = [[UILabel alloc] initWithFrame:CGRectMake(_imgLeft.frame.size.width+_imgLeft.frame.origin.x,_orginY,60 ,NavigationBar_HEIGHT)];
     
@@ -75,17 +75,17 @@
     _lblLeft.font = [UIFont systemFontOfSize:16];
     _lblLeft.textColor = [UIColor whiteColor];
     _lblLeft.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_lblLeft];
+    [_topView addSubview:_lblLeft];
     
     _btnLeft = [[UIButton alloc] initWithFrame:CGRectMake(0, _orginY, 60, NavigationBar_HEIGHT)];
     [_btnLeft addTarget:self action:@selector(clickLeftButton:) forControlEvents:UIControlEventTouchUpInside];
     _btnLeft.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_btnLeft];
+    [_topView addSubview:_btnLeft];
     
     _imgRight = [[UIImageView alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60 , _orginY, 60, NavigationBar_HEIGHT)];
     _imgRight.backgroundColor = [UIColor clearColor];
     _imgRight.center = CGPointMake(_imgRight.center.x, _imgLeft.center.y);
-    [self.view addSubview:_imgRight];
+    [_topView addSubview:_imgRight];
     
     _lblRight = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60-10 ,_orginY ,80,NavigationBar_HEIGHT)];
     
@@ -94,12 +94,12 @@
     _lblRight.font = [UIFont systemFontOfSize:16];
     _lblRight.textColor = [UIColor whiteColor];
     _lblRight.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:_lblRight];
+    [_topView addSubview:_lblRight];
     
     _btnRight = [[UIButton alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 60, _orginY, 60, NavigationBar_HEIGHT)];
     _btnRight.backgroundColor = [UIColor clearColor];
     [_btnRight addTarget:self action:@selector(clickRightButton:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:_btnRight];
+    [_topView addSubview:_btnRight];
     
     
 //    [self createButton];

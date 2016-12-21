@@ -164,7 +164,7 @@
     // titleLbl
     UILabel *titleLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 5, CGRectGetMinY(photoIv.frame) + 3, 200, 21)];
     titleLbl.text = chatRecordItem.name;
-    titleLbl.font = [UIFont systemFontOfSize:16];
+    titleLbl.font = [UIFont systemFontOfSize:15];
     [cell.contentView addSubview:titleLbl];
     // detailLbl
     UILabel *detailLbl = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(photoIv.frame) + 5, CGRectGetMaxY(titleLbl.frame) + 3, 200, 21)];
@@ -174,7 +174,7 @@
     NSMutableAttributedString *attr = [[NSMutableAttributedString alloc] initWithString:contentStr];
     [attr addAttribute:NSForegroundColorAttributeName value:[UIColor colorWithRed:0.16 green:0.57 blue:0.14 alpha:1.00] range:itemRange];
     detailLbl.attributedText = attr;
-    detailLbl.font = [UIFont systemFontOfSize:16];
+    detailLbl.font = [UIFont systemFontOfSize:14];
     [cell.contentView addSubview:detailLbl];
     // dateLbl
     UILabel *dateLbl = [[UILabel alloc] initWithFrame:CGRectMake(SCREEN_WIDTH - 12 - 150, CGRectGetMinY(photoIv.frame) + 3, 150, 21)];
@@ -190,8 +190,6 @@
 #pragma mark - UITableViewDelegate
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:true];
-    
-    [self.navigationController popViewControllerAnimated:true];
     
 //    ChatRecordItem *chatRecordItem = chatRecordArray[indexPath.row];
 //    

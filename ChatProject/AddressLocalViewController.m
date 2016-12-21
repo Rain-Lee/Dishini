@@ -654,7 +654,7 @@
         MFMessageComposeViewController * controller = [[MFMessageComposeViewController alloc]init]; //autorelease];
         
         controller.recipients = [NSArray arrayWithObject:phoneTxt];
-        controller.body = @"我现在在使用IPIC，快来跟我一起体验吧，这是下载地址：http://www.pgyer.com/LDxQ";
+        controller.body = @"我现在在使用迪士尼，快来跟我一起体验吧，这是下载地址：http://www.pgyer.com/LDxQ";
         controller.messageComposeDelegate = self;
         
         [self presentViewController:controller animated:YES completion:nil];
